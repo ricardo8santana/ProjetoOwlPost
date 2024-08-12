@@ -2,6 +2,7 @@ import MDEditor from "@uiw/react-md-editor"
 import { useState } from "react"
 
 import './PostEditor.css';
+import { bold } from "./PostEditorToolbarItems";
 
 const PostEditor = ({defaultValue}) => {
     const [content, setContent] = useState(defaultValue);
@@ -11,7 +12,12 @@ const PostEditor = ({defaultValue}) => {
     }
 
     return (
-        <MDEditor className="editor" value={content} onChange={handleContentChange}/>
+        <MDEditor 
+            className="editor" 
+            value={content} 
+            onChange={handleContentChange}
+            
+            />
     )
 }
 
