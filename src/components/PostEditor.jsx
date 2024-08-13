@@ -1,21 +1,15 @@
 import MDEditor, { commands } from "@uiw/react-md-editor"
-import { useState } from "react"
+
 
 import './PostEditor.css';
 import { extraToolbarCommands, toolbarCommands } from "./PostEditorToolbarItems";
 
-const PostEditor = ({defaultValue}) => {
-    const [content, setContent] = useState(defaultValue);
-
-    const handleContentChange = (content) => {
-        setContent(content);
-    }
-
+const PostEditor = ({content, contentChanged}) => {
     return (
         <MDEditor 
             className="editor" 
             value={content} 
-            onChange={handleContentChange}
+            onChange={contentChanged}
             commands={toolbarCommands} 
             extraCommands={extraToolbarCommands}       
             />

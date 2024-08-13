@@ -1,6 +1,10 @@
 import { Button } from "react-bootstrap";
+import { useState } from "react"
+
 import PostEditor from "../components/PostEditor";
 import './PostEditorPage.css'
+
+import * as postService from '../services/postService';
 
 const defaultContent = `
 # Escreva seu post
@@ -23,12 +27,35 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 `;
 
 const PostEditorPage = () => {
+    const [content, setContent] = useState(defaultContent);
+    const [title, setTitle] = useState(null);
+    
+    const onContentChanged = (content) => {
+        setContent(content);
+    }
+
+    const onTitleChanged = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const onSubmitClicked = () => {
+        if (title === null){
+            console.warn("Falta preencher o nome!");
+            return;
+        }
+
+        postService.createOrUpdatePost({
+            title: title,
+            content: content,
+        });
+    };
+
     return (
         <div className="editor-page">
             <h2 className="editor-page-title">Criar Post</h2>
-            <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post"/>
-            <PostEditor defaultValue={defaultContent}/>
-            <input className="editor-page-submit"type='button' value='Postar'/>
+            <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged}/>
+            <PostEditor content={content} contentChanged={onContentChanged}/>
+            <input className="editor-page-submit"type='button' value='Postar' onClick={onSubmitClicked}/>
         </div>
     )
 };
