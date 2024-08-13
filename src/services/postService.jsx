@@ -6,7 +6,6 @@ export const createPost = (post) => {
 
     const searchPost = posts.find(element => element.title === post.title);
     if (searchPost) {
-        console.error("Um post com o memsmo título já existe.");
         return false;
     }
 
@@ -20,7 +19,6 @@ export const updatePost = (post) => {
     let searchPost = posts.find(element => element.title === post.title);
     
     if (!searchPost) {
-        console.error(`Não foi encontrado um post com o titulo ${post.title}`);
         return false;
     }
 
@@ -34,6 +32,7 @@ export const createOrUpdatePost = (post) => {
         return createPost(post);
     }
 
+    console.error(`Não foi possível encontrado ou criar um post com o titulo ${post.title}`);
     return false;
 }
 
