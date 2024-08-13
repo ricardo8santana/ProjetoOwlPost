@@ -6,33 +6,25 @@
 
     background-color: var(--color-bg-main);    
     position: relative;
+
+    --md-editor-background-color: var(--color-bg-main);
 }
 
 .w-md-editor-show-live
-.w-md-editor-preview::after {
+.w-md-editor-content::after {
     position: absolute;
     content: '';
     background-color: var(--color-bg-alt);
     width: 1px;
     top: 2rem;
     bottom: 2rem;
-    left: 0;
+    left: 50%;
     /* box-shadow: inset 1px 0 0 0 var(--md-editor-box-shadow-color); */
 }
-.w-md-editor-content *,
-.w-md-editor-preview * {
-    color: var(--color-text-alt);
-    font-family: 'Montserrat' !important;
-    font-size: small;
-}
-.w-md-editor-preview img {
-    border-radius: 0.5rem;
-}
 
-.w-md-editor-preview hr {
-    height: 2px;
-    background-color: var(--color-bg-alt) !important;
-}
+
+
+
 
 
 .w-md-editor-preview,
@@ -48,4 +40,34 @@
 
 .w-md-editor-bar {
     display: none;
+}
+
+/*
+    Estilo dos componentes do MDeditor
+*/
+.w-md-editor-content *,
+.w-md-editor-preview * {
+    color: var(--color-text-alt);
+    font-family: 'Montserrat' !important;
+    font-size: small;
+}
+
+.w-md-editor-preview * {
+    background-color: transparent;
+}
+
+.w-md-editor-preview img {
+    border-radius: 0.5rem;
+}
+
+.w-md-editor-preview hr {
+    height: 2px;
+    background-color: var(--color-bg-alt) !important;
+}
+
+.w-md-editor-preview blockquote {
+    background-color: var(--color-bg-body);
+    border-radius: 0.125rem 0.5rem 0.5rem 0.125rem;
+    border-left: 0.5em solid var(--color-main-normal);
+    /* border-left: 0.25em solid var(--color-main-normal); */
 }
