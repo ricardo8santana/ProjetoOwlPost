@@ -9,11 +9,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  background: var(--gradient-header);
   /* background-image: linear-gradient(to right, #002199, #0027b2, #002ccb, #0032e5, #0037ff);  */
-  background-image: linear-gradient(to right,
+  /* background-image: linear-gradient(to right,
       var(--color-main-light) 0% ,
       var(--color-main-normal) 85%,
-      var(--color-main-normal));
+      var(--color-main-normal)); */
 }
 
 .logo {

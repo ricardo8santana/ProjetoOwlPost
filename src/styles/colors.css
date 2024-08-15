@@ -36,25 +36,28 @@ body {
     --color-neutral-6: #2e3234;
     --color-neutral-7: #1e2223;
     --color-neutral-8: #161a1a;
+
+    /* --gradient-header: linear-gradient(to right, #002199, #0027b2, #002ccb, #0032e5, #0037ff); */
+    --gradient-header: linear-gradient(to right, #002199 0%, #1643e7 59%, #002199 100%);
 }
 
-/* @media (prefers-color-scheme: dark) { */
-    body.dark-mode {
-        --color-bg-body:        #1A1D1E;
-        --color-bg-main:        #141718;
-        --color-bg-alt:         #272A2C;
+body.dark-mode {
+    --color-bg-body:        #1A1D1E;
+    --color-bg-main:        #141718;
+    --color-bg-alt:         #272A2C;
 
-        --color-text-main:      #fafaff;
-        --color-text-alt:       #ecedf2;
-        --color-text-disabled:  #ecedf280;
-        
-        --color-main-lighter:   #e1e1ff;
-        --color-main-light:     #7684fe;
-        --color-main-normal:    #1643e7;
-        --color-main-dark:      #013395;
-        --color-main-darker:    #001126;
-    }
-/* } */
+    --color-text-main:      #fafaff;
+    --color-text-alt:       #ecedf2;
+    --color-text-disabled:  #ecedf280;
+    
+    --color-main-lighter:   #e1e1ff;
+    --color-main-light:     #7684fe;
+    --color-main-normal:    #1643e7;
+    --color-main-dark:      #013395;
+    --color-main-darker:    #001126;
+
+    --gradient-header: linear-gradient(to right, rgba(0,19,46,1) 0%, rgba(0,36,92,1) 59%, rgba(0,19,46,1) 100%)
+}
 
 /* https://coolors.co/fafaff-ecedf2-d8dae1-b3b6bd-787d82-42474a-272a2c-1a1d1e-141718 */
 /* https://coolors.co/f2f2ff-b6b9ff-7684fe-3956f7-1643e7-073cc8-013395-00245c-001126 */
