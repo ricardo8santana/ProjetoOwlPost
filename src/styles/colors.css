@@ -8,7 +8,7 @@
     `@import url('./exemplo/color-palette.css`);
 */
 
-:root {
+body {
     color-scheme: light dark;
 
     --color-bg-body:        #ecedf2;
@@ -38,8 +38,8 @@
     --color-neutral-8: #161a1a;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
+/* @media (prefers-color-scheme: dark) { */
+    body.dark-mode {
         --color-bg-body:        #1A1D1E;
         --color-bg-main:        #141718;
         --color-bg-alt:         #272A2C;
@@ -54,7 +54,7 @@
         --color-main-dark:      #013395;
         --color-main-darker:    #001126;
     }
-}
+/* } */
 
 /* https://coolors.co/fafaff-ecedf2-d8dae1-b3b6bd-787d82-42474a-272a2c-1a1d1e-141718 */
 /* https://coolors.co/f2f2ff-b6b9ff-7684fe-3956f7-1643e7-073cc8-013395-00245c-001126 */

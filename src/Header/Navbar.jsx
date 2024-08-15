@@ -3,6 +3,7 @@ import './Navbar.css'; // Importando o arquivo CSS
 import Logo from '../assets/images/Group.svg';
 import Profile from '../assets/images/Profile.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
+import DarkModeToggle from '../components/DarkModeToggle';
 
 
 const Navbar = () => {
@@ -25,6 +26,7 @@ const Navbar = () => {
         <li className="nav-link">Suporte</li>
       </div>
       <div className="auth-buttons">
+        <DarkModeToggle/>
         <button className="sign sign-in-button">Entrar</button>
         <button className="sign sign-up-button">Cadastrar-se</button>
         <img
