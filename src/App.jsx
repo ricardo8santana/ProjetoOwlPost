@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import Header from "./Header"
+// import Footer from "./Footer"
+// import Food from "./Food"
 
-function App() {
-  const [count, setCount] = useState(0)
+// function App() {
+//     return(
+//         <>
+//             <Header/>
+//             <Food/>
+//             <Footer/>
+//         </>
+//     )   
+// }
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+// export default App
+
+// import Card from "./Card";
+
+// function App () {
+//     return(
+//         <Card/>
+//     )
+// }
+
+// export default App;
+
+import Navbar from "./Header/Navbar";
+import CarroselHome from "../Carousel/Carrosel";
+import './App.css';
+
+function App () {
+    return(
+        <>
+        <Navbar/>
+        <div className="home">
+            <CarroselHome/>
+            <div>
+                <p>teste</p>
+                <p>teste</p>
+            </div>
+        </div>
+        </>
+    )
 }
 
-export default App
+export default App;
