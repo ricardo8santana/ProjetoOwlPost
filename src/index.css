@@ -10,13 +10,18 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424; */
 
-  color: var(--color-text-main);
-  background-color: var(--color-bg-body);
+  color: var(--color-text-main) !important;
+  background-color: var(--color-bg-body) !important;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--color-text-main) !important;
+  background-color: var(--color-bg-body) !important;
 }
 
 a {

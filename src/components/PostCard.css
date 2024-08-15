@@ -6,7 +6,9 @@
     border-radius: 0.5rem;
 
     padding: 1rem;
-    gap: 1rem;
+    gap: 2rem;
+
+    text-align: left;
 }
 
 .post-card h1 {
@@ -16,17 +18,6 @@
 
     color: var(--color-text-main);
     font-size: x-large;
-}
-
-.post-card h1::after {
-    content: '';
-    opacity: 0.5;
-    background-color: var(--color-text-alt);
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    bottom: -0.5rem;
-    height: 1px;
 }
 
 .wmde-markdown {
