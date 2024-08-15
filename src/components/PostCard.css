@@ -1,0 +1,91 @@
+.post-card {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--color-bg-main);
+    border-radius: 0.5rem;
+
+    padding: 1rem;
+    gap: 2rem;
+
+    text-align: left;
+}
+
+.post-card h1 {
+    position: relative;
+    padding: 0;
+    margin: 0;
+
+    color: var(--color-text-main);
+    font-size: x-large;
+}
+
+.wmde-markdown {
+    font-family: inherit !important;
+    font-size: small;
+}
+
+.post-card-author {
+    display: flex;
+    gap: 1rem;
+
+    /* border: 1px solid red; */
+}
+
+.profile-picture {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.post-card-author-info {
+    display: flex;
+    flex-direction: column;
+
+    /* border: 1px solid yellowgreen; */
+
+    font-size: x-small;
+    justify-content: center;
+
+    * {
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        opacity: 0.5;
+    }
+
+    
+}
+
+.post-card-author-info div {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start;
+    align-items: center;
+    opacity: 1;
+}
+
+.post-card-author-name {
+    opacity: 1;
+    position: relative;
+    font-size: medium !important;
+    margin-right: 1rem;
+}
+
+.post-card-author-name::after {
+    position: absolute;
+    content: '';
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 1px;
+    right: -0.5rem;
+    background-color: var(--color-text-alt);
+    opacity: 0.5;
+}

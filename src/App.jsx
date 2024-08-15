@@ -1,34 +1,31 @@
-// import Header from "./Header"
-// import Footer from "./Footer"
-// import Food from "./Food"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
-// function App() {
-//     return(
-//         <>
-//             <Header/>
-//             <Food/>
-//             <Footer/>
-//         </>
-//     )   
-// }
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { useState } from 'react'
 
-// export default App
+import PostEditorPage from './pages/PostEditorPage'
+import PostViewPage from './pages/PostViewPage'
 
-// import Card from "./Card";
-
-// function App () {
-//     return(
-//         <Card/>
-//     )
-// }
-
-// export default App;
+const routes = createBrowserRouter([
+  {
+    path: '/post',
+    element: <PostViewPage/>
+  },
+  {
+    path: '/post-edit',
+    element: <PostEditorPage/>
+  }
+])
 
 import Navbar from "./Header/Navbar";
 import CarroselHome from "../Carousel/Carrosel";
 import './App.css';
 
 function App () {
+    // return (
+    //   <RouterProvider router={routes}/>
+    // )
     return(
         <>
         <Navbar/>
