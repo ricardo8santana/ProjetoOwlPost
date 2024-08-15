@@ -18,11 +18,26 @@ const routes = createBrowserRouter([
   }
 ])
 
+import Navbar from "./Header/Navbar";
+import CarroselHome from "../Carousel/Carrosel";
+import './App.css';
 
-function App() {
-  return (
-    <RouterProvider router={routes}/>
-  )
+function App () {
+    // return (
+    //   <RouterProvider router={routes}/>
+    // )
+    return(
+        <>
+        <Navbar/>
+        <div className="home">
+            <CarroselHome/>
+            <div>
+                <p>teste</p>
+                <p>teste</p>
+            </div>
+        </div>
+        </>
+    )
 }
 
-export default App
+export default App;
