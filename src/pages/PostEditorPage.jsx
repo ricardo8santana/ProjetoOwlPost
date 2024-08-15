@@ -5,6 +5,7 @@ import PostEditor from "../components/PostEditor";
 import './PostEditorPage.css'
 
 import * as postService from '../services/postService';
+import Navbar from "../Header/Navbar";
 
 const defaultContent = `
 # Escreva seu post
@@ -51,12 +52,15 @@ const PostEditorPage = () => {
     };
 
     return (
+        <>
+        <Navbar />
         <div className="editor-page">
             <h2 className="editor-page-title">Criar Post</h2>
             <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged}/>
             <PostEditor content={content} contentChanged={onContentChanged}/>
             <input className="editor-page-submit"type='button' value='Postar' onClick={onSubmitClicked}/>
         </div>
+        </>
     )
 };
 

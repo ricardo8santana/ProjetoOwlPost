@@ -5,11 +5,14 @@ import Profile from '../assets/images/Profile.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
 import DarkModeToggle from '../components/DarkModeToggle';
 
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar">
-      <div className="logo">
+      <div className="logo" onClick={()=> navigate('/')}>
         <img 
           src={Logo}
           alt="" 
@@ -21,8 +24,9 @@ const Navbar = () => {
         />
       </div>
       <div className="nav-links">
-        <li className="nav-link">Comunidade</li>
-        <li className="nav-link">Notícias</li>
+        <li className="nav-link" onClick={()=> navigate('/post')}>Comunidade</li>
+        <li className="nav-link" onClick={()=> navigate('/post-edit')}>Editor</li>
+        {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
         <li className="nav-link">Suporte</li>
       </div>
       <div className="auth-buttons">

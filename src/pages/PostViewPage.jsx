@@ -8,6 +8,7 @@ import { Form } from 'react-bootstrap';
 
 import { useState } from 'react';
 import React from 'react';
+import Navbar from '../Header/Navbar';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     const removeImagePattern = /!\[.*\](.*)/g;
@@ -98,6 +99,8 @@ const PostViewList = ({ posts }) => {
     const [order, setOrder] = useState(orders[0]);
 
     return (
+        <>
+        <Navbar/>
         <div className='post-view'>
             <div className='post-view-filters'>
                 <div className='post-view-filter left'>
@@ -133,6 +136,7 @@ const PostViewList = ({ posts }) => {
             }
             <Button>Carregar Mais</Button>
         </div>
+        </>
     )
 };
 
