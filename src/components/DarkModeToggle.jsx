@@ -25,10 +25,11 @@ const DarkModeToggle = () => {
     };
 
     useEffect(() => {
-        const mediaQuery = '(prefers-color-scheme: dark)';
-        const prefersDarkMode =
-            localStorage.getItem(ThemeStorageKey) === ThemeDark ||
-            window.matchMedia(mediaQuery).matches;
+        const currentTheme = localStorage.getItem(ThemeStorageKey);
+
+        let prefersDarkMode = currentTheme !== null
+            ? currentTheme === ThemeDark
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         setTheme(prefersDarkMode);
     }, []);
