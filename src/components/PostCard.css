@@ -23,6 +23,7 @@
 .wmde-markdown {
     font-family: inherit !important;
     font-size: small;
+    color: var(--color-text-alt) !important;
 }
 
 .post-card-author {

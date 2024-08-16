@@ -9,6 +9,8 @@ import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import React from 'react';
 import Navbar from '../Header/Navbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDownShortWide, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     const removeImagePattern = /!\[.*\](.*)/g;
@@ -90,8 +92,8 @@ const tags = [
 
 const orders = [
     'Padrão',
-    'Mais Recente',
-    'Mais Popular',
+    'Recente',
+    'Popular',
 ];
 
 const PostViewList = ({ posts }) => {
@@ -104,7 +106,8 @@ const PostViewList = ({ posts }) => {
         <div className='post-view'>
             <div className='post-view-filters'>
                 <div className='post-view-filter left'>
-                    <span>Filtrar</span>
+                    {/* <span>Filtrar</span> */}
+                    <FontAwesomeIcon icon={faFilter}/>
                     <Dropdown onSelect={e => setFiltro(e)}>
                         <Dropdown.Toggle id="dropdown-custom-components">{filtro}</Dropdown.Toggle>
                         <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
@@ -118,7 +121,8 @@ const PostViewList = ({ posts }) => {
                     <input type='text' placeholder='Pesquisar'/>
                 </div>
                 <div className='post-view-filter right'>
-                    <span>Ordenar</span>
+                    {/* <span>Ordenar</span> */}
+                    <FontAwesomeIcon icon={faArrowDownShortWide} />
                     <Dropdown onSelect={e => setOrder(e)}>
                         <Dropdown.Toggle id="dropdown-custom-components">{order}</Dropdown.Toggle>
                         <Dropdown.Menu as={CustomMenu} >

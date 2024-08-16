@@ -5,16 +5,20 @@ import { useEffect, useState } from "react";
 import './DarkModeToggle.css'
 
 const DarkModeToggle = () => {
-    const prefersDarkMode =
-        localStorage.getItem('theme') === 'dark-mode' || 
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [isDark, setIsDark] = useState(false);
 
-    const [isDark, setIsDark] = useState(prefersDarkMode);
+    useEffect(() => {
+        const prefersDarkMode =
+            localStorage.getItem('theme') === 'dark-mode' || 
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const setTheme = (prefersDarkTheme) => {
-        setIsDark(prefersDarkTheme);
+        setIsDark(prefersDarkMode);
+    }, [])
 
-        if (prefersDarkTheme) {
+    const setTheme = (prefersDarkMode) => {
+        setIsDark(prefersDarkMode);
+
+        if (prefersDarkMode) {
             localStorage.setItem('theme', 'dark-mode');
             document.body.classList.add('dark-mode');
         }
