@@ -4,33 +4,38 @@ import { useEffect, useState } from "react";
 
 import './DarkModeToggle.css'
 
+const ThemeStorageKey = 'theme';
+const ThemeDark = 'dark';
+const ThemeLight = 'light';
+
 const DarkModeToggle = () => {
-    const [isDark, setIsDark] = useState(false);
-
-    useEffect(() => {
-        const prefersDarkMode =
-            localStorage.getItem('theme') === 'dark-mode' || 
-            window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        setIsDark(prefersDarkMode);
-    }, [])
+    const [useDarkMode, setUseDarkMode] = useState(false);
 
     const setTheme = (prefersDarkMode) => {
-        setIsDark(prefersDarkMode);
+        setUseDarkMode(prefersDarkMode);
 
         if (prefersDarkMode) {
-            localStorage.setItem('theme', 'dark-mode');
+            localStorage.setItem(ThemeStorageKey, ThemeDark);
             document.body.classList.add('dark-mode');
         }
         else {
-            localStorage.setItem('theme', 'light-mode');
+            localStorage.setItem(ThemeStorageKey, ThemeLight);
             document.body.classList.remove('dark-mode');
         }
-    }
+    };
 
-    return(
-        <div className="theme-toggle" onClick={() => setTheme(!isDark)}>
-            <FontAwesomeIcon icon={isDark ? faMoon : faSun} />
+    useEffect(() => {
+        const mediaQuery = '(prefers-color-scheme: dark)';
+        const prefersDarkMode =
+            localStorage.getItem(ThemeStorageKey) === ThemeDark ||
+            window.matchMedia(mediaQuery).matches;
+
+        setTheme(prefersDarkMode);
+    }, []);
+
+    return (
+        <div className="theme-toggle" onClick={() => setTheme(!useDarkMode)}>
+            <FontAwesomeIcon icon={useDarkMode ? faMoon : faSun} />
         </div>
     )
 };
