@@ -30,7 +30,7 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 const PostEditorPage = () => {
     const [content, setContent] = useState(defaultContent);
     const [title, setTitle] = useState(null);
-    
+
     const onContentChanged = (content) => {
         setContent(content);
     }
@@ -40,7 +40,7 @@ const PostEditorPage = () => {
     }
 
     const onSubmitClicked = () => {
-        if (title === null){
+        if (title === null) {
             console.warn("Falta preencher o nome!");
             return;
         }
@@ -53,13 +53,15 @@ const PostEditorPage = () => {
 
     return (
         <>
-        <Navbar />
-        <div className="editor-page">
-            <h2 className="editor-page-title">Criar Post</h2>
-            <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged}/>
-            <PostEditor content={content} contentChanged={onContentChanged}/>
-            <input className="editor-page-submit"type='button' value='Postar' onClick={onSubmitClicked}/>
-        </div>
+            <Navbar />
+            <div className="editor-page-root">
+                <div className="editor-page">
+                    <h2 className="editor-page-title">Criar Post</h2>
+                    <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged} />
+                    <PostEditor content={content} contentChanged={onContentChanged} />
+                    <input className="editor-page-submit" type='button' value='Postar' onClick={onSubmitClicked} />
+                </div>
+            </div>
         </>
     )
 };
