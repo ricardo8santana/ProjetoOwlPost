@@ -5,29 +5,27 @@ import { useEffect, useState } from "react";
 import './DarkModeToggle.css'
 
 const DarkModeToggle = () => {
-    const [isDark, setIsDark] = useState(false);
+    const prefersDarkMode =
+        localStorage.getItem('theme') === 'dark-mode' || 
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    useEffect(() => {
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-        setIsDark(mediaQuery.matches);
-    }, []);
+    const [isDark, setIsDark] = useState(prefersDarkMode);
 
-    useEffect(() => {
-        if (isDark) {
+    const setTheme = (prefersDarkTheme) => {
+        setIsDark(prefersDarkTheme);
+
+        if (prefersDarkTheme) {
+            localStorage.setItem('theme', 'dark-mode');
             document.body.classList.add('dark-mode');
         }
         else {
+            localStorage.setItem('theme', 'light-mode');
             document.body.classList.remove('dark-mode');
         }
-
-    }, [isDark]);
-
-    const toggleTheme = () => {
-        setIsDark(!isDark);
     }
 
     return(
-        <div className="theme-toggle" onClick={toggleTheme}>
+        <div className="theme-toggle" onClick={() => setTheme(!isDark)}>
             <FontAwesomeIcon icon={isDark ? faMoon : faSun} />
         </div>
     )
