@@ -1,0 +1,41 @@
+@import url(../App.css);
+
+.home-body {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    border-radius: 0.5rem;
+    width: min(300px, 70vw);
+    height: max-content;
+    padding: 2rem;
+    
+    background-color: var(--color-bg-main);
+}
+
+.home-body svg {
+    margin-bottom: 2rem;
+    color: var(--color-main-lighter);
+    filter: drop-shadow(0 0 2px rgb(0, 0, 0, 0.125));
+}
+
+.home-body a {
+    width: 100%;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-main);
+    border-radius: 0.5rem;
+    padding: 0.75rem 0;
+
+    filter: none;
+    transition: filter 0.25s ease, color 0.25s ease;
+}
+
+.home-body a:hover {
+    color: var(--color-main-light);
+    filter: brightness(0.925) drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
+    transition: filter 0.15s ease, color 0.15s ease;
+}
