@@ -1,11 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
+import './App.css';
 
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { useState } from 'react'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import PostEditorPage from './pages/PostEditorPage'
-import PostViewPage from './pages/PostViewPage'
+import PaginaCadastro from './pages/PaginaCadastro';
+import PaginaLogin from './pages/PaginaLogin';
+import PostViewPage from './pages/PostViewPage';
+import PostEditorPage from './pages/PostEditorPage';
+
+import Navbar from "./Header/Navbar";
+import CarroselHome from "../Carousel/Carrosel";
 
 const routes = createBrowserRouter([
   {
@@ -29,12 +33,16 @@ const routes = createBrowserRouter([
   {
     path: '/post-edit',
     element: <PostEditorPage />
+  },
+  {
+    path: '/login',
+    element: <PaginaLogin />
+  },
+  {
+    path: '/cadastro',
+    element: <PaginaCadastro />
   }
-])
-
-import Navbar from "./Header/Navbar";
-import CarroselHome from "../Carousel/Carrosel";
-import './App.css';
+]);
 
 function App() {
   return (
