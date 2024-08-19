@@ -1,0 +1,104 @@
+/* TelaPerfil */
+@import url('../App.css');
+
+.PaginaPerfil {
+    padding: 3rem;
+    width: 100vw;
+    height: 100%;
+}
+
+.fotoPerfil {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+
+    overflow: hidden;
+}
+
+.fotoPerfil img {
+    width: 100%;
+    height: 100%;
+}
+
+.enquadroPerfil {
+    display: flex;
+}
+
+.infoPerfil {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    margin-left: 3rem;
+}
+
+.enquadroProgresso {
+    display: flex;
+    justify-content: left;
+
+    gap: 3rem;
+}
+
+.progresso {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+}
+
+.progresso div {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Card Jogo */
+
+.enquadroCardJogo {
+    display: flex;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.enquadroCardJogoNome {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 220px;
+    justify-content: center;
+    align-items: center;
+}
+
+.CardJogo {
+    display: flex;
+    border-radius: 5%;
+    width: 350px;
+    height: 220px;
+
+    overflow: hidden;
+}
+
+.CardJogo img {
+    height: 100%;
+    width: 100%;
+}
+
+.dFlex {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.h2Inherit {
+    margin: inherit;
+}
+
+.h4Inherit {
+    margin: inherit;
+}
+
+.h5Inherit {
+    margin: inherit;
+}
