@@ -1,104 +1,91 @@
 /* TelaPerfil */
 @import url('../App.css');
 
-.PaginaPerfil {
+.enquadroPagina {
     padding: 3rem;
     width: 100vw;
     height: 100%;
 }
 
-.fotoPerfil {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-
-    overflow: hidden;
-}
-
-.fotoPerfil img {
-    width: 100%;
-    height: 100%;
-}
-
 .enquadroPerfil {
     display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.fotoPerfil {
+    width: 200px !important;
+    height: 200px !important;
 }
 
 .infoPerfil {
-    flex-grow: 1;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
-    margin-left: 3rem;
 }
 
-.enquadroProgresso {
+.infoUsername {
+    font-weight: bold;
+}
+
+.infoProgresso {
     display: flex;
+    flex-wrap: wrap;
     justify-content: left;
 
     gap: 3rem;
 }
 
-.progresso {
-    display: flex;
-    gap: 0.5rem;
-    flex-direction: column;
-}
+@media screen and (max-width: 720px) {
+    .enquadroPerfil {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.progresso div {
-    display: flex;
-    gap: 0.5rem;
+    .infoUsername {
+        text-align: center;
+    }
 }
 
 /* Card Jogo */
 
-.enquadroCardJogo {
+.gameList {
     display: flex;
-    width: 100%;
-    margin-top: 50px;
-}
-
-.enquadroCardJogoNome {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 220px;
+    flex-wrap: wrap;
+    gap: 2rem;
     justify-content: center;
-    align-items: center;
 }
 
-.CardJogo {
-    display: flex;
-    border-radius: 5%;
-    width: 350px;
-    height: 220px;
+@media screen and (max-width: 720px) {
+    .gameList {
+        gap: 0.5rem 2rem;
+    }
 
-    overflow: hidden;
+    .gameList .enquadroCartaoJogo {
+        width: 250px;
+    }
 }
 
-.CardJogo img {
-    height: 100%;
-    width: 100%;
+
+/* Bootstrap Tabs */
+
+.nav {
+    border-bottom-color: var(--color-text-alt);
+    gap: 0.5rem;
 }
 
-.dFlex {
-    display: flex;
-    margin: 0;
-    padding: 0;
+.nav .nav-link {
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: var(--color-text-main);
+    background-color: var(--color-text-disabled);
+    opacity: 0.75;
 }
 
-.h2Inherit {
-    margin: inherit;
-}
-
-.h4Inherit {
-    margin: inherit;
-}
-
-.h5Inherit {
-    margin: inherit;
+.nav .nav-link.active {
+    border-color: var(--color-text-alt);
+    font-weight: bold;
+    opacity: 1.0;
+    background-color: var(--color-text-main);
+    color: var(--color-bg-main);
 }

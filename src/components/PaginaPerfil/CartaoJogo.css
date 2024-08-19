@@ -1,0 +1,70 @@
+.enquadroCartaoJogo {
+    display: flex;
+    width: 100%;
+    margin-top: 50px;
+
+    gap: 2rem;
+
+    background-color: var(--color-bg-main);
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+}
+
+.cartaoJogoImagem {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.cartaoJogoImagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.cartaoJogoDetalhes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+}
+
+.cartaoJogoDetalhes p {
+    margin: 0;
+    padding: 0;
+}
+
+.cartaoJogoNome {
+    font-weight: bold;
+}
+
+.cartaoJogoInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 720px) {
+    .enquadroCartaoJogo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cartaoJogoDetalhes {
+        gap: 2rem;
+    }
+
+    .cartaoJogoDetalhes h2 {
+        text-align: center;
+    }
+
+    .cartaoJogoInfo {
+        flex-wrap: nowrap;
+    }
+}

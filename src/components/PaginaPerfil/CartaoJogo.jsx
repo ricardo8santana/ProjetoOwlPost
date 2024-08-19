@@ -1,28 +1,38 @@
-import '../../pages/PaginaPerfil.css';
+import Progresso from './Progresso';
+
+import './CartaoJogo.css';
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faStar } from '@fortawesome/free-regular-svg-icons';
 
 const CartaoJogo = () => {
-    return ( 
-        <div className='enquadroCardJogo'>
-            <div className='CardJogo'>
+    return (
+        <div className='enquadroCartaoJogo'>
+            <div className='cartaoJogoImagem'>
                 <img src="https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/aGhopp3MHppi7kooGE2Dtt8C.png" alt="" />
             </div>
-            <div className='enquadroCardJogoNome'>
-                <div className='dFlex'>
-                    <h2>Anel do Velho</h2>
+            <div className='cartaoJogoDetalhes'>
+                <h2 className='cartaoJogoNome'>Anel do Velho</h2>
+                <div className='cartaoJogoInfo'>
+                    {/* <Progresso titulo='Ultima vez' icone={faClock} valor='2h atrás' /> */}
+                    <Progresso titulo='Tempo de jogo' icone={faClock} valor='30h' />
                 </div>
-                <div className='dFlex'>
-                    <h5 className='h5Inherit'>Jogado pela ultima vez ? atrás</h5>
-                    <h5 className='h5Inherit'>|</h5>
-                    <h5 className='h5Inherit'>? horas jogadas</h5>
+                <div className='cartaoJogoInfo'>
+                    <Progresso titulo='Conquistas' icone={faTrophy} valor='7 / 33' />
+                    <Progresso titulo='EXP' icone={faStar} valor='333' />
                 </div>
-                <div className='dFlex'>
-                    <h6>Progressão de conquistas</h6> 
-                    <h6>Progressão de Exp</h6>
+                {/* <div className='cartaoJogoInfo'>
+                    <p>Jogado a 10h atrás</p>
+                    <p>|</p>
+                    <p>30h jogadas</p>
                 </div>
-                <div className='dFlex'>
-                    <h4>?% | Conquistas ?/?</h4>
-                    <h4>?/? Exp</h4>
+                <div className='cartaoJogoInfo'>
+                    <p>Progressão de conquistas</p>
+                    <p>Progressão de Exp</p>
                 </div>
+                <div className='cartaoJogoInfo'>
+                    <p>?% | Conquistas ?/?</p>
+                    <p>?/? Exp</p>
+                </div> */}
             </div>
         </div>
     )
