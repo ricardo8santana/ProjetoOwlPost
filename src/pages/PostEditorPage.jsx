@@ -1,11 +1,16 @@
+import './PostEditorPage.css'
+
 import { Button } from "react-bootstrap";
 import { useState } from "react"
 
 import PostEditor from "../components/PostEditor";
-import './PostEditorPage.css'
+import Navbar from "../Header/Navbar";
 
 import * as postService from '../services/postService';
-import Navbar from "../Header/Navbar";
+import * as userService from '../services/userService';
+
+import { Post } from '../services/postService';
+import { getTags } from '../services/tagService';
 
 const defaultContent = `
 # Escreva seu post
@@ -44,11 +49,14 @@ const PostEditorPage = () => {
             console.warn("Falta preencher o nome!");
             return;
         }
+        
+        const user = userService.getUser();
+        const date = new Date();
+        const tags = [ getTags()[0] ];
 
-        postService.createOrUpdatePost({
-            title: title,
-            content: content,
-        });
+        const post = new Post(user, title, content, date, tags);
+
+        postService.createOrUpdatePost(post);
     };
 
     return (
