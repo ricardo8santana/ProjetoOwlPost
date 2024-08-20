@@ -9,6 +9,7 @@ import { faNewspaper, faStar, faTrophy } from "@fortawesome/free-solid-svg-icons
 import Navbar from "../Header/Navbar";
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { getDummyPosts } from "../services/postService";
 
 const UserGameList = () => {
     return (
@@ -21,10 +22,19 @@ const UserGameList = () => {
 };
 
 const UserPostList = () => {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        setPosts(getDummyPosts());
+    }, []);
+
     return (
         <div className="postList">
-            <PostCard title='Postagem X' source='Uma **breve** postagem' />
-            <PostCard title='Postagem Y' source='Uma **breve** postagem' />
+            {
+                posts.map(post => 
+                    <PostCard post={post} />
+                )
+            }
         </div>
     )
 };
