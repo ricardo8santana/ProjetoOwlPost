@@ -1,0 +1,29 @@
+.teste {
+    /* margin-top: 156px;
+    margin-left: 400px; */
+    width: 50%;
+    height: 40%;
+}
+
+.carousel .carousel-indicators [data-bs-target] {
+    border-radius: 100%; 
+    width: 24px;
+    height: 21px;
+    margin-left: 10px;
+    background-color: #979797;
+}
+
+.Carrosel-example-img{
+    width: 100%;
+}
+
+.carousel-inner{
+    border-radius: 22px!important;
+}
+
+.card{
+    background-color: #fff0!important;
+    border: none!important;
+    width: 50%!important
+}
+

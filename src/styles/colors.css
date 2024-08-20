@@ -1,0 +1,63 @@
+/*
+    Responsável por manter a palheta de cores do site, coloquei tudo em um lugar 
+    só para facilitar se precisar mudar depois. 
+    
+    Para usar é só importar no seu arquivo css, ou se quiser usar no site todo,  
+    importe no 'App.css' ou 'index.css'
+
+    `@import url('./exemplo/color-palette.css`);
+*/
+
+body {
+    color-scheme: light dark;
+
+    --color-bg-body:        #ecedf2;
+    --color-bg-main:        #fafaff;
+    --color-bg-alt:         #d5d7de;
+
+    --color-text-main:      #161a1a;
+    --color-text-alt:       #1e2223;
+    --color-text-disabled:  #1e2223c0;
+    
+    --color-main-lighter:   #00132e;
+    --color-main-light:     #013395;
+    --color-main-normal:    #1643e7;
+    --color-main-dark:      #7684fe;
+    --color-main-darker:    #e1e1ff;
+
+    --color-acc-normal:     #b8971f;
+
+    --color-neutral-0: #fafaff;
+    --color-neutral-1: #ecedf2;
+    --color-neutral-2: #d5d7de;
+    --color-neutral-3: #b1b5bc;
+    --color-neutral-4: #787d82;
+    --color-neutral-5: #4d5255;
+    --color-neutral-6: #2e3234;
+    --color-neutral-7: #1e2223;
+    --color-neutral-8: #161a1a;
+
+    /* --gradient-header: linear-gradient(to right, #002199, #0027b2, #002ccb, #0032e5, #0037ff); */
+    --gradient-header: linear-gradient(to right, #002199 0%, #1643e7 59%, #002199 100%);
+}
+
+body.dark-mode {
+    --color-bg-body:        #1A1D1E;
+    --color-bg-main:        #141718;
+    --color-bg-alt:         #272A2C;
+
+    --color-text-main:      #fafaff;
+    --color-text-alt:       #ecedf2;
+    --color-text-disabled:  #ecedf280;
+    
+    --color-main-lighter:   #e1e1ff;
+    --color-main-light:     #7684fe;
+    --color-main-normal:    #1643e7;
+    --color-main-dark:      #013395;
+    --color-main-darker:    #001126;
+
+    --gradient-header: linear-gradient(to right, rgba(0,19,46,1) 0%, rgba(0,36,92,1) 59%, rgba(0,19,46,1) 100%)
+}
+
+/* https://coolors.co/fafaff-ecedf2-d8dae1-b3b6bd-787d82-42474a-272a2c-1a1d1e-141718 */
+/* https://coolors.co/f2f2ff-b6b9ff-7684fe-3956f7-1643e7-073cc8-013395-00245c-001126 */
