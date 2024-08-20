@@ -31,9 +31,10 @@ const Navbar = () => {
       </div>
       <div className="auth-buttons">
         <DarkModeToggle/>
-        <button className="sign sign-in-button">Entrar</button>
-        <button className="sign sign-up-button">Cadastrar-se</button>
-        <img
+        <button className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</button>
+        <button className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</button>
+        <img 
+            onClick={() => navigate('/perfil')}
             src={Profile}
             alt=''
             className='profile-img'
