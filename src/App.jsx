@@ -29,12 +29,18 @@ const routes = createBrowserRouter([
   {
     path: '/post-edit',
     element: <PostEditorPage />
+  },
+  {
+    path: '/post-titulo',
+    element: <PostTitulo />
   }
 ])
+
 
 import Navbar from "./Header/Navbar";
 import CarroselHome from "../Carousel/Carrosel";
 import './App.css';
+import PostTitulo from './components/PostTitulo';
 
 function App() {
   return (

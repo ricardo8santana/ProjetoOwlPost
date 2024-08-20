@@ -1,0 +1,12 @@
+.post-titulo{
+    background-color: var(--color-bg-main);
+}
+img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 200px;
+    height: 100px;
+
+}
