@@ -15,16 +15,17 @@ const UserGameList = () => {
         <div className="gameList">
             <CartaoJogo />
             <CartaoJogo />
+            <CartaoJogo />
         </div>
     )
 };
 
 const UserPostList = () => {
     return (
-        <>
+        <div className="postList">
             <PostCard title='Postagem X' source='Uma **breve** postagem' />
             <PostCard title='Postagem Y' source='Uma **breve** postagem' />
-        </>
+        </div>
     )
 };
 
@@ -44,7 +45,7 @@ const PaginaPerfil = () => {
                         </div>
                     </div>
                 </div>
-                <Tabs variant='tabs' defaultActiveKey={0}>
+                <Tabs variant='tabs' defaultActiveKey={0} >
                     <Tab eventKey={0} title='Jogos'>
                         <UserGameList />
                     </Tab>

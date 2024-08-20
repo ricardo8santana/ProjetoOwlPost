@@ -1,16 +1,26 @@
 /* TelaPerfil */
 @import url('../App.css');
 
+/* ----------------------------------------------------------------------------
+--- Desktop -------------------------------------------------------------------
+---------------------------------------------------------------------------- */
+
+/* --- Página -------------------------------------------------------------- */
+
 .enquadroPagina {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 3rem;
-    width: 100vw;
-    height: 100%;
 }
+
+/* --- Perfil -------------------------------------------------------------- */
 
 .enquadroPerfil {
     display: flex;
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
 }
 
 .fotoPerfil {
@@ -37,42 +47,129 @@
     gap: 3rem;
 }
 
-@media screen and (max-width: 720px) {
-    .enquadroPerfil {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .infoUsername {
-        text-align: center;
-    }
-}
-
-/* Card Jogo */
+/* --- Lista de jogos -------------------------------------------- */
 
 .gameList {
+    padding: 2rem 0;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
 }
 
-@media screen and (max-width: 720px) {
-    .gameList {
-        gap: 0.5rem 2rem;
-    }
+/* --- Lista de posts ------------------------------------------------------ */
 
-    .gameList .enquadroCartaoJogo {
-        width: 250px;
-    }
+.postList {
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: min(90vw, 800px);
+    justify-content: center;
+}
+
+.postList .post-card {
+    width: 100%;
 }
 
 
-/* Bootstrap Tabs */
+/* --- Cartão dos jogos ---------------------------------------------------- */
+
+.enquadroCartaoJogo {
+    width: min(90vw, 800px);
+    
+    display: flex;
+    gap: 2rem;
+
+    background-color: var(--color-bg-main);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.cartaoJogoImagem {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.cartaoJogoImagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.cartaoJogoDetalhes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    align-items: left;
+}
+
+.cartaoJogoDetalhes p {
+    margin: 0;
+    padding: 0;
+}
+
+.cartaoJogoNome {
+    font-weight: bold;
+}
+
+.cartaoJogoInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Foto de perfil ------------------------------------------------------ */
+
+.fotoPerfil {
+    flex-shrink: 0;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.fotoPerfil img {
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Progresso ----------------------------------------------------------- */
+
+.progresso {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+
+    min-width: 100px;
+}
+
+.progresso div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    p {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+/* --- Bootstrap Tabs ------------------------------------------------------ */
 
 .nav {
     border-bottom-color: var(--color-text-alt);
-    gap: 0.5rem;
+    gap: 0.25rem;
+    width: min(90vw, 800px);
 }
 
 .nav .nav-link {
@@ -88,4 +185,80 @@
     opacity: 1.0;
     background-color: var(--color-text-main);
     color: var(--color-bg-main);
+}
+
+/* ----------------------------------------------------------------------------
+--- Mobile --------------------------------------------------------------------
+---------------------------------------------------------------------------- */
+
+@media screen and (max-width: 720px) {
+
+    /* --- Perfil ---------------------------------------------------------- */
+
+    .enquadroPerfil {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .infoProgresso {
+        justify-content: center;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .infoUsername {
+        text-align: center;
+    }
+
+    /* --- Perfil ---------------------------------------------------------- */
+    
+    .enquadroCartaoJogo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /*--- Cartão de jogo --------------------------------------------------- */
+    
+    .cartaoJogoImagem {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+    }
+    
+    .cartaoJogoImagem img {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    
+    .cartaoJogoDetalhes {
+        gap: 2rem;
+    }
+    
+    .cartaoJogoDetalhes h2 {
+        text-align: center;
+    }
+    
+    .cartaoJogoInfo {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* --- Lista de jogos -------------------------------------------------- */
+    
+    .gameList {
+        gap: 2rem;
+        justify-content: center;
+    }
+    
+    .gameList .enquadroCartaoJogo {
+        width: 275px;
+    }
+    
+    /* --- Progresso ------------------------------------------------------- */
+    
+    .cartaoJogoInfo .progresso,
+    .infoProgresso .progresso {
+        align-items: center;
+    }
 }

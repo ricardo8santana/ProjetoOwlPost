@@ -1,4 +1,3 @@
-import './FotoPerfil.css';
 
 const FotoPerfil = () => {
     return (
