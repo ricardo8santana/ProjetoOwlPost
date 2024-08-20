@@ -1,25 +1,25 @@
-import MDEditor from '@uiw/react-md-editor';
-import * as postService from '../services/postService'
-
 import './PostViewPage.css'
-import PostCard from '../components/PostCard';
-import { Dropdown, DropdownMenu, DropdownButton, Button } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
 
-import { useState } from 'react';
-import React from 'react';
-import Navbar from '../Header/Navbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    Form,
+    Dropdown,
+    DropdownMenu,
+    DropdownButton,
+    Button
+} from 'react-bootstrap';
+
 import { faArrowDownShortWide, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import MDEditor from '@uiw/react-md-editor';
+import React from 'react';
+
+import PostCard from '../components/PostCard';
+import Navbar from '../Header/Navbar';
+
+import * as postService from '../services/postService';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
-    const removeImagePattern = /!\[.*\](.*)/g;
-    const removeHeaderPattern = /^#{1,6} [a-zA-Z ]*\n/gm;
-    const removeDividerPattern = /^\_{3}\n/gm;
-    const removeSpacingPattern = /^\n/gm;
-    const removeBlockQuotesPattern = /^>.*\n/gm;
-    const removeListPattern = /- .*\n/gm;
-
     if (includeTitles) {
         const titlePattern = /^[#]{1,6}\s+(.*\n)/gm;
         content = content.replace(titlePattern, '$1');
@@ -35,14 +35,10 @@ const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => 
 
         resume += match;
     }
-    // matches.forEach(match => resume += match);
 
-    // let resume = content
-    //     .replace(removeImagePattern, '')
-    //     .replace(removeHeaderPattern, '')
-    //     .replace(removeDividerPattern, '')
-    //     .replace(removeSpacingPattern, '')
-    //     .replace(removeBlockQuotes);
+    if (resume === '') {
+        resume = content;
+    }
 
     return resume.substring(0, maxLength);
 };
@@ -102,58 +98,69 @@ const PostViewList = ({ posts }) => {
 
     return (
         <>
-        <Navbar/>
-        <div className='post-view'>
-            <div className='post-view-filters'>
-                <div className='post-view-filter left'>
-                    {/* <span>Filtrar</span> */}
-                    <FontAwesomeIcon icon={faFilter}/>
-                    <Dropdown onSelect={e => setFiltro(e)}>
-                        <Dropdown.Toggle id="dropdown-custom-components">{filtro}</Dropdown.Toggle>
-                        <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
-                        {
-                            tags.map(tag => <Dropdown.Item eventKey={tag}>{tag}</Dropdown.Item>)
-                        }
-                        </Dropdown.Menu>
-                    </Dropdown>
+            <div className='post-view'>
+                <div className='post-view-filters'>
+                    <div className='post-view-filter left'>
+                        {/* <span>Filtrar</span> */}
+                        <FontAwesomeIcon icon={faFilter} />
+                        <Dropdown onSelect={e => setFiltro(e)}>
+                            <Dropdown.Toggle id="dropdown-custom-components">{filtro}</Dropdown.Toggle>
+                            <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
+                                {
+                                    tags.map(tag => <Dropdown.Item eventKey={tag}>{tag}</Dropdown.Item>)
+                                }
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+                    <div className='post-view-search'>
+                        <input type='text' placeholder='Pesquisar' />
+                    </div>
+                    <div className='post-view-filter right'>
+                        {/* <span>Ordenar</span> */}
+                        <FontAwesomeIcon icon={faArrowDownShortWide} />
+                        <Dropdown onSelect={e => setOrder(e)}>
+                            <Dropdown.Toggle id="dropdown-custom-components">{order}</Dropdown.Toggle>
+                            <Dropdown.Menu >
+                                {
+                                    orders.map(order => <Dropdown.Item eventKey={order}>{order}</Dropdown.Item>)
+                                }
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                 </div>
-                <div className='post-view-search'>
-                    <input type='text' placeholder='Pesquisar'/>
-                </div>
-                <div className='post-view-filter right'>
-                    {/* <span>Ordenar</span> */}
-                    <FontAwesomeIcon icon={faArrowDownShortWide} />
-                    <Dropdown onSelect={e => setOrder(e)}>
-                        <Dropdown.Toggle id="dropdown-custom-components">{order}</Dropdown.Toggle>
-                        <Dropdown.Menu as={CustomMenu} >
-                        {
-                            orders.map(order => <Dropdown.Item eventKey={order}>{order}</Dropdown.Item>)
-                        }
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
+                {
+                    posts.map(post =>
+                        <PostCard post={post} />
+                    )
+                }
+                <Button>Carregar Mais</Button>
             </div>
-            {
-                posts.map(post =>
-                    <PostCard title={post.title} source={getResumeFromContent(post.content, true, true, 450)} />
-                )
-            }
-            <Button>Carregar Mais</Button>
-        </div>
         </>
     )
 };
 
 const PostViewPage = () => {
-    const posts = postService.getPosts();
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        let p = postService.getPosts();
+
+        if (p.length === 0) {
+            p = postService.getDummyPosts();
+        }
+
+        setPosts(p);
+    }, []);
 
     return (
         <>
-            {
+            <Navbar />
+            <PostViewList posts={posts} />
+            {/* {
                 posts.length === 0
                     ? <PostViewEmpty />
                     : <PostViewList posts={posts} />
-            }
+            } */}
         </>
     );
 };
