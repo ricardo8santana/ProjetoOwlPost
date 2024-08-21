@@ -76,7 +76,13 @@ const routes = createBrowserRouter([
 
 function App() {
   return (
+<<<<<<< HEAD
+    <>
+     
+    </>
+=======
     <RouterProvider router={routes}/>
+>>>>>>> 6f67807829f4a5a2cdd664fa95d7d6a0ee1ee033
   )
 }
 
