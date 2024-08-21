@@ -87,71 +87,25 @@
 }
 
 
-.profile-button {
-  width: 31px;
-  height: 31px;
-  color: #fafafc;
-  margin-top: 5px;
-}
+  .profile-button {
+    width: 40.5px;
+    height: 31px;
+    color: #fafafc;
+    margin-top: 5px;
+  }
 
-.button-login {
-  border: none!important;
-  background-color: inherit!important;
- }
-
+  .button-login {
+    border: none!important;
+    background-color: inherit!important;
+  }
 .profile-img {
   cursor: pointer;
 }
-
-.dropdown-menu.show {
-  padding: 0.5rem !important;
-  width: 190px;
-  top: -4px !important;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.dropdown-divider {
-  width: 85%;
-}
-
-/* .dropdown-toggle.show {
-  background-color: yellow !important;
-} */
 
 .dropdown-toggle::after {
   color: transparent!important;
 }
 
-.dropdown-box {
-  display: flex;
-  padding: 0.3rem !important
-}
-
-.dropdown-icone {
-  padding-right: 0.5rem !important;
-}
-
-.dropdown-alinhamento {
-  height: 24px;
-  display: flex;
-  align-items: center;
-}
-
-.fonte-dropdown {
-  font-size: 13px;
-}
-
-.espacamento-words {
-  display: flex;
-  align-items: center;
-}
-
-.arrow-right {
-  padding-left: 5rem;
-}
-
-.toggle-right {
-  padding-left: 1.8rem;
+.idioma-style {
+  
 }

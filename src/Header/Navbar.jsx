@@ -1,10 +1,9 @@
-import React from 'react';
-import './Navbar.css'; // Importando o arquivo CSS
+import React, { useState } from 'react';
 import Logo from '../assets/images/Group.svg';
-import Profile from '../assets/images/Profile.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
+import './Navbar.css'; // Importando o arquivo CSS
+import DropdownMenu from './DropdownMenu';
 import DarkModeToggle from '../components/DarkModeToggle';
-
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -33,14 +32,12 @@ const Navbar = () => {
         <DarkModeToggle/>
         <button className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</button>
         <button className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</button>
-        <img 
-            onClick={() => navigate('/perfil')}
-            src={Profile}
-            alt=''
-            className='profile-img'
-        />
+        <div>
+          <DropdownMenu/>
+        </div>
       </div>
     </nav>
   );
 };
+
 export default Navbar;

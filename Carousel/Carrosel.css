@@ -1,15 +1,10 @@
-.teste {
-    /* margin-top: 156px;
-    margin-left: 400px; */
-    width: 50%;
-    height: 40%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 .carousel .carousel-indicators [data-bs-target] {
     border-radius: 100%; 
-    width: 24px;
-    height: 21px;
-    margin-left: 10px;
+    width: 22px;
+    height: 19px;
+    margin-left: 18px;
     background-color: #979797;
 }
 
@@ -24,6 +19,35 @@
 .card{
     background-color: #fff0!important;
     border: none!important;
-    width: 50%!important
+    width: 50%!important;
 }
 
+.teste-1 {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    list-style: none;
+    justify-content: space-between;
+}
+
+.margem-carrosel-jogos {
+    font-family: 'Open Sans';
+    margin-left: 32px;
+    height: 50vh;
+}
+
+.carregamento-carrosel {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #fafaff;
+    width: 260px;
+    height: 90px;
+    border-radius: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
