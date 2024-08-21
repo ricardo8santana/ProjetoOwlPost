@@ -19,6 +19,7 @@ import Navbar from '../Header/Navbar';
 
 import * as postService from '../services/postService';
 import { Link } from 'react-router-dom';
+import { getTags } from '../services/tagService';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     if (includeTitles) {
@@ -81,11 +82,11 @@ const PostViewEmpty = () => {
     )
 };
 
-const tags = [
-    'Nenhum',
-    'Anime',
-    'Aulas',
-];
+// const tags = [
+//     'Nenhum',
+//     'Anime',
+//     'Aulas',
+// ];
 
 const orders = [
     'Padrão',
@@ -94,6 +95,9 @@ const orders = [
 ];
 
 const PostViewList = ({ posts }) => {
+
+    const tags = ['Nenhum'].concat(getTags().map(x => x.name));
+
     const [filtro, setFiltro] = useState(tags[0]);
     const [order, setOrder] = useState(orders[0]);
 
@@ -144,27 +148,16 @@ const PostViewList = ({ posts }) => {
 };
 
 const PostViewPage = () => {
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-        let p = postService.getPosts();
-
-        if (p.length === 0) {
-            p = postService.getDummyPosts();
-        }
-
-        setPosts(p);
-    }, []);
+    const posts = postService.getPosts();
 
     return (
         <>
             <Navbar />
-            <PostViewList posts={posts} />
-            {/* {
+            {
                 posts.length === 0
                     ? <PostViewEmpty />
                     : <PostViewList posts={posts} />
-            } */}
+            }
         </>
     );
 };

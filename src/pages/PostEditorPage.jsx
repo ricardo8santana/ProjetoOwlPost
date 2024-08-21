@@ -7,7 +7,7 @@ import PostEditor from "../components/PostEditor";
 import Navbar from "../Header/Navbar";
 
 import * as postService from '../services/postService';
-import * as userService from '../services/userService';
+import { debugGetRandomUser } from '../services/userService';
 
 import { Post } from '../services/postService';
 import { getTags } from '../services/tagService';
@@ -50,13 +50,11 @@ const PostEditorPage = () => {
             return;
         }
         
-        const user = userService.debugGetRandomUser();
+        const user = debugGetRandomUser();
         const date = new Date();
         const tags = [ getTags()[0] ];
 
-        const post = new Post(user.id, title, content, date, tags);
-
-        postService.createOrUpdatePost(post);
+        postService.createPost(new Post(user.id, date, tags, title, content));
     };
 
     return (
