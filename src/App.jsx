@@ -1,18 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-
 import PaginaCadastro from './pages/PaginaCadastro';
 import PaginaLogin from './pages/PaginaLogin';
-import PostViewPage from './pages/PostViewPage';
-import PostEditorPage from './pages/PostEditorPage';
 
 import Navbar from "./Header/Navbar";
 import CarroselHome from "../Carousel/Carrosel";
 import PaginaPerfil from './pages/PaginaPerfil';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { useState } from 'react'
 
 import PostTitulo from './components/PostTitulo';
 
