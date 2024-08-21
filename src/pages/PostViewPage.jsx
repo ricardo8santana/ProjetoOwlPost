@@ -18,6 +18,7 @@ import PostCard from '../components/PostCard';
 import Navbar from '../Header/Navbar';
 
 import * as postService from '../services/postService';
+import { Link } from 'react-router-dom';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     if (includeTitles) {
@@ -128,12 +129,15 @@ const PostViewList = ({ posts }) => {
                         </Dropdown>
                     </div>
                 </div>
+                <div className='post-view-options'>
+                    <Link className='btn-create' to='/post-edit'>Criar Post</Link>
+                </div>
                 {
                     posts.map(post =>
                         <PostCard post={post} />
                     )
                 }
-                <Button>Carregar Mais</Button>
+                <Button className='btn-load'>Carregar Mais</Button>
             </div>
         </>
     )

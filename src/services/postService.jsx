@@ -5,14 +5,14 @@ const POST_STORAGE_KEY = 'posts';
 
 export class Post {
     /**
-     * @param {User} user O usuário que está criando a postagem.
+     * @param {Number} userID O usuário que está criando a postagem.
      * @param {String} title O título da postagem.
      * @param {String} content O conteúdo em Markdown da postagem.
      * @param {Date} date A data da criação/edição da postagem.
      */
-    constructor(user, title, content, date, tags) {
+    constructor(userID, title, content, date, tags) {
         /** @type {User} */
-        this.user = user;
+        this.userID = userID;
         /** @type {String} */
         this.title = title;
         /** @type {String} */
@@ -99,7 +99,6 @@ export const deletePost = (post) => {
 }
 
 export const getDummyPosts = () => {
-    const user = getUser();
     const tag = getTags()[0];
     const date = new Date();
 
@@ -108,7 +107,7 @@ export const getDummyPosts = () => {
     const content_03 = 'Astu velit, despectabat terris optima [trepidare](#et-namque-turbine) ferox feres Lucifero sine foribus sanguisque, mare est et levi succedere, mane? Timendi prope, valent nec pereat curvamine **procis**, et.';
 
     return [
-        new Post(user, 'Markdown 01', content_01, date, [ tag ]), 
-        new Post(user, 'Markdown 02', content_02, date, [ tag ]), 
-        new Post(user, 'Markdown 03', content_03, date, [ tag ])];
+        new Post(0, 'Markdown 01', content_01, date.toString(), [ tag ]), 
+        new Post(1, 'Markdown 02', content_02, date.toString(), [ tag ]), 
+        new Post(2, 'Markdown 03', content_03, date.toString(), [ tag ])];
 }

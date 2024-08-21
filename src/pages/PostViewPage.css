@@ -60,19 +60,32 @@
     text-align: center;
 }
 
-.post-view .btn {
+.post-view-options {
+    width: min(1024px, 80vw);
+    display: flex;
+    justify-content: right;
+}
+
+.post-view .btn-create {
+    background-color: var(--color-bg-main);
+    border-radius: 0.5rem;
+    color: var(--color-text-main);
+    padding: 0.5rem 2rem;
+}
+
+.post-view .btn-load {
     width: min(1024px, 80vw);
     background-color: var(--color-bg-main);
     color: var(--color-text-main);
     border: none;
     border-radius: 0.5rem;
 }
-
-.post-view .btn:hover {
+.post-view .btn-create:hover,
+.post-view  .btn-load:hover {
     filter: brightness(0.975);
 }
-
-.post-view .btn:active {
+.post-view .btn-create:active,
+.post-view .btn-load:active {
     background-color: var(--color-main-normal);
     color: var(--color-neutral-1);
 }

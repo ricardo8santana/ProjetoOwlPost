@@ -50,11 +50,11 @@ const PostEditorPage = () => {
             return;
         }
         
-        const user = userService.getUser();
+        const user = userService.debugGetRandomUser();
         const date = new Date();
         const tags = [ getTags()[0] ];
 
-        const post = new Post(user, title, content, date, tags);
+        const post = new Post(user.id, title, content, date, tags);
 
         postService.createOrUpdatePost(post);
     };

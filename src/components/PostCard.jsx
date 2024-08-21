@@ -2,6 +2,7 @@ import MDEditor from '@uiw/react-md-editor';
 import './PostCard.css';
 
 import { useState, useEffect } from 'react';
+import { getUser } from '../services/userService';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     if (includeTitles) {
@@ -29,11 +30,14 @@ const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => 
 
 const PostCard = ({post}) => {
     const [timeSincePost, setTimeSincePost] = useState(0.0);
+    const user = getUser(post.userID);
 
     useEffect(() => {
         const now = new Date();
+        const date = new Date(post.date);
         const result = new Date();
-        result.setTime(now.getTime() - post.date.getTime());
+        
+        result.setTime(now.getTime() - date.getTime());
 
         setTimeSincePost(
             result.getMinutes() <= 0 ? 'Agora mesmo' :
@@ -46,12 +50,12 @@ const PostCard = ({post}) => {
         <div className='post-card'>
             <div className='post-card-author'>
                 <div className='profile-picture'>
-                    <img src={post.user.profilePicture}/>
+                    <img src={user.profilePicture}/>
                     {/* <img src='https://i.pinimg.com/originals/19/f2/d7/19f2d715f757d452e9ba3cc3083e6fb9.jpg' width='35px'/> */}
                 </div>
                 <div className='post-card-author-info'>
                     <div>
-                        <span className='post-card-author-name'>{post.user.username}</span>
+                        <span className='post-card-author-name'>{user.username}</span>
                         <span className='post-card-author-time'>{timeSincePost}</span>
                     </div>
                     <p className='post-card-author-location'>{`Postado em ${post.tags.map(x => x.name)}`}</p>
