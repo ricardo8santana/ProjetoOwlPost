@@ -63,9 +63,9 @@ const PostEditorPage = () => {
             <div className="editor-page-root">
                 <div className="editor-page">
                     <h2 className="editor-page-title">Criar Post</h2>
-                    <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged} />
+                    <input className="alt editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged} />
                     <PostEditor content={content} contentChanged={onContentChanged} />
-                    <input className="editor-page-submit" type='button' value='Postar' onClick={onSubmitClicked} />
+                    <input className="btn-owl primary editor-submit-btn" type='button' value='Postar' onClick={onSubmitClicked} />
                 </div>
             </div>
         </>

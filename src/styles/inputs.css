@@ -1,0 +1,46 @@
+/* -----------------------------------------------------------------------------
+    Estilos padrão para todos os tipos de input. Modifica apenas as cores, 
+    fontes, bordas e a altura. A posição e a largura podem ser definidas 
+    normalmente sem problemas.
+----------------------------------------------------------------------------- */
+
+/* 
+    Input padrão, pensado para ser usado dentro de uma container com fundo mais 
+    claro (--color-bg-main).
+*/
+input {
+    font-family: inherit;
+    
+    background-color: var(--color-bg-body);
+    color: var(--color-text-main);
+    
+    border-radius: 0.5rem;
+    border: none;
+
+    height: 2.5rem;
+}
+
+/* 
+    Input alternativo, pensado para ser usado direto na cor de fundo do site 
+    (--color-bg-body).
+*/
+input.alt {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-main);
+}
+
+/* 
+    Muda o efeito quando um input está focado, remove a borda padrão e troca por
+    um box-shadow. A borda padrão não respeita o 'border-radius' 
+*/
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-main-normal) 75%, #0000 75%);
+}
+
+/* Remove esse efeito em inputs que servem como botão */
+input[type='button']:focus,
+input[type='submit']:focus {
+    outline: none;
+    box-shadow: none;
+}

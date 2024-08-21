@@ -134,14 +134,14 @@ const PostViewList = ({ posts }) => {
                     </div>
                 </div>
                 <div className='post-view-options'>
-                    <Link className='btn-create' to='/post-edit'>Criar Post</Link>
+                    <Link className='btn-owl btn-create' to='/post-edit'>Criar Post</Link>
                 </div>
                 {
                     posts.map(post =>
                         <PostCard post={post} />
                     )
                 }
-                <Button className='btn-load'>Carregar Mais</Button>
+                <input type='button' className='btn-owl btn-load' value='Carregar Mais' />
             </div>
         </>
     )
