@@ -1,8 +1,12 @@
 import Retangulo from '../assets/images/Retangulo36.png';
 import './PostTitulo.css';
+import React, {Fragment, useState} from 'react';
+import Navbar from "../Header/Navbar";
 
-const PostTitulo = ({title, source}) =>{
+const PostTitulo = ({Header}) =>{
     return (
+        <>
+        <Navbar/>
         <div className='post-titulo'>
             <div >
                 <div >
@@ -10,9 +14,9 @@ const PostTitulo = ({title, source}) =>{
                 </div>
                 <div >
                     <div>
-                        <span className='post-card-author-name'>Titulo da Postagem</span>
-                    </div>
-                    <p className='post-card-author-location'> Lorem ipsum dolor sit amet. 
+                        <h1>Titulo da Postagem</h1>
+                    </div><br />
+                    <p> Lorem ipsum dolor sit amet. 
                     Est aperiam cumque ea provident nihil est  ratione ullam ut natus quisquam et molestias ullam ut delectus inventore  et totam nihil.
                     Aut sunt quisquam ut velit totam ut mollitia cumque aut  nulla quidem et commodi voluptatum quo animi facilis id similique  neque. 
                     Est nobis obcaecati non galisum aperiam et dolores libero et  blanditiis sint eum iure inventore. 
@@ -24,6 +28,7 @@ const PostTitulo = ({title, source}) =>{
             </div>
         
         </div>
+        </>
     )
    
 };

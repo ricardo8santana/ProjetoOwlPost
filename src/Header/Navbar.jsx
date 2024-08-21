@@ -4,6 +4,7 @@ import Logo from '../assets/images/Group.svg';
 import Profile from '../assets/images/Profile.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
 import DarkModeToggle from '../components/DarkModeToggle';
+import PostTitulo from '../components/PostTitulo';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -42,4 +43,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;

@@ -4,8 +4,12 @@ import './App.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { useState } from 'react'
 
+import PostTitulo from './components/PostTitulo';
+
 import PostEditorPage from './pages/PostEditorPage'
 import PostViewPage from './pages/PostViewPage'
+import Navbar from "./Header/Navbar";
+
 
 const routes = createBrowserRouter([
   {
@@ -14,7 +18,7 @@ const routes = createBrowserRouter([
       <>
         <Navbar />
         <div className="home">
-          <CarroselHome />
+          {/* <CarroselH/> */}
           <div>
             <p>teste</p>
             <p>teste</p>
@@ -37,10 +41,7 @@ const routes = createBrowserRouter([
 ])
 
 
-import Navbar from "./Header/Navbar";
-import CarroselHome from "../Carousel/Carrosel";
-import './App.css';
-import PostTitulo from './components/PostTitulo';
+
 
 function App() {
   return (
