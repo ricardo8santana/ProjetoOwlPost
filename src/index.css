@@ -9,16 +9,30 @@
 }
 
 body {
-  font-family: 'Montserrat', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', 'Open Sans', Inter, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   
   color: var(--color-text-main) !important;
   background-color: var(--color-bg-body) !important;
-}
 
-body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-main-dark);
+  transition: color 0.25s ease-in-out;
+}
+
+a:hover {
+  color: var(--color-main-normal);
+  transition: color 0.125s ease-in-out;
+}
+
+select
+input {
+  font-family: inherit;
 }
