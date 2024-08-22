@@ -23,10 +23,8 @@ const PostTitulo = ({Header}) =>{
                     Sed reiciendis internos ut obcaecati  saepe et voluptatibus galisum quo distinctio expedita hic esse eius et  nostrum placeat non earum quibusdam.
                     Quo excepturi galisum aut quia numquam est quisquam aperiam aut omnis  pariatur eos alias voluptas non eveniet voluptas. 
                     Nam quia earum et  voluptatem dolore eum quia quidem ut veniam quaerat et mollitia error et  expedita quam et natus alias. 
-
-
                     Quo excepturi galisum aut quia numquam est quisquam aperiam aut omnis  pariatur eos alias voluptas non eveniet voluptas.
-                     Nam quia earum et  voluptatem dolore eum quia quidem ut veniam quaerat et mollitia error et  expedita quam et natus alias.
+                     Nam quia earum et  voluptatem dolore eum quia quidem ut veniam quaerat et mollitia error et  expedita quam et.
                     
                      </p>
                     

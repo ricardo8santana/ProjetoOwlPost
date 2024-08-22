@@ -14,8 +14,6 @@ import PostTitulo from './components/PostTitulo';
 import PostEditorPage from './pages/PostEditorPage'
 import PostViewPage from './pages/PostViewPage'
 
-
-
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -70,9 +68,6 @@ const routes = createBrowserRouter([
     element: <PostTitulo />
   }
 ]);
-
-
-
 
 function App() {
   return (
