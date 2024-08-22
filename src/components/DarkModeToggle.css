@@ -8,3 +8,50 @@
     height: 100%;
     color: var(--color-neutral-0);
 }
+
+.toggle-on-off {
+    height: 100%;
+}
+  
+.toggle-on-off {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+  
+.toggle-btn {
+    background-color: #b1b5bc;
+    border: none;
+    border-radius: 99px;
+    width: 34px;
+    height: 19px;
+    transition: background-color 0.1s ease, border-color 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+  
+.toggle-btn .thumb {
+    height: 11px;
+    width: 11px;
+    background-color: #fff;
+    border-radius: 99px;
+    transform: translateX(0);
+    transition: left 0.15s ease;
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+  
+.toggle-btn.toggled {
+    background-color: #0037FF;
+}
+  
+.toggled-btn:hover {
+    border-color: #6f6f6f;
+}
+  
+.toggle-btn.toggled .thumb {
+    left: calc(50px - 33px);
+}

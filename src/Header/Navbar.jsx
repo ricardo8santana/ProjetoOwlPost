@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Navbar.css';
+import '../components/DarkModeToggle.css'
 import Logo from '../assets/images/Group.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
-import './Navbar.css'; // Importando o arquivo CSS
 import DropdownMenu from './DropdownMenu';
-import DarkModeToggle from '../components/DarkModeToggle';
-import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ const Navbar = () => {
         <li className="nav-link">Suporte</li>
       </div>
       <div className="auth-buttons">
-        <DarkModeToggle/>
         <button className="sign sign-in-button">Entrar</button>
         <button className="sign sign-up-button">Cadastrar-se</button>
         <div>
