@@ -141,7 +141,8 @@ const PostViewList = ({ posts }) => {
                         <PostCard post={post} />
                     )
                 }
-                <input type='button' className='btn-owl btn-load' value='Carregar Mais' />
+                {/* <input type='button' className='btn-owl btn-load' value='Carregar Mais' /> */}
+                <Button variant='owl'>Carregar Mais</Button>
             </div>
         </>
     )
