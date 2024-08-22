@@ -1,11 +1,16 @@
+import './PostEditorPage.css'
+
 import { Button } from "react-bootstrap";
 import { useState } from "react"
 
 import PostEditor from "../components/PostEditor";
-import './PostEditorPage.css'
+import Navbar from "../Header/Navbar";
 
 import * as postService from '../services/postService';
-import Navbar from "../Header/Navbar";
+import { debugGetRandomUser } from '../services/userService';
+
+import { Post } from '../services/postService';
+import { getTags } from '../services/tagService';
 
 const defaultContent = `
 # Escreva seu post
@@ -44,11 +49,12 @@ const PostEditorPage = () => {
             console.warn("Falta preencher o nome!");
             return;
         }
+        
+        const user = debugGetRandomUser();
+        const date = new Date();
+        const tags = [ getTags()[0] ];
 
-        postService.createOrUpdatePost({
-            title: title,
-            content: content,
-        });
+        postService.createPost(new Post(user.id, date, tags, title, content));
     };
 
     return (
@@ -57,9 +63,9 @@ const PostEditorPage = () => {
             <div className="editor-page-root">
                 <div className="editor-page">
                     <h2 className="editor-page-title">Criar Post</h2>
-                    <input className="editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged} />
+                    <input className="alt editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged} />
                     <PostEditor content={content} contentChanged={onContentChanged} />
-                    <input className="editor-page-submit" type='button' value='Postar' onClick={onSubmitClicked} />
+                    <input className="btn-owl primary editor-submit-btn" type='button' value='Postar' onClick={onSubmitClicked} />
                 </div>
             </div>
         </>
