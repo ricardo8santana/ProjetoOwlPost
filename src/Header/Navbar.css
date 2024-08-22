@@ -113,7 +113,7 @@
 }
 
 .dropdown-divider {
-  width: 85%;
+  width: 95%;
 }
 
 /* .dropdown-toggle.show {
@@ -127,6 +127,11 @@
 .dropdown-box {
   display: flex;
   padding: 0.3rem !important
+}
+
+.alinhamento-div {
+  display: flex;
+  flex-grow: 1;
 }
 
 .dropdown-icone {
@@ -146,12 +151,4 @@
 .espacamento-words {
   display: flex;
   align-items: center;
-}
-
-.arrow-right {
-  padding-left: 5rem;
-}
-
-.toggle-right {
-  padding-left: 1.8rem;
 }
