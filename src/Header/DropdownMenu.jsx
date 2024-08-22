@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
@@ -20,16 +20,46 @@ import './Navbar.css'
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-
+import * as userService from '../services/userService';
 
 const ThemeStorageKey = 'theme';
 const ThemeDark = 'dark';
 const ThemeLight = 'light';
 
+const DropdownItemLogin = () => {
+  return (
+    <Dropdown.Item href='/login' className='dropdown-box' eventKey="4">
+      <div className='alinhamento-div'>
+        <div className='dropdown-icone dropdown-alinhamento'>
+          <FontAwesomeIcon icon={faArrowRightToBracket} />
+        </div>
+        <div className='espacamento-words'>
+          <span className='fonte-dropdown'>Entrar</span>
+        </div>
+      </div>
+    </Dropdown.Item>
+  )
+};
+
+const DropdownItemLogout = () => {
+  return (
+    <Dropdown.Item className='dropdown-box' eventKey="4" onClick={() => userService.logout()}>
+      <div className='alinhamento-div'>
+        <div className='dropdown-icone dropdown-alinhamento'>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} />
+        </div>
+        <div className='espacamento-words'>
+          <span className='fonte-dropdown'>Sair</span>
+        </div>
+      </div>
+    </Dropdown.Item>
+  )
+}
+
 function DropdownMenu() {
   const [useDarkMode, setUseDarkMode] = useState(false);
   const [toggled, setToggled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
   const setTheme = (prefersDarkMode) => {
     setUseDarkMode(prefersDarkMode);
@@ -45,6 +75,11 @@ function DropdownMenu() {
   };
 
   useEffect(() => {
+    window.addEventListener('user-logout', () => {
+      setIsLoggedIn(false);
+      console.log('logout from dropdown');
+    });
+
     const currentTheme = localStorage.getItem(ThemeStorageKey);
 
     let prefersDarkMode = currentTheme !== null
@@ -111,16 +146,11 @@ function DropdownMenu() {
           </div>
         </Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item href='/login' className='dropdown-box' eventKey="4">
-          <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento'>
-              <FontAwesomeIcon icon={faArrowRightToBracket} />
-            </div>
-            <div className='espacamento-words'>
-              <span className='fonte-dropdown'>Entrar</span>
-            </div>
-          </div>
-        </Dropdown.Item>
+        {
+          isLoggedIn
+            ? <DropdownItemLogout />
+            : <DropdownItemLogin />
+        }
       </Dropdown.Menu>
     </Dropdown>
   );

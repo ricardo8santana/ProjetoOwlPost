@@ -48,12 +48,18 @@
 
 /* -----------------------------------------------------------------------------
     Temas paras os botões 
+    - alt: branco com text azul
     - primary: azul / cor principal
     - secondary: cinza claro
     - danger: vermelho
     - outline: apenas a borda com a cor do texto.
     - outline-alt: apenas a borda com a cor do fundo.
 ----------------------------------------------------------------------------- */
+.btn-owl-alt,
+.btn-owl.alt {
+    background-color: var(--color-neutral-0) !important;
+    color: var(--color-main-normal) !important;
+}
 
 .btn-owl-primary,
 .btn-owl.primary {
