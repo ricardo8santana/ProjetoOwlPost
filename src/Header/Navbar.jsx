@@ -29,7 +29,6 @@ const Navbar = () => {
         <li className="nav-link">Suporte</li>
       </div>
       <div className="auth-buttons">
-        <DarkModeToggle/>
         <button className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</button>
         <button className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</button>
         <div>
