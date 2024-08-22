@@ -1,4 +1,4 @@
-import FotoPerfil from "../components/PaginaPerfil/FotoPerfil";
+import FotoPerfil from "../components/FotoPerfil";
 import Progresso from "../components/PaginaPerfil/Progresso";
 import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
 

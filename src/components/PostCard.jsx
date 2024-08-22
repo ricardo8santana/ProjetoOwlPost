@@ -4,6 +4,8 @@ import './PostCard.css';
 import { useState, useEffect } from 'react';
 import { getUser } from '../services/userService';
 
+import FotoPerfil from '../components/FotoPerfil';
+
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     if (includeTitles) {
         const titlePattern = /^[#]{1,6}\s+(.*\n)/gm;
@@ -49,10 +51,10 @@ const PostCard = ({post}) => {
     return (
         <div className='post-card'>
             <div className='post-card-author'>
-                <div className='profile-picture'>
+                {/* <div className='profile-picture'>
                     <img src={user.profilePicture}/>
-                    {/* <img src='https://i.pinimg.com/originals/19/f2/d7/19f2d715f757d452e9ba3cc3083e6fb9.jpg' width='35px'/> */}
-                </div>
+                </div> */}
+                <FotoPerfil user={user} />
                 <div className='post-card-author-info'>
                     <div>
                         <span className='post-card-author-name'>{user.username}</span>
