@@ -1,11 +1,9 @@
-import { Navbar } from "react-bootstrap";
 import './Sobrenos.css'
-import BarraNav from "../Header/Navbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BarraNav from "../components/Navbar";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
+
 const Sobrenos = () => {
     return (
         <>
