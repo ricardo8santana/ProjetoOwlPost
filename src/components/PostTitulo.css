@@ -1,5 +1,7 @@
-
-img {
+.post-titulo{
+   
+}
+.post-titulo img {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +11,7 @@ img {
     margin-right: auto;
 }
 
-h1{
+.post-titulo h1{
     margin-top: 2%;
     text-align: center;
 }

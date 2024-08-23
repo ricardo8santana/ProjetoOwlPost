@@ -1,7 +1,7 @@
 import React from 'react';
 import './Carrosel.css'; // Importando o arquivo CSS
 import Carousel from 'react-bootstrap/Carousel';
-import ExemploCarrosel from '../src/assets/images/ExemploCarrosel.jpg';
+import ExemploCarrosel from '../assets/images/ExemploCarrosel.jpg';
 import Card from 'react-bootstrap/Card';
 
 
