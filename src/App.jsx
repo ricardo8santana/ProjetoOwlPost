@@ -10,6 +10,7 @@ import PostEditorPage from './pages/PostEditorPage';
 
 import Navbar from "./Header/Navbar";
 import CarroselHome from "../Carousel/Carrosel";
+import Sobrenos from './components/Sobrenos';
 
 const routes = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const routes = createBrowserRouter([
   {
     path: '/cadastro',
     element: <PaginaCadastro />
+  },
+  {
+    path: '/sobrenos',
+    element: <Sobrenos />
   }
 ]);
 
