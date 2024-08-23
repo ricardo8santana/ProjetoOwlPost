@@ -8,6 +8,7 @@ import PostTitulo from './components/PostTitulo';
 import PostViewPage from './pages/PostViewPage'
 import PaginaHome from './pages/PaginaHome';
 import PostEditorPage from './pages/PostEditorPage'
+import Sobrenos from './components/Sobrenos';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
@@ -32,6 +33,10 @@ const routes = createBrowserRouter([
   {
     path: '/cadastro',
     element: <PaginaCadastro />
+  },
+  {
+    path: '/sobrenos',
+    element: <Sobrenos />
   },
   {
     path: '/perfil',
