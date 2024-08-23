@@ -30,6 +30,7 @@ const PostTitulo = ({Header}) =>{
                     
                 </div>
             </div>
+          
         </div>
         </>
     )  
