@@ -1,4 +1,4 @@
-import CarroselHome from "../../Carousel/Carrosel";
+import CarroselHome from "../components/Carrosel";
 import Navbar from "../components/Navbar";
 
 const PaginaHome = () => {
