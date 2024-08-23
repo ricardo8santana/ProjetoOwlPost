@@ -1,11 +1,13 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { faArrowRightFromBracket, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
-import './Navbar.css'
+
+import './DarkModeToggle.css';
+import './Navbar.css';
 
 // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 //   <Button variant='primary' ref={ref}

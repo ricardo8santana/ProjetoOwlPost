@@ -4,7 +4,7 @@ import './App.css';
 import PaginaCadastro from './pages/PaginaCadastro';
 import PaginaLogin from './pages/PaginaLogin';
 
-import Navbar from "./Header/Navbar";
+import Navbar from './components/Navbar';
 import CarroselHome from "../Carousel/Carrosel";
 import PaginaPerfil from './pages/PaginaPerfil';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'

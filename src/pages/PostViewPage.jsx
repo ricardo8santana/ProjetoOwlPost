@@ -15,7 +15,7 @@ import MDEditor from '@uiw/react-md-editor';
 import React from 'react';
 
 import PostCard from '../components/PostCard';
-import Navbar from '../Header/Navbar';
+import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
 import { Link } from 'react-router-dom';

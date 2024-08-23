@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css';
-import '../components/DarkModeToggle.css'
+
 import Logo from '../assets/images/Group.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
-import DropdownMenu from './DropdownMenu';
+import DropdownMenu from './DropdownMenu.jsx';
 
 import * as userService from '../services/userService.jsx';
-import { Button } from 'react-bootstrap';
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [ isLoggedIn, setIsLoggedIn ] = useState(userService.isLoggedIn());
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('user-logout', () => {

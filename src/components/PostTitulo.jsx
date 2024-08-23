@@ -1,7 +1,7 @@
 import Retangulo from '../assets/images/Retangulo36.png';
 import './PostTitulo.css';
 import React, {Fragment, useState} from 'react';
-import Navbar from "../Header/Navbar";
+import Navbar from '../components/Navbar';
 
 const PostTitulo = ({Header}) =>{
     return (

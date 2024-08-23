@@ -1,12 +1,12 @@
 import FotoPerfil from "../components/FotoPerfil";
-import Progresso from "../components/PaginaPerfil/Progresso";
-import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
+import Progresso from "../components/paginaPerfil/Progresso";
+import CartaoJogo from "../components/paginaPerfil/CartaoJogo";
 
 import PostCard from "../components/PostCard";
 
 import './PaginaPerfil.css';
 import { faNewspaper, faStar, faTrophy } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "../Header/Navbar";
+import Navbar from '../components/Navbar';
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { getPosts, getPostsByUserID } from "../services/postService";

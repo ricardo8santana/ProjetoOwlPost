@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { useState } from "react"
 
 import PostEditor from "../components/PostEditor";
-import Navbar from "../Header/Navbar";
+import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
 import { debugGetRandomUser } from '../services/userService';
