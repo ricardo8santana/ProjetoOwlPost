@@ -22,12 +22,12 @@ const PaginaLogin = () => {
 
     const handleOnSubmit = (event) => {
         const lastRoute = localStorage.getItem('last-route');
-        
         const form = event.currentTarget;
         
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+            return;
         }
 
         const username = usernameRef.current.value;
