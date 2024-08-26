@@ -14,6 +14,7 @@
   
 .dropdown-divider {
     width: 95%;
+    border-top: 1px solid rgb(173 173 184 / 34%);
 }
   
 a.dropdown-box.dropdown-item:focus {
