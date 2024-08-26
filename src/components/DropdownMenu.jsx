@@ -5,9 +5,13 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
+import { faMedal } from '@fortawesome/free-solid-svg-icons';
 
 import './DarkModeToggle.css';
 import './Navbar.css';
+import './DropdownMenu.css'
+
+
 
 // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 //   <Button variant='primary' ref={ref}
@@ -72,49 +76,49 @@ function DropdownMenu() {
   const [toggled, setToggled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
-  const setTheme = (prefersDarkMode) => {
-    setUseDarkMode(prefersDarkMode);
+    const setTheme = (prefersDarkMode) => {
+        setUseDarkMode(prefersDarkMode);
 
-    if (prefersDarkMode) {
-      localStorage.setItem(ThemeStorageKey, ThemeDark);
-      document.body.classList.add('dark-mode');
-    }
-    else {
-      localStorage.setItem(ThemeStorageKey, ThemeLight);
-      document.body.classList.remove('dark-mode');
-    }
-  };
+        if (prefersDarkMode) {
+            localStorage.setItem(ThemeStorageKey, ThemeDark);
+            document.body.classList.add('dark-mode');
+        }
+        else {
+            localStorage.setItem(ThemeStorageKey, ThemeLight);
+            document.body.classList.remove('dark-mode');
+        }
+    };
 
-  useEffect(() => {
-    window.addEventListener('user-logout', () => {
-      setIsLoggedIn(false);
-      console.log('logout from dropdown');
-    });
+    useEffect(() => {
+      window.addEventListener('user-logout', () => {
+        setIsLoggedIn(false);
+        console.log('logout from dropdown');
+      });
+  
+        const currentTheme = localStorage.getItem(ThemeStorageKey);
 
-    const currentTheme = localStorage.getItem(ThemeStorageKey);
+        let prefersDarkMode = currentTheme !== null
+            ? currentTheme === ThemeDark
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    let prefersDarkMode = currentTheme !== null
-      ? currentTheme === ThemeDark
-      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDarkMode);
+    }, []);
+  
+    const handleThemeToggle = (event) => {
+      event.preventDefault(); 
+      event.stopPropagation();    
 
-    setTheme(prefersDarkMode);
-  }, []);
-
-  const handleThemeToggle = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    setToggled(!toggled);
-    setTheme(!useDarkMode);
-  };
+      setToggled(!toggled);
+      setTheme(!useDarkMode);
+    };
 
   return (
     <Dropdown>
       <Dropdown.Toggle active={false} id="dropdown-autoclose-true" className='button-login'>
-        <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
+      <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">
+      <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento'>
               <FontAwesomeIcon icon={faCircleUserSolid} />
@@ -123,9 +127,9 @@ function DropdownMenu() {
               <span className='fonte-dropdown'>Perfil</span>
             </div>
           </div>
-          <div className='arrow-right dropdown-alinhamento'>
-            <FontAwesomeIcon icon={faAngleRight} />
-          </div>
+            <div className='arrow-right dropdown-alinhamento'>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </div>
         </Dropdown.Item>
         <Dropdown.Item className='dropdown-box' eventKey="2">
           <div className='alinhamento-div'>
@@ -136,17 +140,17 @@ function DropdownMenu() {
               <span className='fonte-dropdown'>Idioma</span>
             </div>
           </div>
-          <div className='arrow-right dropdown-alinhamento'>
-            <FontAwesomeIcon icon={faAngleRight} />
-          </div>
+            <div className='arrow-right dropdown-alinhamento'>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </div>
         </Dropdown.Item>
         <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle}>
           <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento' >
-              <FontAwesomeIcon icon={useDarkMode ? faMoon : faSun} style={{ width: '15.88', height: '15.88' }} />
+          <div className='dropdown-icone dropdown-alinhamento' >
+          <FontAwesomeIcon icon={useDarkMode ? faMoon : faSun} style={{ width: '15.88', height: '15.88' }} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{useDarkMode ? 'Tema claro' : 'Tema escuro'}</span>
+            <span className='fonte-dropdown'>{useDarkMode ? 'Tema claro' : 'Tema escuro'}</span>
             </div>
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
@@ -154,6 +158,19 @@ function DropdownMenu() {
             <button className={`toggle-btn ${toggled ? "toggled" : ""}`} onClick={() => setToggled(!toggled)}>
               <div className='thumb'></div>
             </button>
+          </div>
+        </Dropdown.Item>
+        <Dropdown.Item className='dropdown-box' eventKey="4">
+          <div className='alinhamento-div'>
+            <div className='dropdown-icone dropdown-alinhamento' >
+              <FontAwesomeIcon icon={faMedal} />
+            </div>
+            <div className='espacamento-words'>
+              <span className='fonte-dropdown'>Minhas conquistas</span>
+            </div>
+          </div>
+          <div className='toggle-on-off dropdown-alinhamento'>
+
           </div>
         </Dropdown.Item>
         <Dropdown.Divider />
