@@ -16,20 +16,12 @@
     width: min(1280px, 80vw);
 }
 
-.editor-page input {
+.editor-page input[type='text'] {
     width: 100%;
-    height: 2.5rem;
-    border-radius: 0.5rem;
     text-align: center;
-    font-family: inherit;
-    border: none;
-
-    background-color: var(--color-bg-main);
 }
 
-.editor-page input[type='button'] {
-    width: 30%;
+.editor-page .editor-submit-btn {
     margin-left: 70%;
-    color: var(--color-neutral-1);
-    background-color: var(--color-main-normal);
+    width: 30%;
 }

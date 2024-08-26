@@ -23,7 +23,7 @@
     margin-bottom: 5rem;
 }
 
-.fotoPerfil {
+.enquadroPerfil .fotoPerfil {
     width: 200px !important;
     height: 200px !important;
 }
@@ -128,20 +128,7 @@
     padding: 0;
 }
 
-/* --- Foto de perfil ------------------------------------------------------ */
 
-.fotoPerfil {
-    flex-shrink: 0;
-    border-radius: 50%;
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-}
-
-.fotoPerfil img {
-    width: 100%;
-    height: 100%;
-}
 
 /* --- Progresso ----------------------------------------------------------- */
 

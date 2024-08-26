@@ -37,8 +37,13 @@
     width: 100%;
 }
 
-.login-form input {
+.login-form div {
     width: 100%;
+}
+
+.login-form button,
+.login-form input {
+    width: 100% !important;
     height: 3rem;
     
     border-radius: 0.5rem;
@@ -53,11 +58,11 @@
     color: var(--color-text-disabled);
 }
 
-.login-form input[type='submit'] {
+/* .login-form input[type='submit'] {
     color: var(--color-neutral-2);
     background-color: var(--color-main-normal);
     font-weight: bold;
-}
+} */
 
 .login-logo {
     width: 120px;
