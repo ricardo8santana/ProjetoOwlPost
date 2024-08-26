@@ -1,13 +1,14 @@
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Navbar.css';
 
 import Logo from '../assets/images/Group.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
-import DropdownMenu from './DropdownMenu.jsx';
-
-import * as userService from '../services/userService.jsx';
+import DropdownMenu from './DropdownMenu';
+import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
+import * as userService from '../services/userService';
 
 const Navbar = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(true);
@@ -40,6 +41,16 @@ const Navbar = () => {
         <li className="nav-link" onClick={() => navigate('/post-edit')}>Editor</li>
         {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
         <li className="nav-link">Suporte</li>
+      </div>
+      <div className='friend-button'>
+        <div className='friendship-suggestion'>
+            <button className='friendship-button'>10</button>
+        </div>
+        <button className='style-button'>
+          <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
+          <div className='pipe'></div>
+          <div className='number-five'>5</div>
+        </button>
       </div>
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
