@@ -10,7 +10,8 @@ import Navbar from '../components/Navbar';
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { getPosts, getPostsByUserID } from "../services/postService";
-import { debugGetRandomUser } from "../services/userService";
+import { debugGetRandomUser, getLoggedUser } from "../services/userService";
+import { redirect, useNavigate } from "react-router-dom";
 
 const UserGameList = () => {
     return (
@@ -37,7 +38,21 @@ const UserPostList = ({user}) => {
 };
 
 const PaginaPerfil = () => {
-    const user = debugGetRandomUser();
+    const navigate = useNavigate();
+    const [user, setUser] = useState(false);
+
+    useEffect(() => {
+        const loggedUser = getLoggedUser();
+        if (!loggedUser) {
+            navigate('/login', {
+                state: {
+                    redirect: '/perfil'
+                }
+            });
+        }
+        
+        setUser(loggedUser);
+    }, []);
 
     return (
         <>

@@ -27,21 +27,25 @@ export const getUser = (id) => {
 
 export const createUser = (username, email, password) => {
     const user = new User(users.length, username, email, password, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Favatarfiles.alphacoders.com%2F184%2F184064.jpg&f=1&nofb=1&ipt=4d6add8cafb02053664146794476bf3728dc6d0935d69869334bcc9f95b07b10&ipo=images');
+    users.push(user);
 };
 
-export const isLoggedIn = () => loggedUser !== undefined;
+export const isLoggedIn = () => getLoggedUser() !== undefined;
+export const getLoggedUser = () => JSON.parse(localStorage.getItem('logged-user'));
 
 const onUserLogout = new Event('user-logout');
 const onUserLogin = new Event('user-login');
 
 export const login = (email, password) => {
     loggedUser = users.find(user => user.email == email && user.password == password);
+    localStorage.setItem('logged-user', JSON.stringify(loggedUser));
     window.dispatchEvent(onUserLogin);
     return loggedUser;
 }
 
 export const logout = () => {
     loggedUser = undefined;
+    localStorage.removeItem('logged-user');
     window.dispatchEvent(onUserLogout);
 }
 
