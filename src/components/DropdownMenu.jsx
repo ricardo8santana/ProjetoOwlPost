@@ -118,7 +118,7 @@ function DropdownMenu() {
       <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
       </Dropdown.Toggle>
       <Dropdown.Menu>
-      <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">
+        <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento'>
               <FontAwesomeIcon icon={faCircleUserSolid} />
