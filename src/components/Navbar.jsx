@@ -41,27 +41,20 @@ const Navbar = () => {
         {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
         <li className="nav-link">Suporte</li>
       </div>
-      {isLoggedIn ? (
-      <div className='friend-button'>
-          <div className='friendship-suggestion'>
+      {
+        isLoggedIn
+          ? null
+          : (<div className='friend-button'>
+            <div className='friendship-suggestion'>
               <button className='friendship-button'>10</button>
-          </div>
-          <button className='style-button'>
-            <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
-            <div className='pipe'></div>
-            <div className='number-five'>5</div>
-          </button>
-        </div>
-      ) : null}
-        <div className='friendship-suggestion'>
-          <button className='friendship-button'>10</button>
-        </div>
-        <button className='style-button'>
-          <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
-          <div className='pipe'></div>
-          <div className='number-five'>5</div>
-        </button>
-      </div>
+            </div>
+            <button className='style-button'>
+              <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
+              <div className='pipe'></div>
+              <div className='number-five'>5</div>
+            </button>
+          </div>)
+      }
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
         <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</Button>
