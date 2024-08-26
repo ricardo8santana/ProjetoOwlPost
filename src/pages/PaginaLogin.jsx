@@ -3,19 +3,26 @@ import './PaginaLogin.css'
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, Col } from 'react-bootstrap';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import * as userService from '../services/userService.jsx';
 
 const PaginaLogin = () => {
     const [validated, setValidated] = useState('false');
-    const { redirect } = useParams();
     const navigate = useNavigate();
 
     const usernameRef = useRef();
     const passwordRef = useRef();
 
+    useEffect(() => {
+        window.addEventListener('user-logout', () => {
+            navigate('/');
+        });
+    }, []);
+
     const handleOnSubmit = (event) => {
+        const lastRoute = localStorage.getItem('last-route');
+        
         const form = event.currentTarget;
         
         if (form.checkValidity() === false) {
@@ -34,7 +41,10 @@ const PaginaLogin = () => {
         }
 
         setValidated('true');
-        navigate(redirect ? redirect : '/');
+        
+        navigate(lastRoute ? lastRoute : '/');
+        localStorage.removeItem('last-route');
+        localStorage.removeItem('login-attempts');
     };
 
     return (

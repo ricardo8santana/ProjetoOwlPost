@@ -39,16 +39,22 @@ const UserPostList = ({user}) => {
 
 const PaginaPerfil = () => {
     const navigate = useNavigate();
+
     const [user, setUser] = useState(false);
 
     useEffect(() => {
         const loggedUser = getLoggedUser();
+        const loginAttempts = localStorage.getItem('login-attempts') || 0;
+
+        if (loginAttempts > 0) {
+            localStorage.removeItem('login-attempts');
+            navigate('/');
+        }
+
         if (!loggedUser) {
-            navigate('/login', {
-                state: {
-                    redirect: '/perfil'
-                }
-            });
+            localStorage.setItem('last-route', '/perfil');
+            localStorage.setItem('login-attempts', 1);
+            navigate('/login');
         }
         
         setUser(loggedUser);

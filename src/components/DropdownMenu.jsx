@@ -23,14 +23,23 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import * as userService from '../services/userService';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ThemeStorageKey = 'theme';
 const ThemeDark = 'dark';
 const ThemeLight = 'light';
 
 const DropdownItemLogin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOnClick = () => {
+    localStorage.setItem('last-route', location.pathname);
+    navigate('/login');
+  };
+  
   return (
-    <Dropdown.Item href='/login' className='dropdown-box' eventKey="4">
+    <Dropdown.Item className='dropdown-box' eventKey="4" onClick={handleOnClick}>
       <div className='alinhamento-div'>
         <div className='dropdown-icone dropdown-alinhamento'>
           <FontAwesomeIcon icon={faArrowRightToBracket} />
