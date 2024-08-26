@@ -1,0 +1,95 @@
+/* -----------------------------------------------------------------------------
+    Uma classe para colocar em qualquer elemento que quiser que pareça como um 
+    botão.
+
+    Como usar:
+        // com um elamento html usando o tema padrão.
+        <elemento classname='btn-owl' />            
+
+        // com um elamento html combinado com algum dos temas.
+        <elemento classname='btn-owl primary' />    
+
+        // com o botão do bootstrap usando o tema padrão.
+        <Button variant='owl'/> 
+
+        // com o botão do bootstrap usando com algum dos temas.
+        <Button variant='owl-primary'/> 
+----------------------------------------------------------------------------- */
+
+/* wildcard - seleciona qualquer classe que comece com 'btn btn-owl' */
+*[class^="btn btn-owl"],
+.btn-owl {
+    background-color: var(--color-bg-main) !important;
+    color: var(--color-text-main) !important;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0 2rem;
+    height: 2.5rem;
+
+    transition: 
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+*[class^="btn btn-owl"]:hover,
+.btn-owl:hover {
+    box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.125);
+    filter: brightness(0.9);
+    transition: 
+        box-shadow 0.125s ease-out,
+        filter 0.125s ease-out;
+}
+
+*[class^="btn btn-owl"]:active,
+.btn-owl:active {
+    filter: brightness(0.8);
+    box-shadow: inset 0 0 4px 1px rgba(0, 0, 0, 0.125);
+}
+
+/* -----------------------------------------------------------------------------
+    Temas paras os botões 
+    - alt: branco com text azul
+    - primary: azul / cor principal
+    - secondary: cinza claro
+    - danger: vermelho
+    - outline: apenas a borda com a cor do texto.
+    - outline-alt: apenas a borda com a cor do fundo.
+----------------------------------------------------------------------------- */
+.btn-owl-alt,
+.btn-owl.alt {
+    background-color: var(--color-neutral-0) !important;
+    color: var(--color-main-normal) !important;
+}
+
+.btn-owl-primary,
+.btn-owl.primary {
+    background-color: var(--color-main-normal) !important;
+    color: var(--color-neutral-1) !important;
+}
+
+.btn-owl-secondary,
+.btn-owl.secondary {
+    background-color: var(--color-bg-alt) !important;
+    color: var(--color-text-alt) !important;
+}
+
+.btn-owl-danger,
+.btn-owl.danger {
+    /* todo: criar uma cor na palheta */
+    background-color: #b83717 !important;
+    color: var(--color-neutral-1) !important;
+}
+
+.btn-owl-outline,
+.btn-owl.outline {
+    background-color: transparent;
+    color: var(--color-text-main) !important;
+    border: 2px solid var(--color-text-main) !important;
+}
+
+.btn-owl-outline-alt,
+.btn-owl.outline-alt {
+    background-color: transparent;
+    color: var(--color-neutral-0) !important;
+    border: 2px solid var(--color-neutral-0) !important;
+}
