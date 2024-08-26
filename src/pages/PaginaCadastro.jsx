@@ -2,51 +2,55 @@ import './PaginaLogin.css';
 
 import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 
+import * as userService from '../services/userService.jsx';
+
+
+
 const PaginaCadastro = () => {
-    const [validated, setValidated] = useState('false');
     const navigate = useNavigate();
+    
+    const [validated, setValidated] = useState(false);
+    
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmation, setConfirmation] = useState('');
 
-    const [passwdMatch, setPasswdMatch] = useState(false);
+    const isValidUsername = () => {
+        return username !== '';
+    }
 
-    const usernameRef = useRef();
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const password2Ref = useRef();
+    const isValidEmail = () => {
+        // const emailValidationRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
+        const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+        return email && email.match(emailValidationRegex);
+    }
 
-    const handlePasswordChanged = () => {
-        const password = passwordRef.current.value;
-        const password2 = password2Ref.current.value
-        setPasswdMatch(password === password2);
-    };
+    const isValidPassword = () => {
+        return (password && confirmation) && password === confirmation;
+    }
+
+    // useEffect(() => {
+    //     setPasswordsMatched(password === confirmation);
+    // }, [password, confirmation]);
 
     const handleOnSubmit = (event) => {
-        const lastRoute = localStorage.getItem('last-route');
-        const form = event.currentTarget;
         
-        if (form.checkValidity() === false) {
+        const form = event.currentTarget;
+
+        if (form.checkValidity() === false || !isValidUsername || !isValidEmail || !isValidPassword) {
             event.preventDefault();
             event.stopPropagation();
-            return;
-        }
-
-        const email = emailRef.current.value;
-        const username = usernameRef.current.value;
-        const password = passwordRef.current.value;
-        const password2 = password2Ref.current.value;
-
-        if (password !== password2) {
-            event.preventDefault();
-            event.stopPropagation();
+            setValidated(false);
             return;
         }
 
         userService.createUser(username, email, password);
-
-        if (!userService.login(username, password)) {
+        if (!userService.login(email, password)) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();
             event.stopPropagation();
@@ -54,8 +58,11 @@ const PaginaCadastro = () => {
         }
 
         setValidated('true');
-        
+
+        const lastRoute = localStorage.getItem('last-route');
+
         navigate(lastRoute ? lastRoute : '/');
+        
         localStorage.removeItem('last-route');
         localStorage.removeItem('login-attempts');
     };
@@ -66,19 +73,38 @@ const PaginaCadastro = () => {
                 <div className='login-logo'>
                     <OwlpostSquareLogo />
                 </div>
-                
+
                 <h3>Criar nova conta</h3>
 
-                <Form validate={validated} className='login-form' onSubmit={handleOnSubmit}>
-                    <Form.Control ref={usernameRef} type="text" placeholder="Nome de usuário" required />
-                    <Form.Control ref={emailRef} type="email" placeholder="Email" required />
-                    <Form.Control ref={passwordRef} type="password" placeholder="Senha" required onChange={handlePasswordChanged} />
-                    <Form.Control ref={password2Ref} type="password" placeholder="Confirmar Senha" required onChange={handlePasswordChanged} />
-                    {
-                        !passwdMatch
-                            ? <p>A senha está diferente</p>
-                            : <></>
-                    }
+                <Form id='sign-form' className='login-form' validate={validated} onSubmit={handleOnSubmit}>
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Nome de usuário" 
+                        autoComplete='username'
+                        isInvalid={!isValidUsername()}
+                        onChange={(e) => setUsername(e.target.value)} />
+
+                    <Form.Control
+                        type="email" 
+                        placeholder="Email"
+                        autoComplete='email' 
+                        isInvalid={!isValidEmail()}
+                        onChange={(e) => setEmail(e.target.value)} />
+
+                    <Form.Control 
+                        type="password" 
+                        placeholder="Senha" 
+                        autoComplete='new-password' 
+                        isInvalid={!isValidPassword()}
+                        onChange={(e) => setPassword(e.target.value)} />
+
+                    <Form.Control 
+                        type="password" 
+                        placeholder="Confirmar Senha" 
+                        autoComplete='new-password' 
+                        isInvalid={!isValidPassword()}
+                        onChange={(e) => setConfirmation(e.target.value)} />
+
                     <Button variant='owl-primary' type="submit" >Criar Conta</Button>
                 </Form>
 

@@ -8,11 +8,11 @@ import { useEffect, useRef, useState } from 'react';
 import * as userService from '../services/userService.jsx';
 
 const PaginaLogin = () => {
-    const [validated, setValidated] = useState('false');
+    const [validated, setValidated] = useState(true);
     const navigate = useNavigate();
 
-    const usernameRef = useRef();
-    const passwordRef = useRef();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         window.addEventListener('user-logout', () => {
@@ -21,7 +21,6 @@ const PaginaLogin = () => {
     }, []);
 
     const handleOnSubmit = (event) => {
-        const lastRoute = localStorage.getItem('last-route');
         const form = event.currentTarget;
         
         if (form.checkValidity() === false) {
@@ -30,19 +29,22 @@ const PaginaLogin = () => {
             return;
         }
 
-        const username = usernameRef.current.value;
-        const password = passwordRef.current.value;
+        console.log(userService.users);
 
         if (!userService.login(username, password)) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();
             event.stopPropagation();
+            setValidated(false);
             return;
         }
 
-        setValidated('true');
+        setValidated(true);
         
+        const lastRoute = localStorage.getItem('last-route');
+
         navigate(lastRoute ? lastRoute : '/');
+
         localStorage.removeItem('last-route');
         localStorage.removeItem('login-attempts');
     };
@@ -56,9 +58,21 @@ const PaginaLogin = () => {
                 
                 <h3>Entrar na conta</h3>
                 
-                <Form validate={validated} className='login-form' onSubmit={handleOnSubmit}>
-                    <Form.Control ref={usernameRef} type="email" placeholder="Email" required />
-                    <Form.Control ref={passwordRef} type="password" placeholder="Senha" required />
+                <Form id='login-form' className='login-form' validate={validated} onSubmit={handleOnSubmit}>
+                <Form.Control 
+                        type="text" 
+                        placeholder="Nome de usuário" 
+                        autoComplete='username'
+                        isInvalid={!validated}
+                        onChange={(e) => setUsername(e.target.value)} />
+
+                    <Form.Control 
+                        type="password" 
+                        placeholder="Senha" 
+                        isInvalid={!validated}
+                        autoComplete='current-password'
+                        onChange={(e) => setPassword(e.target.value)}/>
+
                     <Button variant='owl-primary' type="submit">Entrar</Button>
                 </Form>
 

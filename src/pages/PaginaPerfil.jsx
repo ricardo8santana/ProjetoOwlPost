@@ -43,6 +43,10 @@ const PaginaPerfil = () => {
     const [user, setUser] = useState(false);
 
     useEffect(() => {
+        window.addEventListener('user-logout', () => {
+            navigate('/');
+        });
+
         const loggedUser = getLoggedUser();
         const loginAttempts = localStorage.getItem('login-attempts') || 0;
 

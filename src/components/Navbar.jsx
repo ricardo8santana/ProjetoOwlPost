@@ -11,7 +11,7 @@ import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
 import * as userService from '../services/userService';
 
 const Navbar = () => {
-  const [ isLoggedIn, setIsLoggedIn ] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,8 +19,7 @@ const Navbar = () => {
 
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
-      console.log('logout from navbar');
-    })
+    });
   }, []);
 
   return (
@@ -44,7 +43,7 @@ const Navbar = () => {
       </div>
       <div className='friend-button'>
         <div className='friendship-suggestion'>
-            <button className='friendship-button'>10</button>
+          <button className='friendship-button'>10</button>
         </div>
         <button className='style-button'>
           <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
