@@ -18,7 +18,7 @@ const PaginaLogin = () => {
                     <input type="submit" value="Criar Conta" />
                 </form>
 
-                <Link className='login-link' to='/cadastro'>não tenho uma conta</Link>
+                <Link className='login-link' to='/cadastro'>Não tenho uma conta</Link>
             </div>
         </div>
     )

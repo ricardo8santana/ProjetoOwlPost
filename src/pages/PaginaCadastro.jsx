@@ -21,7 +21,7 @@ const PaginaCadastro = () => {
                     <input type="submit" value="Entrar" />
                 </form>
 
-                <Link className='login-link' to='/login'>já tenho uma conta</Link>
+                <Link className='login-link' to='/login'>Já tenho uma conta</Link>
             </div>
         </div>
     )

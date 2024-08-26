@@ -53,5 +53,5 @@
 }
   
 .toggle-btn.toggled .thumb {
-    left: calc(50px - 33px);
+    left: calc(50px - 32px);
 }

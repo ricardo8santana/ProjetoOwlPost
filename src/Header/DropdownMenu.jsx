@@ -4,8 +4,10 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
+import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
 import './Navbar.css'
+import './DropdownMenu.css'
 
 // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 //   <Button variant='primary' ref={ref}
@@ -20,6 +22,7 @@ import './Navbar.css'
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 
 const ThemeStorageKey = 'theme';
@@ -98,12 +101,12 @@ function DropdownMenu() {
               <FontAwesomeIcon icon={faAngleRight} />
             </div>
         </Dropdown.Item>
-        <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle}>
+        <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle} style={{backgroundColor: 'inherit'}}>
           <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento' >
+            <div className='dropdown-icone color-theme dropdown-alinhamento'>
               <FontAwesomeIcon icon={useDarkMode ? faMoon : faSun}  style={{width: '15.88', height: '15.88'}} />
             </div>
-            <div className='espacamento-words'>
+            <div className='espacamento-words color-theme'>
               <span className='fonte-dropdown'>{ useDarkMode ? 'Tema claro' : 'Tema escuro'}</span>
             </div>
           </div>
@@ -114,16 +117,31 @@ function DropdownMenu() {
             </button>
           </div>
         </Dropdown.Item>
-        <Dropdown.Divider />
         <Dropdown.Item className='dropdown-box' eventKey="4" onClick={handleItemClick}>
           <div className='alinhamento-div'>
+            <div className='dropdown-icone dropdown-alinhamento' >
+              <FontAwesomeIcon icon={faMedal} />
+            </div>
+            <div className='espacamento-words'>
+              <span className='fonte-dropdown'>Minhas conquistas</span>
+            </div>
+          </div>
+          <div className='toggle-on-off dropdown-alinhamento'>
+
+          </div>
+        </Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item className='dropdown-box' eventKey="5" onClick={handleItemClick}>
+        <Link to='/login'  className='alinhamento-div'>
+          {/* <div className='alinhamento-div'> */}
             <div className='dropdown-icone dropdown-alinhamento'>
               <FontAwesomeIcon icon={faArrowRightToBracket} />
             </div>
             <div className='espacamento-words'>
               <span className='fonte-dropdown'>Entrar</span>
             </div>
-          </div>
+          {/* </div> */}
+        </Link>
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

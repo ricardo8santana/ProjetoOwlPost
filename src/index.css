@@ -21,17 +21,6 @@ body {
   min-height: 100vh;
 }
 
-a {
-  text-decoration: none;
-  color: var(--color-main-dark);
-  transition: color 0.25s ease-in-out;
-}
-
-a:hover {
-  color: var(--color-main-normal);
-  transition: color 0.125s ease-in-out;
-}
-
 select
 input {
   font-family: inherit;
