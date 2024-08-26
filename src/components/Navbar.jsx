@@ -10,10 +10,12 @@ import DropdownMenu from './DropdownMenu.jsx';
 import * as userService from '../services/userService.jsx';
 
 const Navbar = () => {
-  const [ isLoggedIn, setIsLoggedIn ] = useState(userService.isLoggedIn());
+  const [ isLoggedIn, setIsLoggedIn ] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoggedIn(userService.isLoggedIn());
+
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
       console.log('logout from navbar');
