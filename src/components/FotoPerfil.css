@@ -2,6 +2,8 @@
     flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
+    background-color: var(--color-bg-alt);
+    content: '';
 }
 
 .fotoPerfil img {
