@@ -1,16 +1,17 @@
 import './PostEditorPage.css'
 
 import { Button } from "react-bootstrap";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import PostEditor from "../components/PostEditor";
 import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
-import { debugGetRandomUser } from '../services/userService';
+import { debugGetRandomUser, getLoggedUser } from '../services/userService';
 
 import { Post } from '../services/postService';
 import { getTags } from '../services/tagService';
+import { useNavigate } from 'react-router-dom';
 
 const defaultContent = `
 # Escreva seu post
@@ -33,8 +34,33 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 `;
 
 const PostEditorPage = () => {
+    const navigate = useNavigate();
+    
     const [content, setContent] = useState(defaultContent);
     const [title, setTitle] = useState(null);
+    const [user, setUser] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('user-logout', () => {
+            navigate('/');
+        });
+
+        const loggedUser = getLoggedUser();
+        const loginAttempts = localStorage.getItem('login-attempts') || 0;
+
+        if (loginAttempts > 0) {
+            localStorage.removeItem('login-attempts');
+            navigate('/');
+        }
+
+        if (!loggedUser) {
+            localStorage.setItem('last-route', '/post-edit');
+            localStorage.setItem('login-attempts', 1);
+            navigate('/login');
+        }
+        
+        setUser(loggedUser);
+    }, [])
 
     const onContentChanged = (content) => {
         setContent(content);
@@ -50,7 +76,7 @@ const PostEditorPage = () => {
             return;
         }
         
-        const user = debugGetRandomUser();
+        // const user = debugGetRandomUser();
         const date = new Date();
         const tags = [ getTags()[0] ];
 
