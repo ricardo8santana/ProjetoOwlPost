@@ -26,13 +26,17 @@ export const getUser = (id) => {
 };
 
 export const createUser = (username, email, password) => {
-    const user = new User(users.length, username, email, password, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Favatarfiles.alphacoders.com%2F184%2F184064.jpg&f=1&nofb=1&ipt=4d6add8cafb02053664146794476bf3728dc6d0935d69869334bcc9f95b07b10&ipo=images');
     const users = getUsers();
+    const user = new User(users.length, username, email, password, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Favatarfiles.alphacoders.com%2F184%2F184064.jpg&f=1&nofb=1&ipt=4d6add8cafb02053664146794476bf3728dc6d0935d69869334bcc9f95b07b10&ipo=images');
     
+    console.log(users);
+
     if (users.includes(user))
         return;
 
     users.push(user);
+
+    console.log(users);
     localStorage.setItem('users', JSON.stringify(users));
     
     console.log(users);
