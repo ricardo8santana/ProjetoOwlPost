@@ -10,8 +10,9 @@ import Navbar from '../components/Navbar';
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { getPosts, getPostsByUserID } from "../services/postService";
-import { debugGetRandomUser, getLoggedUser } from "../services/userService";
 import { redirect, useNavigate } from "react-router-dom";
+
+import * as userService from "../services/userService";
 
 const UserGameList = () => {
     return (
@@ -23,13 +24,13 @@ const UserGameList = () => {
     )
 };
 
-const UserPostList = ({user}) => {
+const UserPostList = ({ user }) => {
     const posts = getPostsByUserID(user.id);
 
     return (
         <div className="postList">
             {
-                posts.map(post => 
+                posts.map(post =>
                     <PostCard post={post} />
                 )
             }
@@ -40,28 +41,32 @@ const UserPostList = ({user}) => {
 const PaginaPerfil = () => {
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState(userService.defaultUser);
 
     useEffect(() => {
         window.addEventListener('user-logout', () => {
             navigate('/');
         });
 
-        const loggedUser = getLoggedUser();
-        const loginAttempts = localStorage.getItem('login-attempts') || 0;
+        const getLoggedUser = async () => {
+            const loggedUser = await userService.getLoggedUser();
 
-        if (loginAttempts > 0) {
-            localStorage.removeItem('login-attempts');
-            navigate('/');
-        }
+            if (localStorage.getItem('login-attempts')) {
+                localStorage.removeItem('login-attempts');
+                navigate('/');
+                return;
+            }
 
-        if (!loggedUser) {
-            localStorage.setItem('last-route', '/perfil');
-            localStorage.setItem('login-attempts', 1);
-            navigate('/login');
-        }
-        
-        setUser(loggedUser);
+            if (!loggedUser) {
+                localStorage.setItem('last-route', '/perfil');
+                localStorage.setItem('login-attempts', 1);
+                navigate('/login');
+                return;
+            }
+
+            setUser(loggedUser);
+        };
+        getLoggedUser();
     }, []);
 
     return (
@@ -84,7 +89,7 @@ const PaginaPerfil = () => {
                         <UserGameList />
                     </Tab>
                     <Tab eventKey={1} title='Postagens'>
-                        <UserPostList  user={user} />
+                        <UserPostList user={user} />
                     </Tab>
                 </Tabs>
             </div>
