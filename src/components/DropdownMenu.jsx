@@ -73,7 +73,6 @@ const DropdownItemLogout = () => {
 
 function DropdownMenu() {
   const [useDarkMode, setUseDarkMode] = useState(false);
-  const [toggled, setToggled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
   const setTheme = (prefersDarkMode) => {
@@ -109,8 +108,6 @@ function DropdownMenu() {
   const handleThemeToggle = (event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    setToggled(!toggled);
     setTheme(!useDarkMode);
   };
 
@@ -157,7 +154,7 @@ function DropdownMenu() {
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
             {/* <FontAwesomeIcon icon={faToggleOff} style={{width: '25px', height: '20px'}} />  */}
-            <button className={`toggle-btn ${toggled ? "toggled" : ""}`} onClick={() => setToggled(!toggled)}>
+            <button className={`toggle-btn ${useDarkMode ? "toggled" : ""}`} onClick={() => setTheme(!useDarkMode)}>
               <div className='thumb'></div>
             </button>
           </div>
