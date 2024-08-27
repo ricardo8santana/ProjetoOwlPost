@@ -9,6 +9,7 @@ import PostViewPage from './pages/PostViewPage'
 import PaginaHome from './pages/PaginaHome';
 import PostEditorPage from './pages/PostEditorPage'
 import Sobrenos from './components/Sobrenos';
+import PaginaConquista from './pages/PaginaConquista';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
@@ -45,6 +46,10 @@ const routes = createBrowserRouter([
   {
     path: '/post-titulo',
     element: <PostTitulo />
+  },
+  {
+    path: '/conquista',
+    element: <PaginaConquista/>
   }
 ]);
 
