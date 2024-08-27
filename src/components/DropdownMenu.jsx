@@ -157,7 +157,7 @@ function DropdownMenu() {
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
             {/* <FontAwesomeIcon icon={faToggleOff} style={{width: '25px', height: '20px'}} />  */}
-            <button className={`toggle-btn ${!toggled ? "toggled" : ""}`} onClick={() => setToggled(!toggled)}>
+            <button className={`toggle-btn ${toggled ? "toggled" : ""}`} onClick={() => setToggled(!toggled)}>
               <div className='thumb'></div>
             </button>
           </div>
