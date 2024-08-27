@@ -43,8 +43,8 @@ const Navbar = () => {
       </div>
       {
         isLoggedIn
-          ? null
-          : (<div className='friend-button'>
+          ?
+           (<div className='friend-button'>
             <div className='friendship-suggestion'>
               <button className='friendship-button'>10</button>
             </div>
@@ -54,6 +54,8 @@ const Navbar = () => {
               <div className='number-five'>5</div>
             </button>
           </div>)
+          : 
+        null
       }
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
