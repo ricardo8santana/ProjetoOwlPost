@@ -1,7 +1,7 @@
 import Progresso from './Progresso';
 
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import { faClock, faStar, faWindowMaximize } from '@fortawesome/free-regular-svg-icons';
+import { faArrowDown, faTrophy, faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import { faClock, faStar } from '@fortawesome/free-regular-svg-icons';
 
 
 const CartaoJogo = () => {
@@ -33,10 +33,10 @@ const CartaoJogo = () => {
                     <p>?% | Conquistas ?/?</p>
                     <p>?/? Exp</p>
                 </div> */}
-                
+                <hr />
             </div>
             <div className='XLR8'>
-                    <Progresso icone={faWindowMaximize} valor='Lista Conquistas'/>
+                    <Progresso icone={faChevronDown}/>
                 </div>
         </div>
     )
