@@ -19,13 +19,12 @@
 }
 
 a.dropdown-box.dropdown-item:focus {
-    background-color: white;
+    background-color: transparent;
 }
 
-.dropdown-item:focus,
 .dropdown-item:hover {
     color: var(--bs-dropdown-link-hover-color);
-    background-color: color-mix(in srgb, var(--color-text-alt) 10%, #0000 100%);
+    background-color: color-mix(in srgb, var(--color-text-alt) 10%, #0000 100%) !important;
     border-radius: 4px;
 }
 
