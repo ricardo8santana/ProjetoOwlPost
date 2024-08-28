@@ -1,26 +1,35 @@
-import Progresso from './Progresso';
+import Progresso from "./Progresso";
 
-import { faArrowDown, faTrophy, faChevronDown} from '@fortawesome/free-solid-svg-icons';
-import { faClock, faStar } from '@fortawesome/free-regular-svg-icons';
-
+import {
+  faArrowDown,
+  faTrophy,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
+import { faClock, faStar } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Accordion } from "react-bootstrap";
 
 const CartaoJogo = () => {
-    return (
-        <div className='enquadroCartaoJogo'>
-            <div className='cartaoJogoImagem'>
-                <img src="https://store-images.s-microsoft.com/image/apps.25322.14537704372270848.6ecb6038-5426-409a-8660-158d1eb64fb0.d230176a-d7a2-4696-ad23-ff53a6e004df" alt="" />
-            </div>
-            <div className='cartaoJogoDetalhes'>
-                <h2 className='cartaoJogoNome'>Anel do Velho</h2>
-                <div className='cartaoJogoInfo'>
-                    {/* <Progresso titulo='Ultima vez' icone={faClock} valor='2h atrás' /> */}
-                    <Progresso titulo='Tempo de jogo' icone={faClock} valor='30h' />
-                {/* </div>
+  return (
+    <div className="rootCartaoJogo">
+      <div className="enquadroCartaoJogo">
+        <div className="cartaoJogoImagem">
+          <img
+            src="https://store-images.s-microsoft.com/image/apps.25322.14537704372270848.6ecb6038-5426-409a-8660-158d1eb64fb0.d230176a-d7a2-4696-ad23-ff53a6e004df"
+            alt=""
+          />
+        </div>
+        <div className="cartaoJogoDetalhes">
+          <h2 className="cartaoJogoNome">Anel do Velho</h2>
+          <div className="cartaoJogoInfo">
+            {/* <Progresso titulo='Ultima vez' icone={faClock} valor='2h atrás' /> */}
+            <Progresso titulo="Tempo de jogo" icone={faClock} valor="30h" />
+            {/* </div>
                 <div className='cartaoJogoInfo'> */}
-                    <Progresso titulo='Conquistas' icone={faTrophy} valor='7 / 33' />
-                    <Progresso titulo='EXP' icone={faStar} valor='333' />
-                </div>
-                {/* <div className='cartaoJogoInfo'>
+            <Progresso titulo="Conquistas" icone={faTrophy} valor="7 / 33" />
+            <Progresso titulo="EXP" icone={faStar} valor="333" />
+          </div>
+          {/* <div className='cartaoJogoInfo'>
                     <p>Jogado a 10h atrás</p>
                     <p>|</p>
                     <p>30h jogadas</p>
@@ -33,13 +42,18 @@ const CartaoJogo = () => {
                     <p>?% | Conquistas ?/?</p>
                     <p>?/? Exp</p>
                 </div> */}
-                <hr />
-            </div>
-            <div className='XLR8'>
-                    <Progresso icone={faChevronDown}/>
-                </div>
         </div>
-    )
+      </div>
+      <hr />
+      <Accordion className="XLR8">
+        <Accordion.Header>
+        </Accordion.Header>
+        <Accordion.Body>
+            TEstando
+        </Accordion.Body>
+      </Accordion>
+    </div>
+  );
 };
 
 export default CartaoJogo;

@@ -77,16 +77,22 @@
 
 /* --- Cartão dos jogos ---------------------------------------------------- */
 
+.rootCartaoJogo {
+    background-color: var(--color-bg-main);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
 .enquadroCartaoJogo {
     width: min(90vw, 800px);
     
     display: flex;
     gap: 2rem;
 
-    background-color: var(--color-bg-main);
-    border-radius: 0.5rem;
-    padding: 1rem;
+    
 }
+
+
 
 .cartaoJogoImagem {
     flex-shrink: 0;
@@ -129,11 +135,28 @@
 }
 
 .XLR8 {
+    width: 100%;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
+    font-size: 20px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
 }
 
+.XLR8 hr{
+    width: 100%;
+
+}
+
+.XLR8 button {
+    width: 100% !important;
+}
+
+.XLR8:hover {
+    background-color: var(--color-text-disabled);
+}
 
 /* --- Progresso ----------------------------------------------------------- */
 
