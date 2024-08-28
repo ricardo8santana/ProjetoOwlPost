@@ -58,13 +58,14 @@ const PaginaCadastro = () => {
         }
 
         setValidated('true');
+        navigate('/');
 
-        const lastRoute = localStorage.getItem('last-route');
+        // const lastRoute = localStorage.getItem('last-route');
 
-        navigate(lastRoute ? lastRoute : '/');
+        // navigate(lastRoute ? lastRoute : '/');
         
-        localStorage.removeItem('last-route');
-        localStorage.removeItem('login-attempts');
+        // localStorage.removeItem('last-route');
+        // localStorage.removeItem('login-attempts');
     };
 
     return (

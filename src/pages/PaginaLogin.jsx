@@ -8,19 +8,13 @@ import { useEffect, useRef, useState } from 'react';
 import * as userService from '../services/userService.jsx';
 
 const PaginaLogin = () => {
-    const [validated, setValidated] = useState(true);
+    const [validated, setValidated] = useState('true');
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
 
-    useEffect(() => {
-        window.addEventListener('user-logout', () => {
-            navigate('/');
-        });
-    }, []);
-
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
         const form = event.currentTarget;
         
         if (form.checkValidity() === false) {
@@ -29,24 +23,30 @@ const PaginaLogin = () => {
             return;
         }
 
-        console.log(userService.users);
+        const user = await userService.login(username, password);
 
-        if (!userService.login(username, password)) {
+        if (!user) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();
             event.stopPropagation();
-            setValidated(false);
+            setValidated('false');
             return;
-        }
+        } 
 
-        setValidated(true);
+        console.warn(`Usuário logou! user: ${user.id} : ${user.username}`);
+
+        setValidated('true');
+
+        const loginDestination = localStorage.getItem('loginDestination') || '/';
+        localStorage.removeItem('loginDestination');
+
+        navigate(loginDestination, { replace: true });
         
-        const lastRoute = localStorage.getItem('last-route');
-
-        navigate(lastRoute ? lastRoute : '/');
-
-        localStorage.removeItem('last-route');
-        localStorage.removeItem('login-attempts');
+        // const returnRoute = localStorage.getItem('triedLoginFrom') || '/';
+        // console.log(`logado com sucesso, indo para ${returnRoute}...`);
+        // localStorage.removeItem('triedLoginFrom');
+        // localStorage.removeItem('alreadyTriedLogin');
+        // navigate(returnRoute);
     };
 
     return (

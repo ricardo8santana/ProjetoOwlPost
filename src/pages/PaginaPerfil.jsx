@@ -48,24 +48,26 @@ const PaginaPerfil = () => {
             navigate('/');
         });
 
+        if (!userService.isLoggedIn()) {
+            console.log('não está logado');
+            localStorage.setItem('loginDestination', '/perfil');
+            navigate('/login', { replace: true});
+            return;
+        }        
+
         const getLoggedUser = async () => {
-            const loggedUser = await userService.getLoggedUser();
+            console.log('tantando achar o usuário');
+            const user = await userService.getLoggedUser();
 
-            if (localStorage.getItem('login-attempts')) {
-                localStorage.removeItem('login-attempts');
-                navigate('/');
-                return;
+            if (!user) {
+                console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
+                navigate('/', { replace: true});
             }
-
-            if (!loggedUser) {
-                localStorage.setItem('last-route', '/perfil');
-                localStorage.setItem('login-attempts', 1);
-                navigate('/login');
-                return;
+            else {
+                setUser(user);
             }
-
-            setUser(loggedUser);
         };
+        
         getLoggedUser();
     }, []);
 

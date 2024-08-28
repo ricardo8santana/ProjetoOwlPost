@@ -53,54 +53,54 @@ export const createUser = async (username, email, password) => {
     }
 };
 
-export const isLoggedIn = async () => {
-    const user = await getLoggedUser();
-    const isLogged = user !== null;
-    console.log(`isLoggedIn() -> u: ${user} l: ${isLogged}`);
-    return isLogged;
-}
 
-export const getLoggedUser = async () => {
-    const userID = localStorage.getItem('logged-user');
-    
-    if (userID === null) {
-        return null;
-    }
-
-    return await getUser(userID);
-}
 
 const onUserLogout = new Event('user-logout');
 const onUserLogin = new Event('user-login');
 
 export const login = async (email, password) => {
     try {
-        const response = await axios.post(urlAPI + '/usuarios/login', {
+        const response = await axios.post(`${urlAPI}/usuarios/login/`, {
             email: email,
             senha: password
         });
 
-        localStorage.setItem('logged-user', response.data.userID);
-        window.dispatchEvent(onUserLogin);
-    } catch (err) {
-        console.log('Erro ao fazer login');
-    }
+        const userID = response.data.userID;
+        const currentUser = await getUser(userID);
 
-    // const loggedUser = getUsers().find(user => user.email == email && user.password == password);
-    // localStorage.setItem('logged-user', JSON.stringify(loggedUser));
-    // window.dispatchEvent(onUserLogin);
-    // return loggedUser;
+        localStorage.setItem('currentUserID', userID);
+
+        window.dispatchEvent(onUserLogin);
+
+        return currentUser;
+    } catch (err) {
+        console.log(`Erro ao fazer login! (${err})`);
+        return null;
+    }
 }
 
-export const logout = () => {
+export const logout = async () => {
     try {
-        const id_usuario = localStorage.getItem('logged-user');
-        const response = axios.delete(urlAPI + `/logins/${id_usuario}`);
-        localStorage.removeItem('logged-user');
+        localStorage.removeItem('currentUserID');
         window.dispatchEvent(onUserLogout);
     } catch (error) {
         console.log('Erro ao deslogar');        
     }
+}
+
+export const isLoggedIn = () => {
+    const userID = localStorage.getItem('currentUserID');
+    return userID !== null;
+}
+
+export const getLoggedUser = async () => {
+    const userID = localStorage.getItem('currentUserID');
+    
+    if (userID === null) {
+        return null;
+    }
+
+    return await getUser(userID);
 }
 
 export const debugGetRandomUser = async () => {
