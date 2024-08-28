@@ -1,9 +1,71 @@
 import './PaginaLogin.css';
 
 import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { useState } from 'react';
+
+import * as userService from '../services/userService.jsx';
+
+
 
 const PaginaCadastro = () => {
+    const navigate = useNavigate();
+    
+    const [validated, setValidated] = useState(false);
+    
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmation, setConfirmation] = useState('');
+
+    const isValidUsername = () => {
+        return username !== '';
+    }
+
+    const isValidEmail = () => {
+        // const emailValidationRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
+        const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+        return email && email.match(emailValidationRegex);
+    }
+
+    const isValidPassword = () => {
+        return (password && confirmation) && password === confirmation;
+    }
+
+    // useEffect(() => {
+    //     setPasswordsMatched(password === confirmation);
+    // }, [password, confirmation]);
+
+    const handleOnSubmit = (event) => {
+        
+        const form = event.currentTarget;
+
+        if (form.checkValidity() === false || !isValidUsername || !isValidEmail || !isValidPassword) {
+            event.preventDefault();
+            event.stopPropagation();
+            setValidated(false);
+            return;
+        }
+
+        userService.createUser(username, email, password);
+        if (!userService.login(email, password)) {
+            console.error(`Falha ao realizar login para ${username} ${password}`);
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
+
+        setValidated('true');
+
+        const lastRoute = localStorage.getItem('last-route');
+
+        navigate(lastRoute ? lastRoute : '/');
+        
+        localStorage.removeItem('last-route');
+        localStorage.removeItem('login-attempts');
+    };
 
     return (
         <div className='login-page'>
@@ -11,17 +73,42 @@ const PaginaCadastro = () => {
                 <div className='login-logo'>
                     <OwlpostSquareLogo />
                 </div>
-                
+
                 <h3>Criar nova conta</h3>
 
-                <form className='login-form'>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Senha" />
-                    <input type="password" placeholder="Confirmar Senha" />
-                    <input type="submit" value="Entrar" />
-                </form>
+                <Form id='sign-form' className='login-form' validate={validated} onSubmit={handleOnSubmit}>
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Nome de usuário" 
+                        autoComplete='username'
+                        isInvalid={!isValidUsername()}
+                        onChange={(e) => setUsername(e.target.value)} />
 
-                <Link className='login-link' to='/login'>já tenho uma conta</Link>
+                    <Form.Control
+                        type="email" 
+                        placeholder="Email"
+                        autoComplete='email' 
+                        isInvalid={!isValidEmail()}
+                        onChange={(e) => setEmail(e.target.value)} />
+
+                    <Form.Control 
+                        type="password" 
+                        placeholder="Senha" 
+                        autoComplete='new-password' 
+                        isInvalid={!isValidPassword()}
+                        onChange={(e) => setPassword(e.target.value)} />
+
+                    <Form.Control 
+                        type="password" 
+                        placeholder="Confirmar Senha" 
+                        autoComplete='new-password' 
+                        isInvalid={!isValidPassword()}
+                        onChange={(e) => setConfirmation(e.target.value)} />
+
+                    <Button variant='owl-primary' type="submit" >Criar Conta</Button>
+                </Form>
+
+                <Link className='login-link' to='/login'>Já tenho uma conta</Link>
             </div>
         </div>
     )

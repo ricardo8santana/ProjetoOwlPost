@@ -5,9 +5,13 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
+import { faMedal } from '@fortawesome/free-solid-svg-icons';
 
 import './DarkModeToggle.css';
 import './Navbar.css';
+import './DropdownMenu.css'
+
+
 
 // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 //   <Button variant='primary' ref={ref}
@@ -23,14 +27,23 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import * as userService from '../services/userService';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ThemeStorageKey = 'theme';
 const ThemeDark = 'dark';
 const ThemeLight = 'light';
 
 const DropdownItemLogin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOnClick = () => {
+    localStorage.setItem('last-route', location.pathname);
+    navigate('/login');
+  };
+
   return (
-    <Dropdown.Item href='/login' className='dropdown-box' eventKey="4">
+    <Dropdown.Item className='dropdown-box' eventKey="4" onClick={handleOnClick}>
       <div className='alinhamento-div'>
         <div className='dropdown-icone dropdown-alinhamento'>
           <FontAwesomeIcon icon={faArrowRightToBracket} />
@@ -60,7 +73,6 @@ const DropdownItemLogout = () => {
 
 function DropdownMenu() {
   const [useDarkMode, setUseDarkMode] = useState(false);
-  const [toggled, setToggled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
   const setTheme = (prefersDarkMode) => {
@@ -77,6 +89,8 @@ function DropdownMenu() {
   };
 
   useEffect(() => {
+    setIsLoggedIn(userService.isLoggedIn());
+
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
       console.log('logout from dropdown');
@@ -94,8 +108,6 @@ function DropdownMenu() {
   const handleThemeToggle = (event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    setToggled(!toggled);
     setTheme(!useDarkMode);
   };
 
@@ -134,17 +146,30 @@ function DropdownMenu() {
         <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle}>
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento' >
-              <FontAwesomeIcon icon={useDarkMode ? faMoon : faSun} style={{ width: '15.88', height: '15.88' }} />
+              <FontAwesomeIcon icon={faMoon} style={{ width: '15.88', height: '15.88' }} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{useDarkMode ? 'Tema claro' : 'Tema escuro'}</span>
+              <span className='fonte-dropdown'>Tema escuro</span>
             </div>
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
             {/* <FontAwesomeIcon icon={faToggleOff} style={{width: '25px', height: '20px'}} />  */}
-            <button className={`toggle-btn ${toggled ? "toggled" : ""}`} onClick={() => setToggled(!toggled)}>
+            <button className={`toggle-btn ${useDarkMode ? "toggled" : ""}`} onClick={() => setTheme(!useDarkMode)}>
               <div className='thumb'></div>
             </button>
+          </div>
+        </Dropdown.Item>
+        <Dropdown.Item className='dropdown-box' eventKey="4">
+          <div className='alinhamento-div'>
+            <div className='dropdown-icone dropdown-alinhamento' >
+              <FontAwesomeIcon icon={faMedal} />
+            </div>
+            <div className='espacamento-words'>
+              <span className='fonte-dropdown'>Minhas conquistas</span>
+            </div>
+          </div>
+          <div className='toggle-on-off dropdown-alinhamento'>
+
           </div>
         </Dropdown.Item>
         <Dropdown.Divider />

@@ -1,23 +1,25 @@
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Navbar.css';
 
 import Logo from '../assets/images/Group.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
-import DropdownMenu from './DropdownMenu.jsx';
-
-import * as userService from '../services/userService.jsx';
+import DropdownMenu from './DropdownMenu';
+import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
+import * as userService from '../services/userService';
 
 const Navbar = () => {
-  const [ isLoggedIn, setIsLoggedIn ] = useState(userService.isLoggedIn());
+  const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoggedIn(userService.isLoggedIn());
+
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
-      console.log('logout from navbar');
-    })
+    });
   }, []);
 
   return (
@@ -39,6 +41,20 @@ const Navbar = () => {
         {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
         <li className="nav-link">Suporte</li>
       </div>
+      {
+        isLoggedIn
+          ? (<div className='friend-button'>
+            <div className='friendship-suggestion'>
+              <button className='friendship-button'>10</button>
+            </div>
+            <button className='style-button'>
+              <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
+              <div className='pipe'></div>
+              <div className='number-five'>5</div>
+            </button>
+          </div>)
+          : null
+      }
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
         <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</Button>
