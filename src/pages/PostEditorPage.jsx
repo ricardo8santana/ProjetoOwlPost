@@ -7,11 +7,14 @@ import PostEditor from "../components/PostEditor";
 import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
+import * as userService from '../services/userService';
+
 import { debugGetRandomUser, getLoggedUser } from '../services/userService';
 
 import { Post } from '../services/postService';
 import { getTags } from '../services/tagService';
 import { useNavigate } from 'react-router-dom';
+
 
 const defaultContent = `
 # Escreva seu post
@@ -45,21 +48,27 @@ const PostEditorPage = () => {
             navigate('/');
         });
 
-        const loggedUser = getLoggedUser();
-        const loginAttempts = localStorage.getItem('login-attempts') || 0;
+        if (!userService.isLoggedIn()) {
+            console.log('não está logado');
+            localStorage.setItem('loginDestination', '/post-edit');
+            navigate('/login', { replace: true});
+            return;
+        }        
 
-        if (loginAttempts > 0) {
-            localStorage.removeItem('login-attempts');
-            navigate('/');
-        }
+        const getLoggedUser = async () => {
+            const user = await userService.getLoggedUser();
+            
+            if (!user) {
+                console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
+                navigate('/');
+            }
+            else {
+                setUser(user);
+            }
+        };
 
-        if (!loggedUser) {
-            localStorage.setItem('last-route', '/post-edit');
-            localStorage.setItem('login-attempts', 1);
-            navigate('/login');
-        }
-        
-        setUser(loggedUser);
+        getLoggedUser();
+
     }, [])
 
     const onContentChanged = (content) => {
