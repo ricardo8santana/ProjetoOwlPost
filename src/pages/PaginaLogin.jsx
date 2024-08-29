@@ -15,6 +15,8 @@ const PaginaLogin = () => {
     const [password, setPassword] = useState();
 
     const handleOnSubmit = async (event) => {
+        event.preventDefault();
+        
         const form = event.currentTarget;
         
         if (form.checkValidity() === false) {
@@ -36,6 +38,8 @@ const PaginaLogin = () => {
         console.warn(`Usuário logou! user: ${user.id} : ${user.username}`);
 
         setValidated('true');
+
+        navigate('/');
 
         const loginDestination = localStorage.getItem('loginDestination') || '/';
         localStorage.removeItem('loginDestination');
