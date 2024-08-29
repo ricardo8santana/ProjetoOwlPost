@@ -38,7 +38,8 @@ const PaginaCadastro = () => {
     //     setPasswordsMatched(password === confirmation);
     // }, [password, confirmation]);
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
         
         const form = event.currentTarget;
 
@@ -49,8 +50,9 @@ const PaginaCadastro = () => {
             return;
         }
 
-        userService.createUser(username, email, password);
-        if (!userService.login(email, password)) {
+        await userService.createUser(username, email, password);
+        const user = await userService.login(email, password);
+        if (!user) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();
             event.stopPropagation();
@@ -58,14 +60,11 @@ const PaginaCadastro = () => {
         }
 
         setValidated('true');
-        navigate('/');
 
-        // const lastRoute = localStorage.getItem('last-route');
+        const loginDestination = localStorage.getItem('loginDestination') || '/';
+        localStorage.removeItem('loginDestination');
 
-        // navigate(lastRoute ? lastRoute : '/');
-        
-        // localStorage.removeItem('last-route');
-        // localStorage.removeItem('login-attempts');
+        navigate(loginDestination, { replace: true });
     };
 
     return (

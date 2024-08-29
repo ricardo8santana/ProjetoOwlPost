@@ -30,6 +30,8 @@ const getUsers = async () => {
 }
 export const getUser = async (id) => {
     try {
+        console.log(`tentando achar o usuário ${id}`);
+
         const response = await axios.get(urlAPI + `/usuarios/id/${id}`);
         const { id_usuario, nome, email, senha, foto_perfil } = response.data.user;
         return new User(id_usuario, nome, email, senha, foto_perfil);
@@ -42,7 +44,7 @@ export const getUser = async (id) => {
 
 export const createUser = async (username, email, password) => {
     try {
-        const response = await axios.put(urlAPI + '/usuarios/', {
+        await axios.put(urlAPI + '/usuarios/', {
             nome: username,
             email: email,
             senha: password,
@@ -50,7 +52,7 @@ export const createUser = async (username, email, password) => {
         });
     }
     catch (err) {
-        console.error("Erro ao criar usuários");
+        console.error(`Erro ao criar usuários! ( ${err} )`);
     }
 };
 
@@ -65,14 +67,13 @@ export const login = async (email, password) => {
             email: email,
             senha: password
         });
+        console.log(`tentando logar como ${email} ${password}`);
+        console.log(`login response: ${JSON.stringify(response.data)}`);
 
         const userID = response.data.userID;
         const currentUser = await getUser(userID);
 
-        console.log(`currentUserID: ${userID}`);
-
         localStorage.setItem('currentUserID', userID);
-
         window.dispatchEvent(onUserLogin);
 
         return currentUser;

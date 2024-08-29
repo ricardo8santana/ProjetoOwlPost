@@ -39,8 +39,6 @@ const PaginaLogin = () => {
 
         setValidated('true');
 
-        navigate('/');
-
         const loginDestination = localStorage.getItem('loginDestination') || '/';
         localStorage.removeItem('loginDestination');
 
