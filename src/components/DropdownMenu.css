@@ -145,3 +145,24 @@ a.dropdown-box.dropdown-item:hover {
 .color-theme {
     color: black;
 }
+
+.button-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px !important;
+    height: 35px !important;
+    padding: 0;
+}
+
+.button-login svg {
+    margin: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.button-login .fotoPerfil {
+    background-color: white;
+    width: 100% !important;
+    height: 100% !important;
+}

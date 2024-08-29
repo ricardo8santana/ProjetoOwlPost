@@ -3,7 +3,7 @@ import './FotoPerfil.css'
 const FotoPerfil = ({user}) => {
     return (
         <div className='fotoPerfil'>
-            <img src={`data:image/png;base64,${user.profilePicture}`} loading='lazy'/>
+            <img src={user.profilePicture} loading='lazy'/>
         </div>
     )
 };
