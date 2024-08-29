@@ -9,28 +9,37 @@ import * as userService from '../services/userService.jsx';
 
 const PaginaLogin = () => {
     const [validated, setValidated] = useState('true');
+    const [failedToLogin, setFailedToLogin] = useState(false);
+
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState();
+    const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+
+    const isValidEmail = () => {
+        // const emailValidationRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
+        const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+        return email && email.match(emailValidationRegex);
+    }
 
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         
         const form = event.currentTarget;
         
-        if (form.checkValidity() === false) {
+        if (form.checkValidity() === false || !isValidEmail() || failedToLogin) {
             event.preventDefault();
             event.stopPropagation();
             return;
         }
 
-        const user = await userService.login(username, password);
+        const user = await userService.login(email, password);
 
         if (!user) {
-            console.error(`Falha ao realizar login para ${username} ${password}`);
+            console.error(`Falha ao realizar login para ${email} ${password}`);
             event.preventDefault();
             event.stopPropagation();
+            setFailedToLogin(true);
             setValidated('false');
             return;
         } 
@@ -41,14 +50,7 @@ const PaginaLogin = () => {
 
         const loginDestination = localStorage.getItem('loginDestination') || '/';
         localStorage.removeItem('loginDestination');
-
         navigate(loginDestination, { replace: true });
-        
-        // const returnRoute = localStorage.getItem('triedLoginFrom') || '/';
-        // console.log(`logado com sucesso, indo para ${returnRoute}...`);
-        // localStorage.removeItem('triedLoginFrom');
-        // localStorage.removeItem('alreadyTriedLogin');
-        // navigate(returnRoute);
     };
 
     return (
@@ -62,18 +64,24 @@ const PaginaLogin = () => {
                 
                 <Form id='login-form' className='login-form' validate={validated} onSubmit={handleOnSubmit}>
                 <Form.Control 
-                        type="text" 
-                        placeholder="Nome de usuário" 
-                        autoComplete='username'
-                        isInvalid={!validated}
-                        onChange={(e) => setUsername(e.target.value)} />
+                        type="email" 
+                        placeholder="Email" 
+                        autoComplete='email'
+                        isInvalid={!isValidEmail() || failedToLogin}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setFailedToLogin(false);
+                        }} />
 
                     <Form.Control 
                         type="password" 
                         placeholder="Senha" 
-                        isInvalid={!validated}
+                        isInvalid={failedToLogin}
                         autoComplete='current-password'
-                        onChange={(e) => setPassword(e.target.value)}/>
+                        onChange={(e) => { 
+                            setPassword(e.target.value);
+                            setFailedToLogin(false);
+                        }}/>
 
                     <Button variant='owl-primary' type="submit">Entrar</Button>
                 </Form>
