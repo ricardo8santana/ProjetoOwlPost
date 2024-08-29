@@ -1,4 +1,5 @@
 import Progresso from "./Progresso";
+import CartaoConquista from "./CartaoConquista";
 
 import {
   faArrowDown,
@@ -8,6 +9,11 @@ import {
 import { faClock, faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Accordion } from "react-bootstrap";
+import { useAccordionButton } from 'react-bootstrap'
+
+import { Button } from "react-bootstrap";
+
+
 
 const CartaoJogo = () => {
   return (
@@ -22,34 +28,22 @@ const CartaoJogo = () => {
         <div className="cartaoJogoDetalhes">
           <h2 className="cartaoJogoNome">Anel do Velho</h2>
           <div className="cartaoJogoInfo">
-            {/* <Progresso titulo='Ultima vez' icone={faClock} valor='2h atrás' /> */}
             <Progresso titulo="Tempo de jogo" icone={faClock} valor="30h" />
-            {/* </div>
-                <div className='cartaoJogoInfo'> */}
             <Progresso titulo="Conquistas" icone={faTrophy} valor="7 / 33" />
             <Progresso titulo="EXP" icone={faStar} valor="333" />
           </div>
-          {/* <div className='cartaoJogoInfo'>
-                    <p>Jogado a 10h atrás</p>
-                    <p>|</p>
-                    <p>30h jogadas</p>
-                </div>
-                <div className='cartaoJogoInfo'>
-                    <p>Progressão de conquistas</p>
-                    <p>Progressão de Exp</p>
-                </div>
-                <div className='cartaoJogoInfo'>
-                    <p>?% | Conquistas ?/?</p>
-                    <p>?/? Exp</p>
-                </div> */}
         </div>
       </div>
       <hr />
       <Accordion className="XLR8">
         <Accordion.Header>
+          <Button variant="owl-secondary">
+            <FontAwesomeIcon icon={faChevronDown}/>
+          </Button>
         </Accordion.Header>
         <Accordion.Body>
-            TEstando
+          <CartaoConquista />
+          <CartaoConquista />
         </Accordion.Body>
       </Accordion>
     </div>
