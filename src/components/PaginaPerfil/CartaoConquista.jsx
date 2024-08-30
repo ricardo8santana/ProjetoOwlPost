@@ -20,7 +20,7 @@ const CartaoConquista = () => {
             <div className="cartaoConquistaDetalhes">
                 <h4 className="cartaoJogoNome">Eu sou o Anel do Velho</h4>
                 <div className="cartaoJogoInfo">
-                    <h6>Desbloqueou todas as conquistas</h6>
+                    <p>Desbloqueou todas as conquistas</p>
                 </div>
             </div>
         </div>
