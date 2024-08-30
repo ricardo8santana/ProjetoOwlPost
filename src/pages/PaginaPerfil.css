@@ -151,13 +151,16 @@
     width: 100% !important;
 }
 
-
+.XLR8.accordion {
+    cursor: default;
+}
 
 /* --- CartaoConquista ------------------------------------------------------*/
 .enquadroCartaoConquista {
     width: 100%;
     display: flex;
     gap: 2rem;
+    cursor: default;
 }
 
 .cartaoConquistaImagem {
@@ -223,6 +226,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    cursor: default;
 }
 /* --- Progresso ----------------------------------------------------------- */
 
