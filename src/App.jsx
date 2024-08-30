@@ -11,6 +11,7 @@ import PostEditorPage from './pages/PostEditorPage'
 import Sobrenos from './components/Sobrenos';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import PaginaCalc from './pages/PaginaCalc';
 
 
 const routes = createBrowserRouter([
@@ -45,6 +46,10 @@ const routes = createBrowserRouter([
   {
     path: '/post-titulo',
     element: <PostTitulo />
+  },
+  {
+    path: '/pagina-calc',
+    element: <PaginaCalc/>
   }
 ]);
 
