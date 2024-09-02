@@ -1,30 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
-.carousel .carousel-indicators [data-bs-target] {
-    border-radius: 100%; 
-    width: 22px;
-    height: 19px;
-    margin-left: 18px;
-    background-color: #979797;
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
-.Carrosel-example-img{
+.carousel-inner {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item {
+    float: left;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.carousel-item {
+    transition: transform 0.6s ease-in-out !important;
+}
+
+.carousel-item-next{
+  transition: transform 0.6s ease-in-out !important;
+}
+/* 
+.carousel-item-prev{
+    transition: transform 0.6s ease-in-out !important;
+} */
+
+.carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+.carousel .carousel-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
     margin: 0;
 }
 
-.carousel-inner{
-    border-radius: 22px!important;
+.carousel .carousel-indicators button {
+    background-color: var(--color-neutral-0);
+    border-radius: 100%; 
+    width: 0.75rem !important;
+    height: 0.75rem !important;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.25);
 }
 
-.card{
+/* .card{
     background-color: #fff0!important;
     border: none!important;
     width: 50%!important;
-}
+} */
 
 .teste-1 {
     width: 100%;
@@ -37,6 +69,8 @@
     list-style: none;
     justify-content: space-between;
 }
+
+
 
 .margem-carrosel-jogos {
     font-family: 'Open Sans';
