@@ -75,43 +75,39 @@ export const login = async (email, password) => {
         const currentUser = await getUser(userID);
 
         const token = await crypto.encryptInt(userID);
-        const decrypted = await crypto.decryptInt(token);
-        console.log(`token: ${token} descrypted: ${decrypted}`)
-        localStorage.setItem('currentUserID', token);
+        localStorage.setItem('userToken', token);
 
         window.dispatchEvent(onUserLogin);
 
         return currentUser;
     } catch (err) {
-        console.log(`Erro ao fazer login! ( ${err} )`);
+        console.error(`Erro ao fazer login! ( ${err} )`);
         return null;
     }
 }
 
 export const logout = async () => {
     try {
-        localStorage.removeItem('currentUserID');
+        localStorage.removeItem('userToken');
         window.dispatchEvent(onUserLogout);
     } catch (error) {
-        console.log('Erro ao deslogar');        
+        console.error('Erro ao deslogar');        
     }
 }
 
 export const isLoggedIn = () => {
-    const userID = localStorage.getItem('currentUserID');
-    return userID !== null;
+    const userToken = localStorage.getItem('userToken');
+    return userToken !== null;
 }
 
 export const getLoggedUser = async () => {
-    const token = localStorage.getItem('currentUserID');
+    const token = localStorage.getItem('userToken');
     
     if (token === null) {
         return null;
     }
 
     const userID = await crypto.decryptInt(token);
-
-    console.log(`token: ${token} descrypted: ${userID}`)
     return await getUser(userID);
 }
 

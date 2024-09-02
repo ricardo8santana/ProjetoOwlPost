@@ -20,11 +20,11 @@ const initialize = async () => {
 
     sodium = await SodiumPlus.auto();
 
-    const c = new CryptographyKey(Buffer.from(key, 'hex'));
-    cryptoKey = c; // await sodium.crypto_secretbox_keygen();
+    cryptoKey = new CryptographyKey(Buffer.from(key, 'hex'));
+    cryptoNonce = new Buffer(nonce, 'hex');
     
-    const n = new Buffer(nonce, 'hex');
-    cryptoNonce = n; // await sodium.randombytes_buf(24);
+    // cryptoKey = await sodium.crypto_secretbox_keygen();
+    // cryptoNonce = await sodium.randombytes_buf(24);
 
     isInitialized = true;
 }
