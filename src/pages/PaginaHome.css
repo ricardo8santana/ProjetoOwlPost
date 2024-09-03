@@ -158,9 +158,21 @@
 }
 
 @media screen and (max-width: 425px) {
+    .destaques {
+        padding: 1rem;
+    }
+    .home-carousel {
+        padding: 0;
+    }
+
     .content-card {
         min-width: 100%;
         flex-grow: 1;
+    }
+
+    .integrante {
+        width: 150px;
+        padding: 0.5rem;
     }
 }
 
