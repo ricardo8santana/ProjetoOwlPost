@@ -7,13 +7,13 @@
 .carousel-inner {
     width: 100%;
     height: 100%;
+    border-radius: 12px !important;
 }
 
 .carousel-item {
     float: left;
     width: 100%;
     height: 100%;
-    border-radius: 12px !important;
     overflow: hidden;
 }
 
