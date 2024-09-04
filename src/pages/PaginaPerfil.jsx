@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getPosts, getPostsByUserID } from "../services/postService";
 import { debugGetRandomUser, getLoggedUser } from "../services/userService";
 import { redirect, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const UserGameList = () => {
     return (
@@ -88,6 +89,7 @@ const PaginaPerfil = () => {
                     </Tab>
                 </Tabs>
             </div>
+            <Footer />
         </>
     )
 };
