@@ -42,7 +42,7 @@ const Navbar = () => {
         {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
         <li className="nav-link">Suporte</li>
       </div>
-      {
+      {/* {
         isLoggedIn
           ? null
           : (<div className='friend-button'>
@@ -55,13 +55,16 @@ const Navbar = () => {
               <div className='number-five'>5</div>
             </button>
           </div>)
-      }
+      } */}
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
         <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</Button>
         <div>
           <DropdownMenu />
         </div>
+      </div>
+      <div className='mobile-menu'>
+        <DropdownBar />
       </div>
     </nav>
   );
