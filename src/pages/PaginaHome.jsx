@@ -141,7 +141,7 @@ const PaginaHome = () => {
 						<FontAwesomeIcon icon={faFacebook} />
 					</div>
 					<hr/>
-					<p>&copy; 2024, OwlPost,Inc. Todos os direitos reservados.</p>
+					<p>&copy; 2024, OwlPost, Inc. Todos os direitos reservados.</p>
 					<div className="alinhamento-links">
 						<Link>Termos de Serviço</Link>
 						<Link>Politica de Privacidade</Link>
