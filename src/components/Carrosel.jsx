@@ -5,48 +5,21 @@ import ExemploCarrosel from '../assets/images/ExemploCarrosel.jpg';
 import Card from 'react-bootstrap/Card';
 
 
-function CarroselHome() {
+const CarroselHome = ({ slides }) => {
+  if (!slides) {
+    return null;
+  }
+    
   return (
-        <Card>
-          <Carousel controls={false}>
-              <Carousel.Item>
-                <img
-                className='Carrosel-example-img'
-                src={ExemploCarrosel}
-                />
-                <Carousel.Caption>
-
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className='Carrosel-example-img'
-                  src={ExemploCarrosel}
-                />
-                <Carousel.Caption>
-
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-              <img
-                  className='Carrosel-example-img'
-                  src={ExemploCarrosel}
-                />
-                <Carousel.Caption>
-
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className='Carrosel-example-img'
-                  src={ExemploCarrosel}
-                />
-                <Carousel.Caption>
-
-                </Carousel.Caption>
-              </Carousel.Item>
-            </Carousel>
-        </Card>
+    <Carousel controls={false}>
+      {
+        slides.map(slide =>
+          <Carousel.Item>
+            <img className='carousel-image' src={slide.imagem} />
+          </Carousel.Item>
+        )
+      }
+    </Carousel>
   );
 }
 

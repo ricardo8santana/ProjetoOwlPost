@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getPosts, getPostsByUserID } from "../services/postService";
 import { debugGetRandomUser, getLoggedUser } from "../services/userService";
 import { redirect, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const UserGameList = () => {
     return (
@@ -69,7 +70,7 @@ const PaginaPerfil = () => {
             <Navbar />
             <div className="enquadroPagina">
                 <div className='enquadroPerfil'>
-                    <FotoPerfil user={user} />
+                    <FotoPerfil src={user.profilePicture} />
                     <div className='infoPerfil'>
                         <h2 className='infoUsername'>{user.username}</h2>
                         <div className="infoProgresso">
@@ -88,6 +89,7 @@ const PaginaPerfil = () => {
                     </Tab>
                 </Tabs>
             </div>
+            <Footer />
         </>
     )
 };

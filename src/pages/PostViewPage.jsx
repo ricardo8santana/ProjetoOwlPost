@@ -20,6 +20,7 @@ import Navbar from '../components/Navbar';
 import * as postService from '../services/postService';
 import { Link } from 'react-router-dom';
 import { getTags } from '../services/tagService';
+import Footer from '../components/Footer';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     if (includeTitles) {
@@ -144,6 +145,7 @@ const PostViewList = ({ posts }) => {
                 {/* <input type='button' className='btn-owl btn-load' value='Carregar Mais' /> */}
                 <Button variant='owl'>Carregar Mais</Button>
             </div>
+            <Footer />
         </>
     )
 };

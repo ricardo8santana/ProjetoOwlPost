@@ -35,10 +35,6 @@ const routes = createBrowserRouter([
     element: <PaginaCadastro />
   },
   {
-    path: '/sobrenos',
-    element: <Sobrenos />
-  },
-  {
     path: '/perfil',
     element: <PaginaPerfil />
   },
