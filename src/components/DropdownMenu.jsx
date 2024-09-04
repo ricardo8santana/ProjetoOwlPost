@@ -73,7 +73,6 @@ const DropdownItemLogout = () => {
 
 function DropdownMenu() {
   const [useDarkMode, setUseDarkMode] = useState(false);
-  const [toggled, setToggled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
   const setTheme = (prefersDarkMode) => {
@@ -109,8 +108,6 @@ function DropdownMenu() {
   const handleThemeToggle = (event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    setToggled(!toggled);
     setTheme(!useDarkMode);
   };
 
@@ -149,15 +146,15 @@ function DropdownMenu() {
         <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle}>
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento' >
-              <FontAwesomeIcon icon={useDarkMode ? faMoon : faSun} style={{ width: '15.88', height: '15.88' }} />
+              <FontAwesomeIcon icon={faMoon} style={{ width: '15.88', height: '15.88' }} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{useDarkMode ? 'Tema claro' : 'Tema escuro'}</span>
+              <span className='fonte-dropdown'>Tema escuro</span>
             </div>
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
             {/* <FontAwesomeIcon icon={faToggleOff} style={{width: '25px', height: '20px'}} />  */}
-            <button className={`toggle-btn ${toggled ? "toggled" : ""}`} onClick={() => setToggled(!toggled)}>
+            <button className={`toggle-btn ${useDarkMode ? "toggled" : ""}`} onClick={() => setTheme(!useDarkMode)}>
               <div className='thumb'></div>
             </button>
           </div>
