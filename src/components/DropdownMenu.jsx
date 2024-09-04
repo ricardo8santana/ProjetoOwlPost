@@ -29,6 +29,8 @@ import { useEffect, useState } from "react";
 import * as userService from '../services/userService';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import FotoPerfil from './FotoPerfil';
+
 const ThemeStorageKey = 'theme';
 const ThemeDark = 'dark';
 const ThemeLight = 'light';
@@ -72,6 +74,7 @@ const DropdownItemLogout = () => {
 }
 
 function DropdownMenu() {
+  const [user, setUser] = useState(null);
   const [useDarkMode, setUseDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
@@ -93,6 +96,8 @@ function DropdownMenu() {
 
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
+      setUser(null);
+      console.log('logout from dropdown');
     });
 
     const currentTheme = localStorage.getItem(ThemeStorageKey);
@@ -102,6 +107,16 @@ function DropdownMenu() {
       : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     setTheme(prefersDarkMode);
+
+    const getLoggedUser = async () => {
+      const user = await userService.getLoggedUser();
+
+      if (user) {
+        setUser(user);
+      }
+    }
+
+    getLoggedUser();
   }, []);
 
   const handleThemeToggle = (event) => {
@@ -113,7 +128,11 @@ function DropdownMenu() {
   return (
     <Dropdown>
       <Dropdown.Toggle active={false} id="dropdown-autoclose-true" className='button-login'>
-        <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
+        {
+          user !== null
+            ? <FotoPerfil user={user} />
+            : <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
+        }
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">

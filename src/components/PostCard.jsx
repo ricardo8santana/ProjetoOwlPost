@@ -2,7 +2,7 @@ import MDEditor from '@uiw/react-md-editor';
 import './PostCard.css';
 
 import { useState, useEffect } from 'react';
-import { getUser } from '../services/userService';
+import * as userService from '../services/userService';
 
 import FotoPerfil from '../components/FotoPerfil';
 
@@ -32,9 +32,15 @@ const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => 
 
 const PostCard = ({post}) => {
     const [timeSincePost, setTimeSincePost] = useState(0.0);
-    const user = getUser(post.userID);
+    const [user, setUser] = useState(userService.defaultUser);
 
     useEffect(() => {
+        const getUser = async () => {
+            setUser(await userService.getUser(post.userID));
+        }
+
+        getUser();
+
         const now = new Date();
         const date = new Date(post.date);
         const result = new Date();
