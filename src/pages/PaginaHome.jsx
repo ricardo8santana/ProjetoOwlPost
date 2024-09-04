@@ -39,7 +39,9 @@ const PaginaHome = () => {
 					<hr />
 					<div className="home-carousel">
 						<div className="home-carousel-container">
-							<CarroselHome slides={slides} />
+							<div className="home-carousel">
+								<CarroselHome slides={slides} />
+							</div>
 						</div>
 						<div className="home-content-container">
 							<div className="content-card">
