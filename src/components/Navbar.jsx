@@ -7,6 +7,7 @@ import './Navbar.css';
 import Logo from '../assets/images/Group.svg';
 import NomeLogo from '../assets/images/NameLogo.svg';
 import DropdownMenu from './DropdownMenu';
+import DropdownBar from './DropdownBar';
 import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
 import * as userService from '../services/userService';
 
@@ -43,7 +44,8 @@ const Navbar = () => {
       </div>
       {
         isLoggedIn
-          ? (<div className='friend-button'>
+          ? null
+          : (<div className='friend-button'>
             <div className='friendship-suggestion'>
               <button className='friendship-button'>10</button>
             </div>
@@ -53,7 +55,6 @@ const Navbar = () => {
               <div className='number-five'>5</div>
             </button>
           </div>)
-          : null
       }
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
