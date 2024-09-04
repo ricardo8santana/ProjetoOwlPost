@@ -111,10 +111,13 @@ function DropdownMenu() {
     const getLoggedUser = async () => {
       const user = await userService.getLoggedUser();
 
-      if (user) {
+      if (!user) {
+        console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
+      }
+      else {
         setUser(user);
       }
-    }
+    };
 
     getLoggedUser();
   }, []);
@@ -130,7 +133,7 @@ function DropdownMenu() {
       <Dropdown.Toggle active={false} id="dropdown-autoclose-true" className='button-login'>
         {
           user !== null
-            ? <FotoPerfil user={user} />
+            ? <FotoPerfil src={user.profilePicture} />
             : <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
         }
       </Dropdown.Toggle>
