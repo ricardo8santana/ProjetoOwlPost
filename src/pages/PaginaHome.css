@@ -10,6 +10,10 @@
     /* background: linear-gradient(135deg, var(--color-bg-main), var(--color-bg-body) 60%, var(--color-bg-main)); */
 }
 
+.page-section:has(.destaques) {
+    min-height: calc(100vh - 74px);
+}
+
 .destaques {
     padding: 4rem;
     display: flex;
