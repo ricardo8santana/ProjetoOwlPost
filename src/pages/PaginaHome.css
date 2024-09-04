@@ -52,6 +52,7 @@
     display: flex;
 }
 
+.grupo,
 .sobre {
     width: 100%;
     padding: 4rem;
@@ -87,12 +88,17 @@
     color: var(--color-neutral-2);
 }
 
+.grupo {
+    color: var(--color-text-main);
+}
+
 .integrantes {
     display: flex;
     flex-wrap: wrap;
 
     justify-content: center;
     gap: 1rem 2rem;
+    
 }
 
 .integrante {
@@ -115,6 +121,7 @@
     aspect-ratio: 1;
 
     border-radius: 50%;
+    box-shadow: 0 0px 12px -4px  rgba(0,0,0,0.125);
     overflow: hidden;
 }
 
@@ -189,6 +196,22 @@
     flex-direction: column;
     padding: 2rem;
     gap: 1rem;
+    background: var(--gradient-header) !important;
+    color: var(--color-neutral-0);
+}
+
+.enquadroFooter hr {
+    color: var(--color-neutral-0);
+    width: 100%;
+}
+
+.enquadroFooter a {
+    color: var(--color-neutral-0);
+    text-decoration: none;
+}
+
+.enquadroFooter a:hover {
+    color: var(--color-neutral-2);
 }
 
 .enquadroFooter * {
@@ -204,8 +227,8 @@
 }
 
 .alinhamento-icones svg {
-    height: 35px;
-    width: 35px;
+    height: 30px;
+    width: 30px;
 }
 
 .alinhamento-links {

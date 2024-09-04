@@ -8,6 +8,7 @@ import './PaginaHome.css';
 
 import Carousel0 from '../assets/images/carousel_0.jpg';
 import Carousel1 from '../assets/images/carousel_1.jpg';
+import { Link } from "react-router-dom";
 
 const slides = [
 	{
@@ -84,7 +85,7 @@ const PaginaHome = () => {
 				</div>
 			</PageSection>
 			<PageSection>
-				<div className="sobre">
+				<div className="grupo">
 					<h1>Os integrantes do grupo </h1>
 					<hr />
 
@@ -130,7 +131,7 @@ const PaginaHome = () => {
 					     
 				</div>
 			</PageSection>
-			<PageSection isEnd hugContent variant='alternative'>
+			<PageSection isEnd hugContent variant='secondary'>
 				<div className="enquadroFooter">
 					<div className="alinhamento-icones">
 						<FontAwesomeIcon icon={faYoutube} />
@@ -140,8 +141,8 @@ const PaginaHome = () => {
 					<hr/>
 					<p>&copy; 2024, OwlPost,Inc. Todos os direitos reservados.</p>
 					<div className="alinhamento-links">
-						<a href="#">Termos de Serviço</a>
-						<a href="#">Politica de Privacidade</a>
+						<Link>Termos de Serviço</Link>
+						<Link>Politica de Privacidade</Link>
 					</div>
 				</div>
 			</PageSection>
