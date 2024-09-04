@@ -93,7 +93,6 @@ function DropdownMenu() {
 
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
-      console.log('logout from dropdown');
     });
 
     const currentTheme = localStorage.getItem(ThemeStorageKey);

@@ -154,23 +154,13 @@
     text-wrap: pretty;
 }
 
-.integrante .foto-perfil {
-    width: 100%;
+.integrante .fotoPerfil {
+    width: 100% !important;
+    height: unset !important;
     aspect-ratio: 1;
 
-    border-radius: 50%;
     box-shadow: 0 0px 12px -4px  rgba(0,0,0,0.125);
-    overflow: hidden;
 }
-
-.integrante .foto-perfil img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-
 
 @media screen and (max-width: 768px) {
     .home-carousel {

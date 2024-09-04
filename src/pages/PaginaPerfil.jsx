@@ -70,7 +70,7 @@ const PaginaPerfil = () => {
             <Navbar />
             <div className="enquadroPagina">
                 <div className='enquadroPerfil'>
-                    <FotoPerfil user={user} />
+                    <FotoPerfil src={user.profilePicture} />
                     <div className='infoPerfil'>
                         <h2 className='infoUsername'>{user.username}</h2>
                         <div className="infoProgresso">

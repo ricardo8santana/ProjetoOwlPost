@@ -10,6 +10,7 @@ import Carousel0 from '../assets/images/carousel_0.jpg';
 import Carousel1 from '../assets/images/carousel_1.jpg';
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import FotoPerfil from "../components/FotoPerfil";
 
 const slides = [
   {
@@ -74,9 +75,7 @@ const IntegranteGrupo = ({ nome, githubUserID }) => {
   /* https://github.com/{username}.png?size=40 */
   return (
     <div className="integrante">
-      <div className="foto-perfil">
-        <img src={`https://avatars.githubusercontent.com/u/${githubUserID}?s=250&v=4`} />
-      </div>
+      <FotoPerfil src={`https://avatars.githubusercontent.com/u/${githubUserID}?s=250&v=4`} />
       <p>{nome}</p>
     </div>
   )
