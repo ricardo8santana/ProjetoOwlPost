@@ -1,9 +1,9 @@
 import './FotoPerfil.css'
 
-const FotoPerfil = ({user}) => {
+const FotoPerfil = ({src}) => {
     return (
         <div className='fotoPerfil'>
-            <img src={user.profilePicture} alt="Foto de Perfil" />
+            <img src={src} alt="Foto de Perfil" loading='lazy'/>
         </div>
     )
 };

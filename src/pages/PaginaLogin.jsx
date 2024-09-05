@@ -8,45 +8,49 @@ import { useEffect, useRef, useState } from 'react';
 import * as userService from '../services/userService.jsx';
 
 const PaginaLogin = () => {
-    const [validated, setValidated] = useState(true);
+    const [validated, setValidated] = useState('true');
+    const [failedToLogin, setFailedToLogin] = useState(false);
+
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
-    useEffect(() => {
-        window.addEventListener('user-logout', () => {
-            navigate('/');
-        });
-    }, []);
+    const isValidEmail = () => {
+        // const emailValidationRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
+        const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+        return email && email.match(emailValidationRegex);
+    }
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
+        
         const form = event.currentTarget;
         
-        if (form.checkValidity() === false) {
+        if (form.checkValidity() === false || !isValidEmail() || failedToLogin) {
             event.preventDefault();
             event.stopPropagation();
             return;
         }
 
-        console.log(userService.users);
+        const user = await userService.login(email, password);
 
-        if (!userService.login(username, password)) {
-            console.error(`Falha ao realizar login para ${username} ${password}`);
+        if (!user) {
+            console.error(`Falha ao realizar login para ${email} ${password}`);
             event.preventDefault();
             event.stopPropagation();
-            setValidated(false);
+            setFailedToLogin(true);
+            setValidated('false');
             return;
-        }
+        } 
 
-        setValidated(true);
-        
-        const lastRoute = localStorage.getItem('last-route');
+        console.warn(`Usuário logou! user: ${user.id} : ${user.username}`);
 
-        navigate(lastRoute ? lastRoute : '/');
+        setValidated('true');
 
-        localStorage.removeItem('last-route');
-        localStorage.removeItem('login-attempts');
+        const loginDestination = localStorage.getItem('loginDestination') || '/';
+        localStorage.removeItem('loginDestination');
+        navigate(loginDestination, { replace: true });
     };
 
     return (
@@ -60,18 +64,24 @@ const PaginaLogin = () => {
                 
                 <Form id='login-form' className='login-form' validate={validated} onSubmit={handleOnSubmit}>
                 <Form.Control 
-                        type="text" 
-                        placeholder="Nome de usuário" 
-                        autoComplete='username'
-                        isInvalid={!validated}
-                        onChange={(e) => setUsername(e.target.value)} />
+                        type="email" 
+                        placeholder="Email" 
+                        autoComplete='email'
+                        isInvalid={!isValidEmail() || failedToLogin}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setFailedToLogin(false);
+                        }} />
 
                     <Form.Control 
                         type="password" 
                         placeholder="Senha" 
-                        isInvalid={!validated}
+                        isInvalid={failedToLogin}
                         autoComplete='current-password'
-                        onChange={(e) => setPassword(e.target.value)}/>
+                        onChange={(e) => { 
+                            setPassword(e.target.value);
+                            setFailedToLogin(false);
+                        }}/>
 
                     <Button variant='owl-primary' type="submit">Entrar</Button>
                 </Form>

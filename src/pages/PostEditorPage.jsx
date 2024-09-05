@@ -1,16 +1,20 @@
 import './PostEditorPage.css'
 
 import { Button } from "react-bootstrap";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import PostEditor from "../components/PostEditor";
 import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
-import { debugGetRandomUser } from '../services/userService';
+import * as userService from '../services/userService';
+
+import { debugGetRandomUser, getLoggedUser } from '../services/userService';
 
 import { Post } from '../services/postService';
 import { getTags } from '../services/tagService';
+import { useNavigate } from 'react-router-dom';
+
 
 const defaultContent = `
 # Escreva seu post
@@ -33,8 +37,39 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 `;
 
 const PostEditorPage = () => {
+    const navigate = useNavigate();
+    
     const [content, setContent] = useState(defaultContent);
     const [title, setTitle] = useState(null);
+    const [user, setUser] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('user-logout', () => {
+            navigate('/');
+        });
+
+        if (!userService.isLoggedIn()) {
+            console.log('não está logado');
+            localStorage.setItem('loginDestination', '/post-edit');
+            navigate('/login', { replace: true});
+            return;
+        }        
+
+        const getLoggedUser = async () => {
+            const user = await userService.getLoggedUser();
+            
+            if (!user) {
+                console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
+                navigate('/');
+            }
+            else {
+                setUser(user);
+            }
+        };
+
+        getLoggedUser();
+
+    }, [])
 
     const onContentChanged = (content) => {
         setContent(content);
@@ -50,7 +85,7 @@ const PostEditorPage = () => {
             return;
         }
         
-        const user = debugGetRandomUser();
+        // const user = debugGetRandomUser();
         const date = new Date();
         const tags = [ getTags()[0] ];
 

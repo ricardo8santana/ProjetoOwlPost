@@ -1,11 +1,11 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import './DarkModeToggle.css';
 import './Navbar.css';
@@ -28,6 +28,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import * as userService from '../services/userService';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import FotoPerfil from './FotoPerfil';
 
 const ThemeStorageKey = 'theme';
 const ThemeDark = 'dark';
@@ -72,6 +74,7 @@ const DropdownItemLogout = () => {
 }
 
 function DropdownMenu() {
+  const [user, setUser] = useState(null);
   const [useDarkMode, setUseDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
@@ -93,6 +96,7 @@ function DropdownMenu() {
 
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);
+      setUser(null);
       console.log('logout from dropdown');
     });
 
@@ -103,6 +107,19 @@ function DropdownMenu() {
       : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     setTheme(prefersDarkMode);
+
+    const getLoggedUser = async () => {
+      const user = await userService.getLoggedUser();
+
+      if (!user) {
+        console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
+      }
+      else {
+        setUser(user);
+      }
+    };
+
+    getLoggedUser();
   }, []);
 
   const handleThemeToggle = (event) => {
@@ -114,7 +131,11 @@ function DropdownMenu() {
   return (
     <Dropdown>
       <Dropdown.Toggle active={false} id="dropdown-autoclose-true" className='button-login'>
-        <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
+        {
+          user !== null
+            ? <FotoPerfil src={user.profilePicture} />
+            : <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
+        }
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">
