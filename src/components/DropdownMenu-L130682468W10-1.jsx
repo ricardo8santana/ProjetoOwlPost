@@ -23,7 +23,6 @@ import './DropdownMenu.css'
 //   </Button>
 // ));
 
-import { useTranslation } from "react-i18next";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -129,19 +128,6 @@ function DropdownMenu() {
     setTheme(!useDarkMode);
   };
 
-  const { 
-    t,
-    i18n: { changeLanguage, language },
-  } = useTranslation()
-
-  const [currentLanguage, setCurrentLanguage] = useState(language)
-
-  const handleChangeLanguage = () => {
-    const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
-    changeLanguage(newLanguage)
-    setCurrentLanguage(newLanguage)
-  }
-
   return (
     <Dropdown>
       <Dropdown.Toggle active={false} id="dropdown-autoclose-true" className='button-login'>
@@ -158,20 +144,20 @@ function DropdownMenu() {
               <FontAwesomeIcon icon={faCircleUserSolid} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{t('profile')}</span>
+              <span className='fonte-dropdown'>Perfil</span>
             </div>
           </div>
           <div className='arrow-right dropdown-alinhamento'>
             <FontAwesomeIcon icon={faAngleRight} />
           </div>
         </Dropdown.Item>
-        <Dropdown.Item onClick={handleChangeLanguage} className='dropdown-box' eventKey="2">
+        <Dropdown.Item className='dropdown-box' eventKey="2">
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento'>
               <FontAwesomeIcon icon={faGlobe} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{t('language')}</span>
+              <span className='fonte-dropdown'>Idioma</span>
             </div>
           </div>
           <div className='arrow-right dropdown-alinhamento'>
@@ -184,7 +170,7 @@ function DropdownMenu() {
               <FontAwesomeIcon icon={faMoon} style={{ width: '15.88', height: '15.88' }} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{t('dark-theme')}</span>
+              <span className='fonte-dropdown'>Tema escuro</span>
             </div>
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
@@ -200,7 +186,7 @@ function DropdownMenu() {
               <FontAwesomeIcon icon={faMedal} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{t('achievements')}</span>
+              <span className='fonte-dropdown'>Minhas conquistas</span>
             </div>
           </div>
           <div className='toggle-on-off dropdown-alinhamento'>
