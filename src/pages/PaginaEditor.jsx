@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { Post } from '../services/postService';
 import { getTags } from '../services/tagService';
 
-import { Button, Dropdown, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCross, faPlus, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
@@ -95,6 +95,8 @@ const PaginaEditor = () => {
     const tags = [getTags()[0]];
 
     postService.createPost(new Post(user.id, date, tags, title, content));
+
+    navigate('/posts');
   };
 
   const handleRemoveTag = (tag) => {
@@ -115,8 +117,7 @@ const PaginaEditor = () => {
 
     setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
   };
-
-
+  
   return (
     <>
       <Navbar />
@@ -132,35 +133,46 @@ const PaginaEditor = () => {
                 )
               }
             </div>
-            <input type='text' list='tags' className="btn-tag alt" placeholder="Adicionar Tag +"/>
-            <datalist id="tags">
-              {
-                availableTags.map(tag => 
-                  <option value={tag.name}/>
-                )
-              }
-            </datalist>
-            {/* <Dropdown>
-              <Dropdown.Toggle className="btn-tag btn-owl secondary">
-                <p>Adicionar Tag</p>
-                <FontAwesomeIcon icon={faPlus}/>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {                  
-                  availableTags.map(tag => 
-                    <Dropdown.Item onClick={() => handleInsertTag(tag)}>{tag.name}</Dropdown.Item>
-                  )
-                }
-              </Dropdown.Menu>
-            </Dropdown> */}
+            <TagButton availableTags={availableTags} onSubmit={tagName => handleInsertTag({ name: tagName })} />
           </div>
           <PostEditor content={content} contentChanged={onContentChanged} />
-          <Button type="submit" className="editor-submit-btn" variant="owl-primary" onClick={onSubmitClicked}>Postar</Button>
+          <Button className="editor-submit-btn" variant="owl-primary" onClick={onSubmitClicked}>Postar</Button>
         </Form>
       </div>
       <Footer />
     </>
   )
 };
+
+function TagButton ({availableTags, onSubmit}) {
+  const [tagName, setTagName] = useState('');
+
+  return (
+    <ButtonGroup>
+      <input 
+        type='text' 
+        list='tags' 
+        className="input-tag alt" 
+        placeholder="Adicionar Tag" 
+        value={tagName}
+        onChange={e => setTagName(e.target.value)}/>
+
+      <Button className="btn-tag btn-owl secondary" onClick={e => {
+          onSubmit(tagName);
+          setTagName('');
+        }}>
+        <FontAwesomeIcon icon={faPlus} />
+      </Button>
+
+      <datalist id="tags">
+        {
+          availableTags.map(tag => 
+            <option value={tag.name}/>
+          )
+        }
+      </datalist>
+    </ButtonGroup> 
+  )
+}
 
 export default PaginaEditor;

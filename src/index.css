@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Mono:wght@100..900&display=swap');
 
 /* Importa os estilos padrão do site */
+@import url('./styles/core.css');
 @import url('./styles/colors.css');
 @import url('./styles/inputs.css');
 @import url('./styles/buttons.css');

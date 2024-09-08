@@ -62,7 +62,7 @@
     background-color: var(--color-bg-alt);
     padding: 0rem 0.75rem;
     height: 2.5rem;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
 
     margin-top: 10px;
     margin-right: 10px;
@@ -79,14 +79,27 @@
     border-radius: 50%;
 }
 
+.tag-container .btn-group {
+    width: 25%;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.input-tag {
+    padding: 0.5rem 0.5rem !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
 
 .btn-tag {
     width: max-content !important;
-    margin-top: 10px;
 
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    padding: 0.5rem 1rem !important;
 }
 
 @media screen and (max-width: 768px) {
