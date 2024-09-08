@@ -13,39 +13,126 @@ export class Post {
 }
 
 const posts = [
-    new Post(1, 1, new Date(), [ getTags()[0] ], 'Lorem markdownum adspicit', 
-`## Calydon manebat at dixit
+    new Post(1, 1, new Date(), [ getTags()[0] ], 'Como funcionam as postagens', 
+`# Como funcionam as postagens.
 
-Lorem markdownum adspicit neque imagine iunxit nobis. Error doluit non,
-cunctisque ponti respicio figuras lumen: hoc *unxit* feri, qua et et aut. Ire
-deserere male gravis liliaque et vultus, non voces animos *et*. Locutus fretum
-pingues sumus Iuppiter celebrabere hospita commendat nymphae: utile vota,
-[experientia tuetur](http://ultoris-rigescunt.com/tu) concitat fallebat abest
-tempestivus monstra. Quoque annua, et Rhoetus secretaque prosunt pectore fecerit
-adimam dura corpus, glaebis adest.
+Aqui você pode escrever o que quiser, talvez algo interessante, talvez até 
+incluir algumas imagens.
 
-1. Ruricolae nitidis Panchaeaque videre carus nunc Byblis
-2. In cornua tempora veniebat furibundus sorores fera
-3. Hebeti sublato quondam
-4. Nec notissima tamen inguine silentia
-5. Lelegeia notissima culpam pacis
-6. Iove usque relaxant iugalibus sub diu`),
+![](https://img.freepik.com/fotos-gratis/personagem-de-estilo-anime-no-espaco_23-2151134100.jpg)
+___
+Tudo aqui é escrito em **Markdown** ou **MD** para simplicficar, uma 
+**linguagem de marcação**, ou em outras palavras, um meio de escrever que usa 
+símbolos e caracteres especiais para formatar seu texto.
 
-    new Post(2, 2, new Date(), [ getTags()[1] ], 'Duo Sigei sit peterem', 
-`Duo Sigei sit peterem auras *onerique* copia hac praesente totis saucia est
-corpore vestrae. Melanthus et columque *consuetas loqui*, nitidis in deserti
-vicem. Deo pro, cum ferat successit Phrygiae animasque cum tardos *cum*, mala
-leviter videre et? Et studiis patefecit, superis velociter patriisque auceps,
-nec Turni? Mores [perque optandi me](http://www.moriens.io/) crista tegmine:
-[Aesonides usquam](http://generisque.org/prolesqueeras) vitae, una flore furens
-emicuit mea *Acmon* terraeque hostis.
+> **Porque usar Markdown?**
+>
+> É uma forma simples e rápida de criar textos. Podem conter conteúdos externos 
+> (*como conteúdo da internet*) como links, imagens e até mesmo vídeos e outros sites
+> se você decidir se aprofundar um pouquinho.
 
-Tulit pecudesque imagine ac sibi titulum habet, mittor et semper rubra carpe
-visus ducere, est Minos? Amazone possit, quo adacto, sunt tardatus voce, est. Te
-redit Hector quem praefixo, de est postquam claviger:
-[timor](http://letum.org/). Timorem scelerataque fecit meminitque **narres**,
-erat tune: via proles tellure stipe quaque vincla cupit properamus. Longumque
-gravet ictus iam mutatus cura eodem gemini: nunc denique!`),
+Você vai usar o editor para escrever seus posts. O editor é divido em dois paineis:
+- O code (*painel da esquerda*) é onde você vai poder escrever e editar seus posts.
+- O preview (*painel da direita*) é onde você pode ver como seu post está ficando.
+
+Você pode alternar entre eles usando os botões na barra de ferramentas, que fica
+em cima do editor. Nela também vão ter alguns atalhos bem uteis.`),
+
+    new Post(2, 2, new Date(), [ getTags()[1] ], 'Como escrever em markdown', 
+`# Como escrever em markdown
+
+Um guia simples de como escrever em markdown, qualquer duvida, dê uma olhada no 
+painel da esquerda, nele tem vários exemplos de como tudo funciona.
+
+## Como criar títulos
+
+O símbolo para criar títulos é o hashtag \`#\`. Para criar títulos use de 1 a 6 \`#\` 
+seguido de um espaço e o seu título. 
+
+> Não esqueça de deixar uma linha em branco entre seu título e seus parágrafos.
+
+\`\`\`md
+# Meu título principal
+\`\`\`
+ou
+\`\`\`md
+# Meu título secundário
+\`\`\`
+
+## Como criar um parágrafo
+
+Parágrafos são separados por uma linha em branco entre eles, não precisa de mais 
+nada, o markdown vai entender e criar seus parágrafos.
+
+Parágrafos devem estar no começo da linha, evite colocar espaços antes de um parágrafo.
+
+\`\`\`md
+Parágrafo 1 ...
+            <- Linha em branco
+Parágrafo 2 ...
+\`\`\`
+
+## Como formatar meu texto
+
+O símbolo para formatar textos é o \`*\`. 
+
+Você pode criar um *texto em itálico* usando o \`*\` seguido do texto e feche 
+usando o \`*\` novamente.
+
+\`\`\`md 
+*meu texto em itálico*
+\`\`\`
+
+Você pode criar um **texto em negrito** usando o dois \`*\` seguido do texto e 
+feche usando dois \`*\` novamente.
+
+\`\`\`md 
+**meu texto em negrito**
+\`\`\`
+
+Você pode combinar os dois para criar um ***texto em itálico e negrito*** usando 
+três \`*\` seguido do texto e feche usando três \`*\` novamente.
+
+\`\`\`md 
+***meu texto em itálico e negrito***
+\`\`\`
+
+## Como separar meu texto
+
+Alguns textos precisam estar separados para fazerem sentido na hora de ler. 
+
+Para criar uma barra que separa seu texto use três underlines \`_\` seguidos.
+
+\`\`\`md 
+Cria uma barra que separa esse parágrafo...
+_ _ _ 
+...deste outro.
+\`\`\`
+___
+
+Algumas vezes você quer que seu texto continue na linha de baixo, mas no markdown 
+não é tão simples quanto pular uma linha e continuar escrevendo na linha de baixo.  
+
+O markdown permite que você pule linhas para organizar seu texto no editor, então 
+ele ignora essas **quebras de linha** e considera tudo como o mesmo parágrafo.
+
+Para pular uma linha use 2 ou mais espaços no final da linha e continue escrevendo 
+na linha de baixo.
+
+\`\`\`md 
+meu texto_ _        <- dois espaços
+que continua na linha de baixo.
+\`\`\`
+## Quer aprender mais
+
+Esse guia foi apenas o básico para começar a escrever em markdown. Ainda tem muitas 
+coisas que não apareceram nesse guia, como listas, citações, blocos de código, 
+links, imagens e muito mais.
+
+Quer aprender mais sobre **Markdown**? comece por esses links:
+
+- [O que é Markdown](https://markdown.net.br/)
+- [Como escrever Markdown](https://markdown.net.br/sintaxe-basica/))`),
 
     new Post(3, 3, new Date(), [ getTags()[2] ], 'Calydon manebat', 
 `## Calydon manebat at dixit
