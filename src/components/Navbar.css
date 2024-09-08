@@ -66,24 +66,22 @@
 
 .sign-in-button {
   background-color: transparent;
-  /* color: #ffffff; */
   color: var(--color-neutral-0);
-  /* border: 1px solid #ffffff; */
   border: 1px solid var(--color-neutral-0);
   border-radius: 8px;
   width: 86px;
   height: 39px;
+  padding: 0 !important;
 }
 
 .sign-up-button {
-  /* background-color: #ffffff; */
   background-color: var(--color-neutral-0);
-  /* color: #0037FF; */
   color: var(--color-main-normal);
   border: none;
   border-radius: 8px;
   height: 39px;
   width: 119px;
+  padding: 0 !important;
 }
 
 

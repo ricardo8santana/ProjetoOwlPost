@@ -73,7 +73,7 @@ const PaginaEditor = () => {
 
     setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
 
-    routingService.redirectToLoginWhenNoUser(`/editor/${postID}`);
+    routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
     userService.getLoggedUserSync(user => setUser(user));
   }, [])
 

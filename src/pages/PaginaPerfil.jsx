@@ -1,6 +1,6 @@
 import FotoPerfil from "../components/FotoPerfil";
-import Progresso from "../components/paginaPerfil/Progresso";
-import CartaoJogo from "../components/paginaPerfil/CartaoJogo";
+import Progresso from "../components/PaginaPerfil/Progresso";
+import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
 
 import PostCard from "../components/PostCard";
 
