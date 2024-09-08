@@ -59,9 +59,17 @@ const PaginaEditor = () => {
 
   const { postID } = useParams();
 
-  const [content, setContent] = useState(defaultContent);
-  const [title, setTitle] = useState(null);
-  const [tags, setTags] = useState([]);
+  const post = postService.getPostByID(parseInt(postID));
+
+  console.log(`Trying loading post with id: ${postID}. Result: ${post}`);
+
+  const postContent = post ? post.content : defaultContent;
+  const postTitle = post ? post.title : "";
+  const postTags = post ? post.tags : [];
+
+  const [content, setContent] = useState(postContent);
+  const [title, setTitle] = useState(postTitle);
+  const [tags, setTags] = useState(postTags);
 
   const [availableTags, setAvailableTags] = useState([]);
   const [user, setUser] = useState(false);
@@ -91,6 +99,11 @@ const PaginaEditor = () => {
       return;
     }
 
+    if (post !== null) {
+      console.warn("Ainda não é possível editar posts");
+      return;
+    }
+
     const date = new Date();
     const tags = [getTags()[0]];
 
@@ -117,7 +130,7 @@ const PaginaEditor = () => {
 
     setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
   };
-  
+
   return (
     <>
       <Navbar />

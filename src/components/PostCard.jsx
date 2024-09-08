@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import * as userService from '../services/userService';
 
 import FotoPerfil from '../components/FotoPerfil';
+import { useNavigate } from 'react-router-dom';
 
 const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     if (includeTitles) {
@@ -31,6 +32,8 @@ const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => 
 };
 
 const PostCard = ({post}) => {
+    const navigate = useNavigate();
+
     const [timeSincePost, setTimeSincePost] = useState(0.0);
     const [user, setUser] = useState(userService.defaultUser);
 
@@ -54,8 +57,12 @@ const PostCard = ({post}) => {
             `${result.getDay()} dias`);
     }, []);
 
+    const handleOnClick = () => {
+        navigate(`/editor/${post.id}`);
+    }
+
     return (
-        <div className='post-card'>
+        <div className='post-card' onClick={handleOnClick}>
             <div className='post-card-author'>
                 {/* <div className='profile-picture'>
                     <img src={user.profilePicture}/>
