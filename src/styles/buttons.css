@@ -17,14 +17,18 @@
 ----------------------------------------------------------------------------- */
 
 /* wildcard - seleciona qualquer classe que comece com 'btn btn-owl' */
-*[class^="btn btn-owl"],
+*[class*="btn btn-owl"],
 .btn-owl {
     background-color: var(--color-bg-main) !important;
     color: var(--color-text-main) !important;
-    border-radius: 0.5rem;
+    border-radius: 12px;
     border: none;
     padding: 0 2rem;
     height: 2.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     transition: 
         box-shadow 0.25s ease,

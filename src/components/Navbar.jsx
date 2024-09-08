@@ -37,9 +37,8 @@ const Navbar = () => {
         />
       </div>
       <div className="nav-links">
-        <li className="nav-link" onClick={() => navigate('/post')}>Comunidade</li>
-        <li className="nav-link" onClick={() => navigate('/post-edit')}>Editor</li>
-        {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
+        <li className="nav-link" onClick={() => navigate('/posts')}>Comunidade</li>
+        <li className="nav-link" onClick={() => navigate('/editor/0')}>Editor</li>
         <li className="nav-link">Suporte</li>
       </div>
       {/* {

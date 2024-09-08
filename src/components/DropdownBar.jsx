@@ -178,7 +178,7 @@ function MenuShow() {
             <FontAwesomeIcon icon={faAngleRight} />
           </div>
         </Dropdown.Item>
-        <Dropdown.Item href='/post-edit' className='dropdown-box' eventKey="5">
+        <Dropdown.Item href='/editor/0' className='dropdown-box' eventKey="5">
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento'>
               <FontAwesomeIcon icon={faNotesMedical} />
@@ -216,16 +216,3 @@ function MenuShow() {
 }
 
 export default MenuShow;
-
-
-
-// <div className='mobile-menu'>
-      //   <li className="nav-link" onClick={() => navigate('/post')}>Comunidade</li>
-      //   <li className="nav-link" onClick={() => navigate('/post-edit')}>Editor</li>
-      //   {/* TEMPORÁRIO <li className="nav-link">Notícias</li> */}
-      //   <li className="nav-link">Suporte</li>
-      //   <div>
-      //     <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
-      //     <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</Button>
-      //   </div>
-// </div>

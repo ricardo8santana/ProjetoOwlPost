@@ -135,7 +135,7 @@ const PostViewList = ({ posts }) => {
                     </div>
                 </div>
                 <div className='post-view-options'>
-                    <Link className='btn-owl btn-create' to='/post-edit'>Criar Post</Link>
+                    <Link className='btn-owl btn-create' to='/editor/0'>Criar Post</Link>
                 </div>
                 {
                     posts.map(post =>
