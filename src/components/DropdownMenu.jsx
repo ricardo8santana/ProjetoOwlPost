@@ -8,7 +8,6 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import './DarkModeToggle.css';
-import './Navbar.css';
 import './DropdownMenu.css'
 
 
@@ -130,11 +129,11 @@ function DropdownMenu() {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle active={false} id="dropdown-autoclose-true" className='button-login'>
+      <Dropdown.Toggle id="dropdown-autoclose-true" className='button-login'>
         {
           user !== null
-            ? <FotoPerfil src={user.profilePicture} />
-            : <FontAwesomeIcon className='profile-button' icon={faCircleUserRegular} />
+            ? <FotoPerfil className='btn-owl link-alt' src={user.profilePicture} />
+            : <FontAwesomeIcon className='btn-owl link-alt profile-button' icon={faCircleUserRegular} />
         }
       </Dropdown.Toggle>
       <Dropdown.Menu>

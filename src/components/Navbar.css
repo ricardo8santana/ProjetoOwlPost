@@ -9,6 +9,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  gap: 16px;
   background: var(--gradient-header);
   /* background-image: linear-gradient(to right, #002199, #0027b2, #002ccb, #0032e5, #0037ff);  */
   /* background-image: linear-gradient(to right,
@@ -22,12 +23,12 @@
   align-items: center;
   margin-left: 30px;
   cursor: pointer;
+  gap: 8px;
+  height: 40px !important;
 }
 
 .logo-image {
-  width: 24.85px;
-  height: 33.1px;
-  margin-right: 6px;
+  height: 40px;
 }
 
 .logo-text {
@@ -43,8 +44,8 @@
   color: var(--color-neutral-0);
   list-style-type: none;
   display: flex;
-  flex: 0.9;
-  gap: 36px;
+  flex-grow: 1;
+  gap: 12px;
 }
 
 .nav-link {
@@ -85,17 +86,9 @@
 }
 
 
-.profile-button {
-  width: 31px;
-  height: 31px;
-  color: #fafafc;
-  margin-top: 5px;
-}
 
-.button-login {
-  border: none!important;
-  background-color: inherit!important;
- }
+
+
 
 .profile-img {
   cursor: pointer;

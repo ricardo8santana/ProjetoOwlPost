@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Navbar.css';
 
@@ -25,21 +25,14 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="logo" onClick={() => navigate('/')}>
-        <img
-          src={Logo}
-          alt=""
-          className="logo-image"
-        />
-        <img
-          src={NomeLogo}
-          className='logo-name'
-        />
+      <div className="logo btn-owl link-alt" onClick={() => navigate('/')}>
+        <img src={Logo} alt="" className="logo-image"/>
+        <img src={NomeLogo} className='logo-name' />
       </div>
       <div className="nav-links">
-        <li className="nav-link" onClick={() => navigate('/posts')}>Comunidade</li>
-        <li className="nav-link" onClick={() => navigate('/editor/0')}>Editor</li>
-        <li className="nav-link">Suporte</li>
+        <Link to={'/posts'} className="btn-owl link-alt nav-link">Comunidade</Link>
+        <Link to={'/editor/0'} className="btn-owl link-alt nav-link">Editor</Link>
+        <Link className="btn-owl link-alt nav-link">Suporte</Link>
       </div>
       {
         !isLoggedIn

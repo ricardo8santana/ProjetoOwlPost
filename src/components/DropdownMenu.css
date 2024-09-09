@@ -149,13 +149,27 @@ a.dropdown-box.dropdown-item:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: transparent !important;
     width: 35px !important;
     height: 35px !important;
     padding: 0;
+    border: none!important;
 }
 
-.button-login svg {
-    margin: 0;
+
+.profile-button {
+    width: 35px !important;
+    height: 35px !important;
+    background-color: transparent !important;
+    color: #fafafc !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    margin-top: 5px;
+    border-radius: 50% !important;
+}
+
+.profile-button svg {
+    background-color: transparent !important;
     width: 100% !important;
     height: 100% !important;
 }
