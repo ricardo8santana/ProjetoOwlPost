@@ -57,7 +57,7 @@ function DropdownMenu() {
         </Dropdown.Item>
 
         <DropdownItemDarkModoToggle eventKey="3"/>
-        <DropdownItemLink name="Minhas conquistas" icon={faMedal} eventKey="4" />
+        <DropdownItemLink name="Minhas conquistas" icon={faMedal} eventKey="4" to="/perfil/#conquistas" />
         
         <Dropdown.Divider />
 
