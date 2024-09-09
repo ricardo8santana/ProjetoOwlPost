@@ -41,8 +41,8 @@ const Navbar = () => {
         <li className="nav-link" onClick={() => navigate('/editor/0')}>Editor</li>
         <li className="nav-link">Suporte</li>
       </div>
-      {/* {
-        isLoggedIn
+      {
+        !isLoggedIn
           ? null
           : (<div className='friend-button'>
             <div className='friendship-suggestion'>
@@ -54,7 +54,7 @@ const Navbar = () => {
               <div className='number-five'>5</div>
             </button>
           </div>)
-      } */}
+      }
       <div className="auth-buttons">
         <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>Entrar</Button>
         <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>Cadastrar-se</Button>
