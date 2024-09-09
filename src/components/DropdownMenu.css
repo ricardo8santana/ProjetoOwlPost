@@ -146,25 +146,22 @@ a.dropdown-box.dropdown-item:hover {
 }
 
 .button-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block !important;
     background-color: transparent !important;
     width: 35px !important;
     height: 35px !important;
-    padding: 0;
+    padding: 0 !important;
     border: none!important;
 }
 
 
 .profile-button {
-    width: 35px !important;
-    height: 35px !important;
     background-color: transparent !important;
     color: #fafafc !important;
     padding: 0 !important;
     margin: 0 !important;
-    margin-top: 5px;
+    width: 35px !important;
+    height: 35px !important;
     border-radius: 50% !important;
 }
 

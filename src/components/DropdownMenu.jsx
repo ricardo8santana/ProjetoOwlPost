@@ -1,40 +1,98 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightToBracket, faArrowRightFromBracket, faAngleRight, faGlobe, faMoon, faMedal } from '@fortawesome/free-solid-svg-icons';
+
+
+
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import * as userService from '../services/userService';
+
+import FotoPerfil from './FotoPerfil';
 
 import './DarkModeToggle.css';
 import './DropdownMenu.css'
 
+function DropdownMenu() {
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
 
 
-// const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-//   <Button variant='primary' ref={ref}
-//   onClick={(e) => {
-//     e.preventDefault();
-//     onClick(e);
-//   }}>
+  useEffect(() => {
+    setIsLoggedIn(userService.isLoggedIn());
 
-//   </Button>
-// ));
+    window.addEventListener('user-logout', () => {
+      setIsLoggedIn(false);
+      setUser(null);
+      console.log('logout from dropdown');
+    });
 
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import * as userService from '../services/userService';
-import { useLocation, useNavigate } from 'react-router-dom';
+    userService.getLoggedUserSync((user) => setUser(user));
+  }, []);
 
-import FotoPerfil from './FotoPerfil';
+  return (
+    <Dropdown>
+      <Dropdown.Toggle id="dropdown-autoclose-true" className='btn-owl link-alt button-login'>
+        {
+          user !== null
+            ? <FotoPerfil className='' src={user.profilePicture} />
+            : <FontAwesomeIcon className='btn-owl link-alt profile-button' icon={faCircleUserRegular} />
+        }
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <DropdownItemLink name="Perfil" icon={faCircleUserSolid} to="/perfil"/>
 
-const ThemeStorageKey = 'theme';
-const ThemeDark = 'dark';
-const ThemeLight = 'light';
+        {/* Matheus: Não tirei esse pq não sei como vai funcionar o idioma */}
+        <Dropdown.Item className='dropdown-box' eventKey="2">
+          <div className='alinhamento-div'>
+            <div className='dropdown-icone dropdown-alinhamento'>
+              <FontAwesomeIcon icon={faGlobe} />
+            </div>
+            <div className='espacamento-words'>
+              <span className='fonte-dropdown'>Idioma</span>
+            </div>
+          </div>
+          <div className='arrow-right dropdown-alinhamento'>
+            <FontAwesomeIcon icon={faAngleRight} />
+          </div>
+        </Dropdown.Item>
 
-const DropdownItemLogin = () => {
+        <DropdownItemDarkModoToggle />
+        <DropdownItemLink name="Minhas conquistas" icon={faMedal}/>
+        <Dropdown.Divider />
+        {
+          isLoggedIn
+            ? <DropdownItemLogout />
+            : <DropdownItemLogin />
+        }
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
+
+function DropdownItemLink({ name, to, icon }) {
+  return (
+    <Dropdown.Item href={to} className='dropdown-box' eventKey="4">
+      <div className='alinhamento-div'>
+        <div className='dropdown-icone dropdown-alinhamento' >
+          <FontAwesomeIcon icon={icon} />
+        </div>
+        <div className='espacamento-words'>
+          <span className='fonte-dropdown'>{name}</span>
+        </div>
+      </div>
+      <div className='toggle-on-off dropdown-alinhamento'>
+        <FontAwesomeIcon icon={faAngleRight} />
+      </div>
+    </Dropdown.Item>
+  );
+};
+
+function DropdownItemLogin() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -54,10 +112,10 @@ const DropdownItemLogin = () => {
         </div>
       </div>
     </Dropdown.Item>
-  )
+  );
 };
 
-const DropdownItemLogout = () => {
+function DropdownItemLogout() {
   return (
     <Dropdown.Item className='dropdown-box' eventKey="4" onClick={() => userService.logout()}>
       <div className='alinhamento-div'>
@@ -69,57 +127,36 @@ const DropdownItemLogout = () => {
         </div>
       </div>
     </Dropdown.Item>
-  )
-}
+  );
+};
 
-function DropdownMenu() {
-  const [user, setUser] = useState(null);
+function DropdownItemDarkModoToggle() {
   const [useDarkMode, setUseDarkMode] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
+
+  useEffect(() => {
+    const currentTheme = localStorage.getItem('theme');
+
+    // Se não tiver um tema salvo usa o tema do navegador.
+    let prefersDarkMode = currentTheme !== null
+      ? currentTheme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    setTheme(prefersDarkMode);
+
+  }, []);
 
   const setTheme = (prefersDarkMode) => {
     setUseDarkMode(prefersDarkMode);
 
     if (prefersDarkMode) {
-      localStorage.setItem(ThemeStorageKey, ThemeDark);
+      localStorage.setItem('theme', 'dark');
       document.body.classList.add('dark-mode');
     }
     else {
-      localStorage.setItem(ThemeStorageKey, ThemeLight);
+      localStorage.setItem('theme', 'light');
       document.body.classList.remove('dark-mode');
     }
   };
-
-  useEffect(() => {
-    setIsLoggedIn(userService.isLoggedIn());
-
-    window.addEventListener('user-logout', () => {
-      setIsLoggedIn(false);
-      setUser(null);
-      console.log('logout from dropdown');
-    });
-
-    const currentTheme = localStorage.getItem(ThemeStorageKey);
-
-    let prefersDarkMode = currentTheme !== null
-      ? currentTheme === ThemeDark
-      : window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    setTheme(prefersDarkMode);
-
-    const getLoggedUser = async () => {
-      const user = await userService.getLoggedUser();
-
-      if (!user) {
-        console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
-      }
-      else {
-        setUser(user);
-      }
-    };
-
-    getLoggedUser();
-  }, []);
 
   const handleThemeToggle = (event) => {
     event.preventDefault();
@@ -128,79 +165,22 @@ function DropdownMenu() {
   };
 
   return (
-    <Dropdown>
-      <Dropdown.Toggle id="dropdown-autoclose-true" className='button-login'>
-        {
-          user !== null
-            ? <FotoPerfil className='btn-owl link-alt' src={user.profilePicture} />
-            : <FontAwesomeIcon className='btn-owl link-alt profile-button' icon={faCircleUserRegular} />
-        }
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item href='/perfil' className='dropdown-box' eventKey="1">
-          <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento'>
-              <FontAwesomeIcon icon={faCircleUserSolid} />
-            </div>
-            <div className='espacamento-words'>
-              <span className='fonte-dropdown'>Perfil</span>
-            </div>
-          </div>
-          <div className='arrow-right dropdown-alinhamento'>
-            <FontAwesomeIcon icon={faAngleRight} />
-          </div>
-        </Dropdown.Item>
-        <Dropdown.Item className='dropdown-box' eventKey="2">
-          <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento'>
-              <FontAwesomeIcon icon={faGlobe} />
-            </div>
-            <div className='espacamento-words'>
-              <span className='fonte-dropdown'>Idioma</span>
-            </div>
-          </div>
-          <div className='arrow-right dropdown-alinhamento'>
-            <FontAwesomeIcon icon={faAngleRight} />
-          </div>
-        </Dropdown.Item>
-        <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle}>
-          <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento' >
-              <FontAwesomeIcon icon={faMoon} style={{ width: '15.88', height: '15.88' }} />
-            </div>
-            <div className='espacamento-words'>
-              <span className='fonte-dropdown'>Tema escuro</span>
-            </div>
-          </div>
-          <div className='toggle-on-off dropdown-alinhamento'>
-            {/* <FontAwesomeIcon icon={faToggleOff} style={{width: '25px', height: '20px'}} />  */}
-            <button className={`toggle-btn ${useDarkMode ? "toggled" : ""}`} onClick={() => setTheme(!useDarkMode)}>
-              <div className='thumb'></div>
-            </button>
-          </div>
-        </Dropdown.Item>
-        <Dropdown.Item className='dropdown-box' eventKey="4">
-          <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento' >
-              <FontAwesomeIcon icon={faMedal} />
-            </div>
-            <div className='espacamento-words'>
-              <span className='fonte-dropdown'>Minhas conquistas</span>
-            </div>
-          </div>
-          <div className='toggle-on-off dropdown-alinhamento'>
-
-          </div>
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        {
-          isLoggedIn
-            ? <DropdownItemLogout />
-            : <DropdownItemLogin />
-        }
-      </Dropdown.Menu>
-    </Dropdown>
+    <Dropdown.Item className='dropdown-box' eventKey="3" onClick={handleThemeToggle}>
+      <div className='alinhamento-div'>
+        <div className='dropdown-icone dropdown-alinhamento' >
+          <FontAwesomeIcon icon={faMoon} style={{ width: '15.88', height: '15.88' }} />
+        </div>
+        <div className='espacamento-words'>
+          <span className='fonte-dropdown'>Tema escuro</span>
+        </div>
+      </div>
+      <div className='toggle-on-off dropdown-alinhamento'>
+        <button className={`toggle-btn ${useDarkMode ? "toggled" : ""}`} onClick={() => setTheme(!useDarkMode)}>
+          <div className='thumb'></div>
+        </button>
+      </div>
+    </Dropdown.Item>
   );
-}
+};
 
 export default DropdownMenu;
