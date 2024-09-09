@@ -136,8 +136,13 @@ const PaginaEditor = () => {
       <Navbar />
       <div className="editor-page-root">
         <Form className="editor-page">
-          <h2 className="editor-page-title">Criar Post</h2>
-          <input className="alt editor-page-post" type='text' placeholder="Um nome interessante para o seu post" onChange={onTitleChanged} />
+          <h2 className="editor-page-title">{post ? post.title : 'Criar Post'}</h2>
+          <input 
+            type='text' 
+            className="alt editor-page-post" 
+            placeholder="Um nome interessante para o seu post" 
+            hidden={post}
+            onChange={onTitleChanged} />
           <div className="tag-container">
             <div className="tag-list">
               {
@@ -146,10 +151,10 @@ const PaginaEditor = () => {
                 )
               }
             </div>
-            <TagButton availableTags={availableTags} onSubmit={tagName => handleInsertTag({ name: tagName })} />
+            <TagButton hidden={post} availableTags={availableTags} onSubmit={tagName => handleInsertTag({ name: tagName })} />
           </div>
           <PostEditor content={content} contentChanged={onContentChanged} />
-          <Button className="editor-submit-btn" variant="owl-primary" onClick={onSubmitClicked}>Postar</Button>
+          <Button hidden={post} className="editor-submit-btn" variant="owl-primary" onClick={onSubmitClicked}>Postar</Button>
         </Form>
       </div>
       <Footer />
@@ -157,11 +162,11 @@ const PaginaEditor = () => {
   )
 };
 
-function TagButton ({availableTags, onSubmit}) {
+function TagButton ({availableTags, onSubmit, hidden}) {
   const [tagName, setTagName] = useState('');
 
   return (
-    <ButtonGroup>
+    <ButtonGroup hidden={hidden}>
       <input 
         type='text' 
         list='tags' 
