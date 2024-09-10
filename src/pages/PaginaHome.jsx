@@ -1,6 +1,9 @@
 import CarroselHome from "../components/Carrosel";
 import Navbar from "../components/Navbar";
 import PageSection from "../components/PageSection";
+import { useLayoutEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
 
@@ -84,6 +87,25 @@ const IntegranteGrupo = ({ nome, githubUserID }) => {
 const PaginaHome = () => {
   const slideDestaques = slides.slice(0, 4);
 
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to(".about-site", {
+      x: 0,
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".secondary",
+        markers: true,
+        start: "top 520px",
+        end: "bottom 600px",
+        scrub: true
+      }
+    })
+
+    return () => {
+      gsap.killTweensOf(".about-site")
+    }
+  }, [])
+
   return (
     <div className="home">
       <Navbar />
@@ -110,7 +132,7 @@ const PaginaHome = () => {
       </PageSection>
       <PageSection variant='secondary'>
         <div className="sobre">
-          <h1>Um pouco sobre o site</h1>
+              <h1 className="about-site">Um pouco sobre o site</h1>
           <hr />
 
           <div className="sobre-buble">
