@@ -2,7 +2,7 @@ import axios from "axios";
 import * as crypto from './crypto';
 import { Buffer } from 'buffer';
 
-import defaultImage from '../assets/images/defaultProfilePic.jpg';
+import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
 
 
 // Pra funcionar no celular precisa trocar pelo ip da maquina que tá rodando 
@@ -22,14 +22,23 @@ export class User {
 }
 
 // export const defaultUser = new User(0, 'username', 'username@email.com', 'password', defaultImage);
-export const defaultUser = new User(0, 'username', 'username@email.com', 'password', defaultImage);
+export const defaultUser = new User(0, 'username', 'username@email.com', 'password', defaultProfilePicture);
 
 const getUsers = async () => {
     try {
         const response = await axios.get(urlAPI + '/usuarios/');
-        return response.data.map(({id_usuario, nome, email, senha, foto_perfil}) => {
-            return new User(id_usuario, nome, email, senha, `${urlAPI}/uploads/${foto_perfil}`);
-            // return new User(id_usuario, nome, email, senha, `data:image/png;base64,${foto_perfil}`);
+        return response.data.map(({id, nome, email, senha, fotoPerfil, fotoFormato}) => {
+            let profileImage = defaultProfilePicture;
+        
+            const hasProfileImage = fotoPerfil && fotoFormato;
+            if (hasProfileImage)
+            {
+                const buffer = Buffer.from(fotoPerfil);
+                const image = buffer.toString('base64');
+                profileImage = `data:${fotoFormato};base64,${image}`
+            }
+
+            return new User(id, nome, email, senha, profileImage);
         });
     }
     catch (err) {
@@ -37,13 +46,23 @@ const getUsers = async () => {
         return [];
     }
 }
-export const getUser = async (id) => {
+
+export const getUser = async (userID) => {
     try {
-        const response = await axios.get(urlAPI + `/usuarios/id/${id}`);
-        console.log('aconteceu aqui! > getUser() <');
-        const { id_usuario, nome, email, senha, foto_perfil } = response.data.user;
-        return new User(id_usuario, nome, email, senha, `${urlAPI}/uploads/${foto_perfil}`);
-        // return new User(id_usuario, nome, email, senha, `data:image/png;base64,${foto_perfil}`);
+        const response = await axios.get(urlAPI + `/usuarios/${userID}`);
+        const { id, nome, email, senha, fotoPerfil, fotoFormato } = response.data.user;
+        
+        let profileImage = defaultProfilePicture;
+        
+        const hasProfileImage = fotoPerfil && fotoFormato;
+        if (hasProfileImage)
+        {
+            const buffer = Buffer.from(fotoPerfil);
+            const image = buffer.toString('base64');
+            profileImage = `data:${fotoFormato};base64,${image}`
+        }
+
+        return new User(id, nome, email, senha, profileImage);
     } 
     catch (err) {
         console.error(`Erro ao buscar usuário! ${err}`);
@@ -53,31 +72,20 @@ export const getUser = async (id) => {
 
 export const createUser = async (username, email, password) => {
     try {
-        const response = await fetch(defaultImage);
+        const response = await fetch(defaultProfilePicture);
         const blob = await response.blob();
 
         const formData = new FormData();
         formData.append('nome', username);
         formData.append('email', email);
         formData.append('senha', password);
-        formData.append('profilePic', blob, 'defaultProfilePic.jpg');
+        formData.append('fotoPerfil', blob, 'defaultProfilePic.jpg');
 
-        await axios.put(urlAPI + '/usuarios/alt', formData, {
+        await axios.put(urlAPI + '/usuarios/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
-        }).then(res => {
-            console.log('Usuário criado com sucesso');
-        }).catch(err => {
-            console.error(`Erro ao criar usuário. ${err}`);
-        })
-        // await axios.put(urlAPI + '/usuarios/', {
-        //     nome: username,
-        //     email: email,
-        //     senha: password,
-        //     foto_perfil: imageBuffer,
-        // });
-        console.log('aconteceu aqui! > createUser() <');
+        });
     }
     catch (err) {
         console.error(`Erro ao criar usuários! ( ${err} )`);
@@ -90,9 +98,30 @@ const onUserLogout = new Event('user-logout');
 const onUserLogin = new Event('user-login');
 
 
+export const isLoggedIn = () => {
+    const userToken = localStorage.getItem('userToken');
+    return userToken !== null;
+}
+
+export const getLoggedUser = async () => {
+    const token = localStorage.getItem('userToken');
+    
+    if (token === null) {
+        return null;
+    }
+
+    const userID = await crypto.decryptInt(token);
+    return await getUser(userID);
+}
+
+export const getLoggedUserSync = async (callback) => {
+    const user = await getLoggedUser();
+    callback(user);
+}
+
 export const login = async (email, password) => {
     try {
-        const response = await axios.post(`${urlAPI}/usuarios/login/`, {
+        const response = await axios.post(`${urlAPI}/logins/`, {
             email: email,
             senha: password
         });
@@ -116,6 +145,13 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
     try {
+        const user = await getLoggedUser();
+        console.log(`${urlAPI}/logins/${user.id}`);
+        await axios.patch(`${urlAPI}/logins/`, {
+            id: user.id,
+            logado: false,
+        });
+
         localStorage.removeItem('userToken');
         window.dispatchEvent(onUserLogout);
     } catch (error) {
@@ -123,28 +159,3 @@ export const logout = async () => {
     }
 }
 
-export const isLoggedIn = () => {
-    const userToken = localStorage.getItem('userToken');
-    return userToken !== null;
-}
-
-export const getLoggedUser = async () => {
-    const token = localStorage.getItem('userToken');
-    
-    if (token === null) {
-        return null;
-    }
-
-    const userID = await crypto.decryptInt(token);
-    return await getUser(userID);
-}
-
-export const getLoggedUserSync = async (callback) => {
-    const user = await getLoggedUser();
-    callback(user);
-}
-
-export const debugGetRandomUser = async () => {
-    const users = await getUsers();
-    return users[Math.floor(Math.random() * users.length)];
-};
