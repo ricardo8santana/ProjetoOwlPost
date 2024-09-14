@@ -1,43 +1,22 @@
-import FotoPerfil from "../components/FotoPerfil";
-import Progresso from "../components/PaginaPerfil/Progresso";
-import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
-
-import PostCard from "../components/PostCard";
-
 import './PaginaPerfil.css';
+
 import { faNewspaper, faStar, faTrophy } from "@fortawesome/free-solid-svg-icons";
-import Navbar from '../components/Navbar';
+import { useNavigate } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getPosts, getPostsByUserID } from "../services/postService";
-import { redirect, useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
 
+import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
+import Progresso from "../components/PaginaPerfil/Progresso";
+import FotoPerfil from "../components/FotoPerfil";
+import PostCard from "../components/PostCard";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
+import { getPostsByUserID } from "../services/postService";
+
+import * as routingService from "../services/routingService";
+import * as authService from "../services/authService";
 import * as userService from "../services/userService";
-
-const UserGameList = () => {
-    return (
-        <div className="gameList">
-            <CartaoJogo />
-            <CartaoJogo />
-            <CartaoJogo />
-        </div>
-    )
-};
-
-const UserPostList = ({ user }) => {
-    const posts = getPostsByUserID(user.id);
-
-    return (
-        <div className="postList">
-            {
-                posts.map(post =>
-                    <PostCard post={post} />
-                )
-            }
-        </div>
-    )
-};
 
 const PaginaPerfil = () => {
     const navigate = useNavigate();
@@ -49,27 +28,9 @@ const PaginaPerfil = () => {
             navigate('/');
         });
 
-        if (!userService.isLoggedIn()) {
-            console.log('não está logado');
-            localStorage.setItem('loginDestination', '/perfil');
-            navigate('/login', { replace: true});
-            return;
-        }        
-
-        const getLoggedUser = async () => {
-            console.log('tantando achar o usuário');
-            const user = await userService.getLoggedUser();
-
-            if (!user) {
-                console.log('Erro ao tentar encontrar o usuário logado! indo pra home...');
-                navigate('/', { replace: true});
-            }
-            else {
-                setUser(user);
-            }
-        };
+        routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
+        authService.getLoggedUserSync(user => setUser(user));
         
-        getLoggedUser();
     }, []);
 
     return (
@@ -98,6 +59,30 @@ const PaginaPerfil = () => {
             </div>
             <Footer />
         </>
+    )
+};
+
+function UserGameList () {
+    return (
+        <div className="gameList">
+            <CartaoJogo />
+            <CartaoJogo />
+            <CartaoJogo />
+        </div>
+    )
+};
+
+function UserPostList({ user }) {
+    const posts = getPostsByUserID(user.id);
+
+    return (
+        <div className="postList">
+            {
+                posts.map(post =>
+                    <PostCard post={post} />
+                )
+            }
+        </div>
     )
 };
 

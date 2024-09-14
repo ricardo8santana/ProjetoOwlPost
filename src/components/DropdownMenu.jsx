@@ -7,7 +7,7 @@ import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-s
 import { faAngleRight, faGlobe, faMedal } from '@fortawesome/free-solid-svg-icons';
 
 import { useEffect, useState } from "react";
-import * as userService from '../services/userService';
+import * as authService from '../services/authService';
 
 import FotoPerfil from './FotoPerfil';
 
@@ -26,7 +26,7 @@ function DropdownMenu() {
       setUser(null);
     });
 
-    userService.getLoggedUserSync((user) => setUser(user));
+    authService.getLoggedUserSync((user) => setUser(user));
   }, []);
 
   return (

@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Navbar.css';
 
-import Logo from '../assets/images/Group.svg';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+
+
 import NomeLogo from '../assets/images/NameLogo.svg';
+import Logo from '../assets/images/Group.svg';
 import DropdownMenu from './DropdownMenu';
 import DropdownBar from './DropdownBar';
-import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
-import * as userService from '../services/userService';
+
+import * as authService from '../services/authService';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(userService.isLoggedIn());
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.isUserLoggedIn());
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoggedIn(userService.isLoggedIn());
+    setIsLoggedIn(authService.isUserLoggedIn());
 
     window.addEventListener('user-logout', () => {
       setIsLoggedIn(false);

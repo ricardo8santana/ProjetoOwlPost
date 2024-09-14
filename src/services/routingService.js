@@ -1,9 +1,14 @@
-import * as userService from './userService';
-import { useNavigate } from 'react-router-dom';
+import * as authService from './authService';
 
 export const redirectToLoginWhenNoUser = (navigate, from) => {
-    if (!userService.isLoggedIn()) {
+    if (!authService.isUserLoggedIn()) {
         localStorage.setItem('loginDestination', from);
         navigate('/login', { replace: true });
     }
+}
+
+export const redirectBackFromLogin = (navigate) => {
+    const destination = localStorage.getItem('loginDestination') || '/';
+    localStorage.removeItem('loginDestination');
+    navigate(destination, { replace: true });
 }

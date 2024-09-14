@@ -4,12 +4,7 @@ import { Buffer } from 'buffer';
 
 import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
 
-
-// Pra funcionar no celular precisa trocar pelo ip da maquina que tá rodando 
-// o servidor da API. EX:
-// const urlAPI = 'http://10.23.49.20:3000'; 
-const urlAPI = 'http://127.0.0.1:3000';
-
+import { urlAPI } from "./apiConnection";
 
 export class User {
     constructor(id, username, email, password, profilePicture) {
@@ -91,71 +86,3 @@ export const createUser = async (username, email, password) => {
         console.error(`Erro ao criar usuários! ( ${err} )`);
     }
 };
-
-
-
-const onUserLogout = new Event('user-logout');
-const onUserLogin = new Event('user-login');
-
-
-export const isLoggedIn = () => {
-    const userToken = localStorage.getItem('userToken');
-    return userToken !== null;
-}
-
-export const getLoggedUser = async () => {
-    const token = localStorage.getItem('userToken');
-    
-    if (token === null) {
-        return null;
-    }
-
-    const userID = await crypto.decryptInt(token);
-    return await getUser(userID);
-}
-
-export const getLoggedUserSync = async (callback) => {
-    const user = await getLoggedUser();
-    callback(user);
-}
-
-export const login = async (email, password) => {
-    try {
-        const response = await axios.post(`${urlAPI}/logins/`, {
-            email: email,
-            senha: password
-        });
-
-        console.log('aconteceu aqui! > login() <');
-
-        const userID = response.data.userID;
-        const currentUser = await getUser(userID);
-
-        const token = await crypto.encryptInt(userID);
-        localStorage.setItem('userToken', token);
-
-        window.dispatchEvent(onUserLogin);
-
-        return currentUser;
-    } catch (err) {
-        console.error(`Erro ao fazer login! ( ${err} )`);
-        return null;
-    }
-}
-
-export const logout = async () => {
-    try {
-        const user = await getLoggedUser();
-        console.log(`${urlAPI}/logins/${user.id}`);
-        await axios.patch(`${urlAPI}/logins/`, {
-            id: user.id,
-            logado: false,
-        });
-
-        localStorage.removeItem('userToken');
-        window.dispatchEvent(onUserLogout);
-    } catch (error) {
-        console.error('Erro ao deslogar');        
-    }
-}
-

@@ -1,26 +1,22 @@
-import PostEditor from "../components/PostEditor";
+import './PaginaEditor.css'
 
+import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react"
 
-
-import { Post } from '../services/postService';
-import { getTags } from '../services/tagService';
-
-import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCross, faPlus, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-
-import * as postService from '../services/postService';
-import * as userService from '../services/userService';
-import * as routingService from '../services/routingService';
-import * as tagService from '../services/tagService';
-
+import PostEditor from "../components/PostEditor";
 import Navbar from "../components/Navbar";
 import Footer from '../components/Footer';
 
-import './PaginaEditor.css'
+import * as routingService from '../services/routingService';
+import * as postService from '../services/postService';
+import * as authService from '../services/authService';
+import * as tagService from '../services/tagService';
+import { getTags } from '../services/tagService';
+import { Post } from '../services/postService';
 
 const defaultContent = `
 # Escreva seu post
@@ -48,7 +44,10 @@ const Tag = ({tag, onDelete}) => {
   return (
     <div className="tag">
       <p>{nome}</p>
-      <FontAwesomeIcon className="tag-btn-remove btn-owl danger" icon={faCircleXmark} onClick={onDelete}/>
+      <FontAwesomeIcon 
+        className="tag-btn-remove btn-owl danger" 
+        icon={faCircleXmark} 
+        onClick={onDelete}/>
     </div>
   )
 };
@@ -82,7 +81,7 @@ const PaginaEditor = () => {
     setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
 
     routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
-    userService.getLoggedUserSync(user => setUser(user));
+    authService.getLoggedUserSync(user => setUser(user));
   }, [])
 
   const onContentChanged = (content) => {

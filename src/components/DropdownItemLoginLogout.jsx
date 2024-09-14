@@ -1,11 +1,12 @@
+import './DropdownMenu.css'
+import './Navbar.css';
+
+import { faArrowRightToBracket, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 
-import { useNavigate, useLocation } from "react-router-dom";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-
-import * as userService from '../services/userService';
+import * as authService from '../services/authService';
 
 const DropdownItemLogin = ({eventKey}) => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const DropdownItemLogin = ({eventKey}) => {
 
 const DropdownItemLogout = ({eventKey}) => {
   return (
-    <Dropdown.Item className='dropdown-box' eventKey={eventKey} onClick={() => userService.logout()}>
+    <Dropdown.Item className='dropdown-box' eventKey={eventKey} onClick={() => authService.logout()}>
       <div className='alinhamento-div'>
         <div className='dropdown-icone dropdown-alinhamento'>
           <FontAwesomeIcon icon={faArrowRightFromBracket} />
@@ -46,7 +47,7 @@ const DropdownItemLogout = ({eventKey}) => {
 };
 
 const DropdownItemLoginLogout = ({eventKey}) => {
-  return userService.isLoggedIn()
+  return authService.isUserLoggedIn()
     ? <DropdownItemLogout eventKey={eventKey} />
     : <DropdownItemLogin eventKey={eventKey} />
 }
