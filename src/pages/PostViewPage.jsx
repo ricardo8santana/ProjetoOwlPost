@@ -5,7 +5,8 @@ import {
     Dropdown,
     DropdownMenu,
     DropdownButton,
-    Button
+    Button,
+    Spinner
 } from 'react-bootstrap';
 
 import { faArrowDownShortWide, faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -18,33 +19,11 @@ import PostCard from '../components/PostCard';
 import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
+import * as tagService from '../services/tagService';
+
 import { Link } from 'react-router-dom';
 import { getTags } from '../services/tagService';
 import Footer from '../components/Footer';
-
-const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
-    if (includeTitles) {
-        const titlePattern = /^[#]{1,6}\s+(.*\n)/gm;
-        content = content.replace(titlePattern, '$1');
-    }
-
-    const textOnlyPattern = /^[a-zA-Z#].*\n/gm;
-    const matches = content.matchAll(textOnlyPattern);
-
-    let resume = '';
-    for (const match of matches) {
-        if (match.index !== 0 && !useCompact)
-            resume += '\n';
-
-        resume += match;
-    }
-
-    if (resume === '') {
-        resume = content;
-    }
-
-    return resume.substring(0, maxLength);
-};
 
 const CustomMenu = React.forwardRef(
     ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
@@ -59,7 +38,7 @@ const CustomMenu = React.forwardRef(
             >
                 <Form.Control
                     autoFocus
-                    className="mx-3 my-2 w-auto"
+                    className="mx-3 my-2 w-100"
                     placeholder="Type to filter..."
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
@@ -77,9 +56,10 @@ const CustomMenu = React.forwardRef(
 
 const PostViewEmpty = () => {
     return (
-        <>
-            <h2>Nenhum post ainda, volte mais tarde</h2>
-        </>
+        <Spinner animation='border' variant='primary'/>
+        // <>
+        //     <h2>Nenhum post ainda, volte mais tarde</h2>
+        // </>
     )
 };
 
@@ -95,12 +75,31 @@ const orders = [
     'Popular',
 ];
 
-const PostViewList = ({ posts }) => {
+const PostViewList = () => {
 
-    const tags = ['Nenhum'].concat(getTags().map(x => x.name));
-
-    const [filtro, setFiltro] = useState(tags[0]);
+    const [tags, setTags] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [filtro, setFiltro] = useState({ id: 0, name: 'Nenhum' });
     const [order, setOrder] = useState(orders[0]);
+
+    useEffect(() => {
+        postService.getPostsSync(posts => setPosts(posts));
+        tagService.getTagsSync(tags => setTags(tags));
+    }, []);
+
+    useEffect(() => {
+
+
+    }, [filtro])
+
+    const handleFilterSelected = (selected) => {
+        const getFilteredPost = async () => {
+            const posts = await postService.getPostsByTagID([filtro.id === 0 ? null : filtro.id]);
+            setPosts(posts);
+        }
+
+        getFilteredPost();
+    }
 
     return (
         <>
@@ -109,11 +108,13 @@ const PostViewList = ({ posts }) => {
                     <div className='post-view-filter left'>
                         {/* <span>Filtrar</span> */}
                         <FontAwesomeIcon icon={faFilter} />
-                        <Dropdown onSelect={e => setFiltro(e)}>
-                            <Dropdown.Toggle id="dropdown-custom-components">{filtro}</Dropdown.Toggle>
+                        <Dropdown onSelect={handleFilterSelected}>
+                            <Dropdown.Toggle id="dropdown-custom-components">{filtro.name}</Dropdown.Toggle>
                             <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
                                 {
-                                    tags.map(tag => <Dropdown.Item eventKey={tag}>{tag}</Dropdown.Item>)
+                                    tags.map(tag =>
+                                        <Dropdown.Item eventKey={tag.id}>{tag.name}</Dropdown.Item>
+                                    )
                                 }
                             </Dropdown.Menu>
                         </Dropdown>
@@ -139,7 +140,7 @@ const PostViewList = ({ posts }) => {
                 </div>
                 {
                     posts.map(post =>
-                        <PostCard post={post} />
+                        <PostCard key={post.id} post={post} />
                     )
                 }
                 {/* <input type='button' className='btn-owl btn-load' value='Carregar Mais' /> */}
@@ -151,7 +152,11 @@ const PostViewList = ({ posts }) => {
 };
 
 const PostViewPage = () => {
-    const posts = postService.getPosts();
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        postService.getPostsSync(posts => setPosts(posts));
+    }, []);
 
     return (
         <>

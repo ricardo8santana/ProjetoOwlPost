@@ -1,60 +1,25 @@
-import MDEditor from '@uiw/react-md-editor';
 import './PostCard.css';
 
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import MDEditor from '@uiw/react-md-editor';
+
 import * as userService from '../services/userService';
+import * as tagService from '../services/tagService';
 
 import FotoPerfil from '../components/FotoPerfil';
-import { useNavigate } from 'react-router-dom';
-
-const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
-    if (includeTitles) {
-        const titlePattern = /^[#]{1,6}\s+(.*\n)/gm;
-        content = content.replace(titlePattern, '$1');
-    }
-
-    const textOnlyPattern = /^[a-zA-Z#].*\n/gm;
-    const matches = content.matchAll(textOnlyPattern);
-
-    let resume = '';
-    for (const match of matches) {
-        if (match.index !== 0 && !useCompact)
-            resume += '\n';
-
-        resume += match;
-    }
-
-    if (resume === '') {
-        resume = content;
-    }
-
-    return resume.substring(0, maxLength);
-};
 
 const PostCard = ({post}) => {
     const navigate = useNavigate();
-
-    const [timeSincePost, setTimeSincePost] = useState(0.0);
+    
+    const [tags, setTags] = useState([]);
     const [user, setUser] = useState(userService.defaultUser);
 
     useEffect(() => {
-        const getUser = async () => {
-            setUser(await userService.getUser(post.userID));
-        }
-
-        getUser();
-
-        const now = new Date();
-        const date = new Date(post.date);
-        const result = new Date();
-        
-        result.setTime(now.getTime() - date.getTime());
-
-        setTimeSincePost(
-            result.getMinutes() <= 0 ? 'Agora mesmo' :
-            result.getMinutes() <= 60 ? `${result.getMinutes()} min` :
-            result.getHour() <= 24 ? `${result.getHour()} h` :
-            `${result.getDay()} dias`);
+        userService.getUserSync(post.userID, user => setUser(user));
+        tagService.getTagsByPostIDSync(post.id, (tags) => { 
+            return setTags(tags.map(x => x.name).join(', '))
+        });
     }, []);
 
     const handleOnClick = () => {
@@ -64,16 +29,13 @@ const PostCard = ({post}) => {
     return (
         <div className='post-card' onClick={handleOnClick}>
             <div className='post-card-author'>
-                {/* <div className='profile-picture'>
-                    <img src={user.profilePicture}/>
-                </div> */}
                 <FotoPerfil src={user.profilePicture} />
                 <div className='post-card-author-info'>
                     <div>
                         <span className='post-card-author-name'>{user.username}</span>
-                        <span className='post-card-author-time'>{timeSincePost}</span>
+                        <span className='post-card-author-time'>{getTimeSincePost(post)}</span>
                     </div>
-                    <p className='post-card-author-location'>{`Postado em ${post.tags.map(x => x.name)}`}</p>
+                    <p className='post-card-author-location'>Postado em <b>{`${tags}`}</b></p>
                 </div>
             </div>
             <h1>{post.title}</h1>
@@ -83,3 +45,38 @@ const PostCard = ({post}) => {
 };
 
 export default PostCard;
+
+function getTimeSincePost (post) {
+    const currentDate = new Date();
+    const postDate = new Date(post.lastActivity);
+    
+    const date = new Date();
+    date.setTime(currentDate.getTime() - postDate.getTime());
+
+    return (
+        date.getMinutes() <= 0 ? 'Agora mesmo' :
+        date.getMinutes() <= 60 ? `${date.getMinutes()} min` :
+        date.getHour() <= 24 ? `${date.getHour()} h` :
+        `A alguns dias`);
+}
+
+/** @param {String} content @param {Boolean} useCompact @param {Boolean} includeTitles @param {Number} maxLength @returns {String}*/
+function getResumeFromContent(content, useCompact, includeTitles, maxLength) {
+    const lines = content.split('\n');
+    
+    const result = lines.map(line => {
+        if (line.match(/^[ a-z\u00df-\u00ff]/i)) {
+            const result = `${line}${useCompact ? ' ' : '\n'}`;
+            return result;
+        }
+
+        // if (includeTitles && line.match(/^[ #]+/i)) {
+        //     const result = line.replace(/^[#]{1,6}\s+(.*\n)/i, /$1/);
+        //     return result.trim() + '\n'
+        // }
+
+        return;
+    });
+    
+    return result.join('').substring(0, maxLength);
+};

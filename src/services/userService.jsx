@@ -17,7 +17,7 @@ export class User {
 }
 
 // export const defaultUser = new User(0, 'username', 'username@email.com', 'password', defaultImage);
-export const defaultUser = new User(0, 'username', 'username@email.com', 'password', defaultProfilePicture);
+export const defaultUser = new User(0, 'Username', 'username@email.com', 'password', defaultProfilePicture);
 
 const getUsers = async () => {
     try {
@@ -64,6 +64,11 @@ export const getUser = async (userID) => {
         return null;
     }
 };
+
+export const getUserSync = async (userID, onGetUser) => {
+    const user = await getUser(userID);
+    onGetUser(user);
+}
 
 export const createUser = async (username, email, password) => {
     try {

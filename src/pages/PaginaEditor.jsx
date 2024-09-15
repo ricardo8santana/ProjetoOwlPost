@@ -38,16 +38,20 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 - [Como escrever Markdown](https://markdown.net.br/sintaxe-basica/)
 `;
 
-const Tag = ({tag, onDelete}) => {
+const Tag = ({tag, onDelete, isReadOnly}) => {
   const nome = tag.name || 'tag';
   
   return (
     <div className="tag">
       <p>{nome}</p>
-      <FontAwesomeIcon 
-        className="tag-btn-remove btn-owl danger" 
-        icon={faCircleXmark} 
-        onClick={onDelete}/>
+      {
+        !isReadOnly
+          ? <FontAwesomeIcon 
+            className="tag-btn-remove btn-owl danger" 
+            icon={faCircleXmark} 
+            onClick={onDelete}/>
+          : null
+      }
     </div>
   )
 };
@@ -57,18 +61,12 @@ const PaginaEditor = () => {
   const navigate = useNavigate();
 
   const { postID } = useParams();
+  
+  const [post, setPost] = useState(null);
 
-  const post = postService.getPostByID(parseInt(postID));
-
-  console.log(`Trying loading post with id: ${postID}. Result: ${post}`);
-
-  const postContent = post ? post.content : defaultContent;
-  const postTitle = post ? post.title : "";
-  const postTags = post ? post.tags : [];
-
-  const [content, setContent] = useState(postContent);
-  const [title, setTitle] = useState(postTitle);
-  const [tags, setTags] = useState(postTags);
+  const [content, setContent] = useState(postID != 0 ? '' : defaultContent);
+  const [title, setTitle] = useState('');
+  const [tags, setTags] = useState([]);
 
   const [availableTags, setAvailableTags] = useState([]);
   const [user, setUser] = useState(false);
@@ -78,8 +76,28 @@ const PaginaEditor = () => {
       navigate('/');
     });
 
-    setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
+    const getPost = async () => {
+      const post = await postService.getPostByID(parseInt(postID));
+      console.log(`Trying loading post with id: ${postID}. Result: ${post}`);
+      
+      setPost(post);
+      setTitle(post.title);
+      setContent(post.content);
+      
+      const tags = await tagService.getTagsByPostID(postID);
+      setTags(tags);
 
+      const availableTags = await tagService.getTags();
+      setAvailableTags(availableTags);
+    }
+
+    if (postID !== 0) {
+      getPost();
+    }
+    else {
+      setContent(defaultContent);
+    }
+   
     routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
     authService.getLoggedUserSync(user => setUser(user));
   }, [])
@@ -146,7 +164,7 @@ const PaginaEditor = () => {
             <div className="tag-list">
               {
                 tags.map(tag => 
-                  <Tag tag={tag} onDelete={() => handleRemoveTag(tag)}/>
+                  <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post !== 0}/>
                 )
               }
             </div>
@@ -184,7 +202,7 @@ function TagButton ({availableTags, onSubmit, hidden}) {
       <datalist id="tags">
         {
           availableTags.map(tag => 
-            <option value={tag.name}/>
+            <option key={tag.id} value={tag.name}/>
           )
         }
       </datalist>

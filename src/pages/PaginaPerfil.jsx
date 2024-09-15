@@ -12,16 +12,16 @@ import PostCard from "../components/PostCard";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-import { getPostsByUserID } from "../services/postService";
-
 import * as routingService from "../services/routingService";
 import * as authService from "../services/authService";
 import * as userService from "../services/userService";
+import * as postService from "../services/postService";
 
 const PaginaPerfil = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState(userService.defaultUser);
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         window.addEventListener('user-logout', () => {
@@ -29,8 +29,16 @@ const PaginaPerfil = () => {
         });
 
         routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
-        authService.getLoggedUserSync(user => setUser(user));
-        
+
+        const getUserData = async () => {
+            const user = await authService.getLoggedUser();
+            const posts = await postService.getPostsByUserID(user.id);
+
+            setUser(user);
+            setPosts(posts);
+        };
+
+        getUserData();        
     }, []);
 
     return (
@@ -53,7 +61,7 @@ const PaginaPerfil = () => {
                         <UserGameList />
                     </Tab>
                     <Tab eventKey={1} title='Postagens'>
-                        <UserPostList user={user} />
+                        <UserPostList posts={posts} />
                     </Tab>
                 </Tabs>
             </div>
@@ -72,14 +80,12 @@ function UserGameList () {
     )
 };
 
-function UserPostList({ user }) {
-    const posts = getPostsByUserID(user.id);
-
+function UserPostList({ posts }) {
     return (
         <div className="postList">
             {
                 posts.map(post =>
-                    <PostCard post={post} />
+                    <PostCard key={post.id} post={post} />
                 )
             }
         </div>
