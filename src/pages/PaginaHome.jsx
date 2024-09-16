@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import Logo from '../assets/images/Group.svg';
 
 import './PaginaHome.css';
 
@@ -132,8 +133,17 @@ const PaginaHome = () => {
       </PageSection>
       <PageSection variant='secondary'>
         <div className="sobre">
-              <h1 className="about-site">Um pouco sobre o site</h1>
+              <h1>Um pouco sobre o site</h1>
           <hr />
+
+          <div className="sobre-buble testando-1">
+            <img className="corujinha" src={Logo} style={{width: "50px"}} />
+            <h5>Porque Owlpost?</h5>
+            <p>O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar, 
+              e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado), 
+              seria o seu ponto de referência enquanto você está explorando novos conhecimentos. 
+              E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+          </div>
 
           <div className="sobre-buble">
             <h5>Como surgiu a ideia da gamificação?</h5>

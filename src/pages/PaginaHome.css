@@ -102,10 +102,10 @@
     color: var(--color-neutral-0);
 }
 
-.about-site {
+/* .corujinha {
     transform: translateX(-700px);
     opacity: 0;
-}
+} */
 
 .sobre-buble {
     width: min(100%, 75vw);
