@@ -58,7 +58,7 @@ const CustomMenu = React.forwardRef(
             >
                 <Form.Control
                     autoFocus
-                    className="mx-3 my-2 w-auto"
+                    className="mx-3 my-2 w-100"
                     placeholder="Type to filter..."
                     onChange={(e) => setValue(e.target.value)}
                     value={value}
@@ -107,9 +107,8 @@ const PostViewList = ({ posts }) => {
                 <div className='post-view-filters'>
                     <div className='post-view-filter left'>
                         {/* <span>Filtrar</span> */}
-                        <FontAwesomeIcon icon={faFilter} />
                         <Dropdown onSelect={e => setFiltro(e)}>
-                            <Dropdown.Toggle id="dropdown-custom-components">{filtro}</Dropdown.Toggle>
+                        <Dropdown.Toggle id="dropdown-custom-components"><FontAwesomeIcon icon={faFilter} /><span className='icon-filters'>{filtro}</span></Dropdown.Toggle>
                             <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
                                 {
                                     tags.map(tag => <Dropdown.Item eventKey={tag}>{tag}</Dropdown.Item>)
@@ -122,9 +121,8 @@ const PostViewList = ({ posts }) => {
                     </div>
                     <div className='post-view-filter right'>
                         {/* <span>Ordenar</span> */}
-                        <FontAwesomeIcon icon={faArrowDownShortWide} />
                         <Dropdown onSelect={e => setOrder(e)}>
-                            <Dropdown.Toggle id="dropdown-custom-components">{order}</Dropdown.Toggle>
+                        <Dropdown.Toggle id="dropdown-custom-components"><FontAwesomeIcon icon={faArrowDownShortWide} /><span className='icon-filters'>{order}</span></Dropdown.Toggle>
                             <Dropdown.Menu >
                                 {
                                     orders.map(order => <Dropdown.Item eventKey={order}>{order}</Dropdown.Item>)
