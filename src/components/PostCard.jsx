@@ -54,7 +54,7 @@ const PostCard = ({post}) => {
                 {/* <div className='profile-picture'>
                     <img src={user.profilePicture}/>
                 </div> */}
-                <FotoPerfil user={user} />
+                <FotoPerfil src={user.profilePicture} />
                 <div className='post-card-author-info'>
                     <div>
                         <span className='post-card-author-name'>{user.username}</span>
