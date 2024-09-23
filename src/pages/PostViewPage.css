@@ -101,15 +101,11 @@
         width: 30%;
     }
 
-    .post-view-filter.left {
-        justify-content: left;
-    }
-
-    .post-view-filter.right {
-        justify-content: right;
-    }
-
     .icon-filters {
+        display: none;
+    }
+    
+    .post-view-filters .dropdown-toggle::after {
         display: none;
     }
 
