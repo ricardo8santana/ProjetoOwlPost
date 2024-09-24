@@ -1,17 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import PaginaPerfil from './pages/PaginaPerfil';
 import PaginaCadastro from './pages/PaginaCadastro';
 import PaginaLogin from './pages/PaginaLogin';
 import PostTitulo from './components/PostTitulo';
 import PostViewPage from './pages/PostViewPage'
 import PaginaHome from './pages/PaginaHome';
-import PostEditorPage from './pages/PostEditorPage'
-import Sobrenos from './components/Sobrenos';
-
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-
+import PaginaEditor from './pages/PaginaEditor';
 
 const routes = createBrowserRouter([
   {
@@ -19,12 +16,12 @@ const routes = createBrowserRouter([
     element: <PaginaHome />    
   },
   {
-    path: '/post',
+    path: '/posts',
     element: <PostViewPage />
   },
   {
-    path: '/post-edit',
-    element: <PostEditorPage />
+    path: '/editor/:postID',
+    element: <PaginaEditor />
   },
   {
     path: '/login',

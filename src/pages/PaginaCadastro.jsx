@@ -6,8 +6,8 @@ import { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 
-import * as userService from '../services/userService.jsx';
-
+import * as userService from '../services/userService';
+import * as authService from '../services/authService';
 
 
 const PaginaCadastro = () => {
@@ -38,7 +38,8 @@ const PaginaCadastro = () => {
     //     setPasswordsMatched(password === confirmation);
     // }, [password, confirmation]);
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
         
         const form = event.currentTarget;
 
@@ -49,8 +50,9 @@ const PaginaCadastro = () => {
             return;
         }
 
-        userService.createUser(username, email, password);
-        if (!userService.login(email, password)) {
+        await userService.createUser(username, email, password);
+        const user = await authService.login(email, password);
+        if (!user) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();
             event.stopPropagation();
@@ -59,12 +61,10 @@ const PaginaCadastro = () => {
 
         setValidated('true');
 
-        const lastRoute = localStorage.getItem('last-route');
+        const loginDestination = localStorage.getItem('loginDestination') || '/';
+        localStorage.removeItem('loginDestination');
 
-        navigate(lastRoute ? lastRoute : '/');
-        
-        localStorage.removeItem('last-route');
-        localStorage.removeItem('login-attempts');
+        navigate(loginDestination, { replace: true });
     };
 
     return (

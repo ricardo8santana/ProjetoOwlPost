@@ -1,68 +1,44 @@
-import FotoPerfil from "../components/FotoPerfil";
-import Progresso from "../components/PaginaPerfil/Progresso";
-import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
-
-import PostCard from "../components/PostCard";
-
 import './PaginaPerfil.css';
+
 import { faNewspaper, faStar, faTrophy } from "@fortawesome/free-solid-svg-icons";
-import Navbar from '../components/Navbar';
+import { useNavigate } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getPosts, getPostsByUserID } from "../services/postService";
-import { debugGetRandomUser, getLoggedUser } from "../services/userService";
-import { redirect, useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
 
-const UserGameList = () => {
-    return (
-        <div className="gameList">
-            <CartaoJogo />
-            <CartaoJogo />
-            <CartaoJogo />
-        </div>
-    )
-};
+import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
+import Progresso from "../components/PaginaPerfil/Progresso";
+import FotoPerfil from "../components/FotoPerfil";
+import PostCard from "../components/PostCard";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
-const UserPostList = ({user}) => {
-    const posts = getPostsByUserID(user.id);
-
-    return (
-        <div className="postList">
-            {
-                posts.map(post => 
-                    <PostCard post={post} />
-                )
-            }
-        </div>
-    )
-};
+import * as routingService from "../services/routingService";
+import * as authService from "../services/authService";
+import * as userService from "../services/userService";
+import * as postService from "../services/postService";
 
 const PaginaPerfil = () => {
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState(userService.defaultUser);
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         window.addEventListener('user-logout', () => {
             navigate('/');
         });
 
-        const loggedUser = getLoggedUser();
-        const loginAttempts = localStorage.getItem('login-attempts') || 0;
+        routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
 
-        if (loginAttempts > 0) {
-            localStorage.removeItem('login-attempts');
-            navigate('/');
-        }
+        const getUserData = async () => {
+            const user = await authService.getLoggedUser();
+            const posts = await postService.getPostsByUserID(user.id);
 
-        if (!loggedUser) {
-            localStorage.setItem('last-route', '/perfil');
-            localStorage.setItem('login-attempts', 1);
-            navigate('/login');
-        }
-        
-        setUser(loggedUser);
+            setUser(user);
+            setPosts(posts);
+        };
+
+        getUserData();        
     }, []);
 
     return (
@@ -85,12 +61,34 @@ const PaginaPerfil = () => {
                         <UserGameList />
                     </Tab>
                     <Tab eventKey={1} title='Postagens'>
-                        <UserPostList  user={user} />
+                        <UserPostList posts={posts} />
                     </Tab>
                 </Tabs>
             </div>
             <Footer />
         </>
+    )
+};
+
+function UserGameList () {
+    return (
+        <div className="gameList">
+            <CartaoJogo />
+            <CartaoJogo />
+            <CartaoJogo />
+        </div>
+    )
+};
+
+function UserPostList({ posts }) {
+    return (
+        <div className="postList">
+            {
+                posts.map(post =>
+                    <PostCard key={post.id} post={post} />
+                )
+            }
+        </div>
     )
 };
 

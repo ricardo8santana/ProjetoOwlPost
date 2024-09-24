@@ -9,6 +9,7 @@ const PostEditor = ({content, contentChanged}) => {
         <MDEditor 
             className="editor" 
             value={content} 
+            textareaProps={{spellCheck: true}}
             onChange={contentChanged}
             commands={toolbarCommands} 
             extraCommands={extraToolbarCommands}       

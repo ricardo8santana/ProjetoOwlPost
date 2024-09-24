@@ -14,7 +14,7 @@ input {
     background-color: var(--color-bg-body);
     color: var(--color-text-main);
     
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     border: none;
 
     height: 2.5rem;

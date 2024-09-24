@@ -144,3 +144,35 @@ a.dropdown-box.dropdown-item:hover {
 .color-theme {
     color: black;
 }
+
+.button-login {
+    display: block !important;
+    background-color: transparent !important;
+    width: 35px !important;
+    height: 35px !important;
+    padding: 0 !important;
+    border: none!important;
+}
+
+
+.profile-button {
+    background-color: transparent !important;
+    color: #fafafc !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+}
+
+.profile-button svg {
+    background-color: transparent !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.button-login .fotoPerfil {
+    background-color: white;
+    width: 100% !important;
+    height: 100% !important;
+}
