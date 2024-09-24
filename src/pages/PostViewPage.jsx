@@ -109,7 +109,10 @@ const PostViewList = () => {
                         {/* <span>Filtrar</span> */}
                         <FontAwesomeIcon icon={faFilter} />
                         <Dropdown onSelect={handleFilterSelected}>
-                            <Dropdown.Toggle id="dropdown-custom-components">{filtro.name}</Dropdown.Toggle>
+                            <Dropdown.Toggle id="dropdown-custom-components">
+                                <FontAwesomeIcon icon={faFilter} />
+                                <span className='icon-filters'>{filtro.name}</span>
+                            </Dropdown.Toggle>
                             <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
                                 {
                                     tags.map(tag =>
@@ -124,9 +127,8 @@ const PostViewList = () => {
                     </div>
                     <div className='post-view-filter right'>
                         {/* <span>Ordenar</span> */}
-                        <FontAwesomeIcon icon={faArrowDownShortWide} />
                         <Dropdown onSelect={e => setOrder(e)}>
-                            <Dropdown.Toggle id="dropdown-custom-components">{order}</Dropdown.Toggle>
+                        <Dropdown.Toggle id="dropdown-custom-components"><FontAwesomeIcon icon={faArrowDownShortWide} /><span className='icon-filters'>{order}</span></Dropdown.Toggle>
                             <Dropdown.Menu >
                                 {
                                     orders.map(order => <Dropdown.Item eventKey={order}>{order}</Dropdown.Item>)

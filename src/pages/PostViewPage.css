@@ -23,17 +23,20 @@
 
 .post-view-filter {
     width: 0;
-    flex-grow: 1;
     display: flex;
+    flex-grow: 1;
     align-items: center;
-    gap: 0.5rem;
-
+    
     .dropdown-toggle {
         width: max-content !important;
         background-color: transparent !important;
         border: 0 !important;
         color: var(--color-text-alt) !important;
-        opacity: 0.75;
+        opacity: 0.75 !important;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        
     }
 }
 .post-view-filter.left {
@@ -91,3 +94,19 @@
     color: var(--color-neutral-1);
 }
  */
+
+@media screen and (max-width: 768px) {
+
+    .post-view-search {
+        width: 30%;
+    }
+
+    .icon-filters {
+        display: none;
+    }
+    
+    .post-view-filters .dropdown-toggle::after {
+        display: none;
+    }
+
+}
