@@ -1,6 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
+import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser as faCircleUserRegular } from '@fortawesome/free-regular-svg-icons';
@@ -28,6 +29,18 @@ function DropdownMenu() {
 
     authService.getLoggedUserSync((user) => setUser(user));
   }, []);
+  const { 
+    t,
+    i18n: { changeLanguage, language },
+  } = useTranslation()
+
+  const [currentLanguage, setCurrentLanguage] = useState(language)
+
+  const handleChangeLanguage = () => {
+    const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
+    changeLanguage(newLanguage)
+    setCurrentLanguage(newLanguage)
+  }
 
   return (
     <Dropdown>
@@ -39,16 +52,16 @@ function DropdownMenu() {
         }
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <DropdownItemLink name="Perfil" icon={faCircleUserSolid} to="/perfil" eventKey="1"/>
+        <DropdownItemLink name={t('profile')} icon={faCircleUserSolid} to="/perfil" eventKey="1"/>
 
         {/* Matheus: Não tirei esse pq não sei como vai funcionar o idioma */}
-        <Dropdown.Item className='dropdown-box' eventKey="2">
+        <Dropdown.Item  onClick={handleChangeLanguage} className='dropdown-box' eventKey="2">
           <div className='alinhamento-div'>
             <div className='dropdown-icone dropdown-alinhamento'>
               <FontAwesomeIcon icon={faGlobe} />
             </div>
             <div className='espacamento-words'>
-              <span className='fonte-dropdown'>Idioma</span>
+              <span className='fonte-dropdown'>{t('language')}</span>
             </div>
           </div>
           <div className='arrow-right dropdown-alinhamento'>
@@ -56,8 +69,8 @@ function DropdownMenu() {
           </div>
         </Dropdown.Item>
 
-        <DropdownItemDarkModoToggle eventKey="3"/>
-        <DropdownItemLink name="Minhas conquistas" icon={faMedal} eventKey="4" to="/perfil/#conquistas" />
+        <DropdownItemDarkModoToggle name={t('dark-theme')} eventKey="3"/>
+        <DropdownItemLink name={t('achievements')} icon={faMedal} eventKey="4" to="/perfil/#conquistas" />
         
         <Dropdown.Divider />
 

@@ -4,3 +4,13 @@
 
 
 
+::-webkit-scrollbar {
+    width: 7px;
+    background-color: inherit;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 7px;
+    background-color: rgba(0,0,0, 0.4);
+    border-radius: 8px;
+}

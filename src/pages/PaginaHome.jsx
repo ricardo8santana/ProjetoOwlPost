@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import CarroselHome from "../components/Carrosel";
 import Navbar from "../components/Navbar";
 import PageSection from "../components/PageSection";
+import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
 
@@ -84,12 +86,25 @@ const IntegranteGrupo = ({ nome, githubUserID }) => {
 const PaginaHome = () => {
   const slideDestaques = slides.slice(0, 4);
 
+  const { 
+    t,
+    i18n: { changeLanguage, language },
+  } = useTranslation()
+
+  const [currentLanguage, setCurrentLanguage] = useState(language)
+
+  const handleChangeLanguage = () => {
+    const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
+    changeLanguage(newLanguage)
+    setCurrentLanguage(newLanguage)
+  }
+
   return (
     <div className="home">
       <Navbar />
       <PageSection isStart>
         <div className="destaques">
-          <h1>Destaques</h1>
+          <h1>{t('highlights')}</h1>
           <hr />
           <div className="home-carousel">
             <div className="home-carousel-container">
@@ -110,28 +125,23 @@ const PaginaHome = () => {
       </PageSection>
       <PageSection variant='secondary'>
         <div className="sobre">
-          <h1>Um pouco sobre o site</h1>
+          <h1>{t('about us')}</h1>
           <hr />
 
           <div className="sobre-buble">
-            <h5>Como surgiu a ideia da gamificação?</h5>
-            <p>No início, não tínhamos uma ideia clara do que criar. No entanto, surgiu a oportunidade de desenvolver algo
-              que pudesse ajudar a turma de enfermagem. Com isso em mente, decidimos criar um jogo. Usando a ideia da
-              gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
+            <h5>{t('idea')}</h5>
+            <p>{t('gamification')}</p>
           </div>
 
           <div className="sobre-buble">
-            <h5>Como surgiu a ideia da plataforma?</h5>
-            <p>Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
-              em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
-              e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
-              acessar esse conteúdo.</p>
+            <h5>{t('platform')}</h5>
+            <p>{t('nursing')}</p>
           </div>
         </div>
       </PageSection>
       <PageSection>
         <div className="grupo">
-          <h1>Os integrantes do grupo </h1>
+          <h1>{t('members')}</h1>
           <hr />
 
           <div className="integrantes">
