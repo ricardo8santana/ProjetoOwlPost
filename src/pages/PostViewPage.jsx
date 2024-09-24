@@ -107,7 +107,6 @@ const PostViewList = () => {
                 <div className='post-view-filters'>
                     <div className='post-view-filter left'>
                         {/* <span>Filtrar</span> */}
-                        <FontAwesomeIcon icon={faFilter} />
                         <Dropdown onSelect={handleFilterSelected}>
                             <Dropdown.Toggle id="dropdown-custom-components">
                                 <FontAwesomeIcon icon={faFilter} />
