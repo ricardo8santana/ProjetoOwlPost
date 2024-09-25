@@ -25,6 +25,8 @@
   cursor: pointer;
   gap: 8px;
   height: 40px !important;
+  margin-left: 15px;
+  margin-right: 20px;
 }
 
 .logo-image {
@@ -56,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 32px;
-  margin-right: 0;
+  margin-right: 18px;
 }
 
 .sign {
@@ -86,7 +88,10 @@
 }
 
 
-
+.menu-friendbuttons, .menu-authbuttons {
+  display: flex;
+  gap: 18px;
+}
 
 
 
@@ -96,13 +101,30 @@
 
 
 @media screen and (max-width: 1024px) {
+  .navbar {
+    padding: 0 15px;
+  }
+
   .logo {
-    margin-left: 10px;
+    margin-left: 5px;
+  }
+
+  .mobile-menu {
+    display: block;
+    margin-right: 10px;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 10px;
+  }
+
   .logo {
-    margin-left: 5px;
+    margin-left: 0;
+  }
+
+  .mobile-menu {
+    margin-right: 15px;
   }
 }

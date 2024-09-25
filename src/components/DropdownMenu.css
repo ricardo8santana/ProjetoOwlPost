@@ -76,6 +76,7 @@ a.dropdown-box.dropdown-item:focus {
     justify-content: end;
     height: 100%;
     align-items: baseline;
+    margin-bottom: 5px;
 }
 
 .style-button {
@@ -160,7 +161,7 @@ a.dropdown-box.dropdown-item:hover {
     color: #fafafc !important;
     padding: 0 !important;
     margin: 0 !important;
-    width: 35px !important;
+    width: 45px !important;
     height: 35px !important;
     border-radius: 50% !important;
 }

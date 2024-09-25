@@ -50,25 +50,31 @@ const Navbar = () => {
         <Link to={'/editor/0'} className="btn-owl link-alt nav-link">Editor</Link>
         <Link className="btn-owl link-alt nav-link">{t('support')}</Link>
       </div>
-      {
-        !isLoggedIn
-          ? null
-          : (<div className='friend-button'>
-            <div className='friendship-suggestion'>
-              <button className='friendship-button'>10</button>
-            </div>
-            <button className='style-button'>
-              <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
-              <div className='pipe'></div>
-              <div className='number-five'>5</div>
-            </button>
-          </div>)
-      }
-      <div className="auth-buttons">
-        <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>{t('login')}</Button>
-        <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>{t('sign up')}</Button>
+      <div className='menu-friendbuttons'>
         <div>
-          <DropdownMenu />
+          {
+            !isLoggedIn
+              ? null
+              : (<div className='friend-button'>
+                <div className='friendship-suggestion'>
+                  <button className='friendship-button'>10</button>
+                </div>
+                <button className='style-button'>
+                  <FontAwesomeIcon className='nurse-style' icon={faUserNurse} />
+                  <div className='pipe'></div>
+                  <div className='number-five'>5</div>
+                </button>
+              </div>)
+          }
+        </div>
+        <div className='menu-authbuttons'>
+          <div className="auth-buttons">
+            <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>{t('login')}</Button>
+            <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>{t('sign up')}</Button>
+            <div>
+              <DropdownMenu />
+            </div>
+          </div>
         </div>
       </div>
       <div className='mobile-menu'>
