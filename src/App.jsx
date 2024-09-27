@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import PaginaPerfil from './pages/PaginaPerfil';
 import PaginaCadastro from './pages/PaginaCadastro';
 import PaginaLogin from './pages/PaginaLogin';
-import PostTitulo from './components/PostTitulo';
+import PaginaPostagem from './pages/PaginaPostagem';
 import PostViewPage from './pages/PostViewPage'
 import PaginaHome from './pages/PaginaHome';
 import PaginaEditor from './pages/PaginaEditor';
@@ -36,8 +36,8 @@ const routes = createBrowserRouter([
     element: <PaginaPerfil />
   },
   {
-    path: '/post-titulo',
-    element: <PostTitulo />
+    path: '/posts/:postID',
+    element: <PaginaPostagem />
   }
 ]);
 

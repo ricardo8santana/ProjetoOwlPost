@@ -23,7 +23,7 @@ const PostCard = ({post}) => {
     }, []);
 
     const handleOnClick = () => {
-        navigate(`/editor/${post.id}`);
+        navigate(`/posts/${post.id}`);
     }
 
     return (

@@ -9,7 +9,7 @@ import {
     Spinner
 } from 'react-bootstrap';
 
-import { faArrowDownShortWide, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownShortWide, faFilter, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
@@ -56,7 +56,9 @@ const CustomMenu = React.forwardRef(
 
 const PostViewEmpty = () => {
     return (
-        <Spinner animation='border' variant='primary'/>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
+            <FontAwesomeIcon icon={faCircleNotch} spin style={{ width: '2rem', height: '2rem'}}/>
+        </div>
         // <>
         //     <h2>Nenhum post ainda, volte mais tarde</h2>
         // </>
