@@ -18,11 +18,34 @@
 .trash {
     width: 20px;
     height: 20px;
-    color: var(--color-main-lighter);
+    color: var(--color-neutral-0);
 }
 
 .modalEdit {
     display: flex;
     align-items: center;
     gap: 0.8rem;
+}
+
+.modal-content {
+    background-color: var(--color-bg-main) !important;
+}
+.modal-content .modal-header .btn-close {
+    --bs-btn-close-color: var(--color-text-main) !important;
+    color: var(--color-text-main) !important;
+    filter: invert();
+}
+
+.modalBody {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+}
+
+.modalBody .fotoPerfil {
+    width: 150px !important;
+    height: 150px !important;
 }

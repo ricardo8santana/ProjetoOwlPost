@@ -24,22 +24,21 @@ const PaginaPerfil = () => {
     const [user, setUser] = useState(userService.defaultUser);
     const [posts, setPosts] = useState([]);
 
+    const loadUserData = async () => {
+        const user = await authService.getLoggedUser();
+        const posts = await postService.getPostsByUserID(user.id);
+
+        setUser(user);
+        setPosts(posts);
+    };
+
     useEffect(() => {
         window.addEventListener('user-logout', () => {
             navigate('/');
         });
 
         routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
-
-        const getUserData = async () => {
-            const user = await authService.getLoggedUser();
-            const posts = await postService.getPostsByUserID(user.id);
-
-            setUser(user);
-            setPosts(posts);
-        };
-
-        getUserData();        
+        loadUserData();        
     }, []);
 
     return (
@@ -49,7 +48,7 @@ const PaginaPerfil = () => {
                 <div className='enquadroPerfil'>
                     <div className='editPerfil'>
                         <FotoPerfil src={user.profilePicture} />
-                        <Form />
+                        <Form profilePic={user.profilePicture} onUpdateProfile={() => loadUserData()} />
                     </div>
                     <div className='infoPerfil'>
                         <h2 className='infoUsername'>{user.username}</h2>

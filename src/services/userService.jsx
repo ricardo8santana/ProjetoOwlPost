@@ -95,26 +95,40 @@ export const createUser = async (username, email, password) => {
 
 export const atualizarFotos = async (path, name) => {
     try {
-
         const usuario = await authService.getLoggedUser();
         const response = await fetch(path);
         const blob = await response.blob();
+
+        console.log(`tamanho do arquivo ${blob.size}`)
+        if (blob.size > 16777215) {
+            console.log(`muito grande ${blob.size}`)
+        }
 
         const formData = new FormData();
         formData.append('id', usuario.id);
         formData.append('fotoPerfil', blob, name);
 
-        console.log("patch");
+        console.log(`patch: ${name} (${path})`);
 
-        const r = await axios.patch(urlAPI + '/usuarios/', formData, {
+        await axios.patch(urlAPI + '/usuarios/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
         });
-
-        console.log(r);
     }
     catch (err) {
         console.error(`Erro ao atualizar foto usuários! ( ${err} )`);
+    }
+}
+
+export const removerFotos = async () => {
+    try {
+        const usuario = await authService.getLoggedUser();
+        await axios.patch(urlAPI + '/usuarios/delete', {
+            id: usuario.id,
+        });
+    }
+    catch (err) {
+        console.error(`Erro ao remover foto usuários! ( ${err} )`);
     }
 }
