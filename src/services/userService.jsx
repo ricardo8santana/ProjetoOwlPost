@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as crypto from './crypto';
 import { Buffer } from 'buffer';
+import * as authService from './authService'
 
 import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
 
@@ -91,3 +92,43 @@ export const createUser = async (username, email, password) => {
         console.error(`Erro ao criar usuários! ( ${err} )`);
     }
 };
+
+export const atualizarFotos = async (path, name) => {
+    try {
+        const usuario = await authService.getLoggedUser();
+        const response = await fetch(path);
+        const blob = await response.blob();
+
+        const sizeLimit = 16 * 1024 * 1024; // 16MB
+        if (blob.size > sizeLimit) {
+            console.error(`Arquivo muito grande para o banco de dados (${blob.size / 1024 / 1024}`);
+        }
+
+        const formData = new FormData();
+        formData.append('id', usuario.id);
+        formData.append('fotoPerfil', blob, name);
+
+        console.log(`patch: ${name} (${path})`);
+
+        await axios.patch(urlAPI + '/usuarios/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+    }
+    catch (err) {
+        console.error(`Erro ao atualizar foto usuários! ( ${err} )`);
+    }
+}
+
+export const removerFotos = async () => {
+    try {
+        const usuario = await authService.getLoggedUser();
+        await axios.patch(urlAPI + '/usuarios/delete', {
+            id: usuario.id,
+        });
+    }
+    catch (err) {
+        console.error(`Erro ao remover foto usuários! ( ${err} )`);
+    }
+}

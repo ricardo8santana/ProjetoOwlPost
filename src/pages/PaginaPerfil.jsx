@@ -11,6 +11,7 @@ import FotoPerfil from "../components/FotoPerfil";
 import PostCard from "../components/PostCard";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Form from '../components/FileInput';
 
 import * as routingService from "../services/routingService";
 import * as authService from "../services/authService";
@@ -23,22 +24,21 @@ const PaginaPerfil = () => {
     const [user, setUser] = useState(userService.defaultUser);
     const [posts, setPosts] = useState([]);
 
+    const loadUserData = async () => {
+        const user = await authService.getLoggedUser();
+        const posts = await postService.getPostsByUserID(user.id);
+
+        setUser(user);
+        setPosts(posts);
+    };
+
     useEffect(() => {
         window.addEventListener('user-logout', () => {
             navigate('/');
         });
 
         routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
-
-        const getUserData = async () => {
-            const user = await authService.getLoggedUser();
-            const posts = await postService.getPostsByUserID(user.id);
-
-            setUser(user);
-            setPosts(posts);
-        };
-
-        getUserData();        
+        loadUserData();        
     }, []);
 
     return (
@@ -46,7 +46,10 @@ const PaginaPerfil = () => {
             <Navbar />
             <div className="enquadroPagina">
                 <div className='enquadroPerfil'>
-                    <FotoPerfil src={user.profilePicture} />
+                    <div className='editPerfil'>
+                        <FotoPerfil src={user.profilePicture} />
+                        <Form profilePic={user.profilePicture} onUpdateProfile={() => loadUserData()} />
+                    </div>
                     <div className='infoPerfil'>
                         <h2 className='infoUsername'>{user.username}</h2>
                         <div className="infoProgresso">

@@ -47,6 +47,24 @@
     gap: 3rem;
 }
 
+.editPerfil {
+    position: relative;
+}
+
+.editPerfil .edit-foto-form {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.editPerfil .edit-foto-form .btn {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--color-main-normal);
+}
+
+
 /* --- Lista de jogos -------------------------------------------- */
 
 .gameList {
