@@ -99,9 +99,9 @@ export const atualizarFotos = async (path, name) => {
         const response = await fetch(path);
         const blob = await response.blob();
 
-        console.log(`tamanho do arquivo ${blob.size}`)
-        if (blob.size > 16777215) {
-            console.log(`muito grande ${blob.size}`)
+        const sizeLimit = 16 * 1024 * 1024; // 16MB
+        if (blob.size > sizeLimit) {
+            console.error(`Arquivo muito grande para o banco de dados (${blob.size / 1024 / 1024}`);
         }
 
         const formData = new FormData();

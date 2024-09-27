@@ -1,3 +1,5 @@
+@import url('../styles/inputs.css');
+
 .mb-3 {
     margin-bottom: 3rem !important;
 }
@@ -23,17 +25,26 @@
 
 .modalEdit {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.8rem;
 }
 
-.modal-content {
-    background-color: var(--color-bg-main) !important;
+.modalEdit .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
 }
-.modal-content .modal-header .btn-close {
-    --bs-btn-close-color: var(--color-text-main) !important;
+
+.modal-content {
+    background-color: var(--color-bg-body) !important;
     color: var(--color-text-main) !important;
-    filter: invert();
 }
 
 .modalBody {
