@@ -11,6 +11,7 @@ import FotoPerfil from "../components/FotoPerfil";
 import PostCard from "../components/PostCard";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Form from '../components/FileInput';
 
 import * as routingService from "../services/routingService";
 import * as authService from "../services/authService";
@@ -46,7 +47,10 @@ const PaginaPerfil = () => {
             <Navbar />
             <div className="enquadroPagina">
                 <div className='enquadroPerfil'>
-                    <FotoPerfil src={user.profilePicture} />
+                    <div className='editPerfil'>
+                        <FotoPerfil src={user.profilePicture} />
+                        <Form />
+                    </div>
                     <div className='infoPerfil'>
                         <h2 className='infoUsername'>{user.username}</h2>
                         <div className="infoProgresso">

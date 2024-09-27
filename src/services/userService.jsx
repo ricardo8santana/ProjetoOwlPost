@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as crypto from './crypto';
 import { Buffer } from 'buffer';
+import * as authService from './authService'
 
 import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
 
@@ -91,3 +92,29 @@ export const createUser = async (username, email, password) => {
         console.error(`Erro ao criar usuários! ( ${err} )`);
     }
 };
+
+export const atualizarFotos = async (path, name) => {
+    try {
+
+        const usuario = await authService.getLoggedUser();
+        const response = await fetch(path);
+        const blob = await response.blob();
+
+        const formData = new FormData();
+        formData.append('id', usuario.id);
+        formData.append('fotoPerfil', blob, name);
+
+        console.log("patch");
+
+        const r = await axios.patch(urlAPI + '/usuarios/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+
+        console.log(r);
+    }
+    catch (err) {
+        console.error(`Erro ao atualizar foto usuários! ( ${err} )`);
+    }
+}

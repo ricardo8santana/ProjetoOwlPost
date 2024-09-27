@@ -51,7 +51,7 @@ const Navbar = () => {
         <Link className="btn-owl link-alt nav-link">{t('support')}</Link>
       </div>
       <div className='menu-friendbuttons'>
-        <div>
+        {/* <div>
           {
             !isLoggedIn
               ? null
@@ -66,7 +66,7 @@ const Navbar = () => {
                 </button>
               </div>)
           }
-        </div>
+        </div> */}
         <div className='menu-authbuttons'>
           <div className="auth-buttons">
             <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>{t('login')}</Button>

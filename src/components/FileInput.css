@@ -1,0 +1,28 @@
+.mb-3 {
+    margin-bottom: 3rem !important;
+}
+
+.testando {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.trash-btn {
+    display: flex;
+    border: none;
+    background-color: inherit;
+}
+
+.trash {
+    width: 20px;
+    height: 20px;
+    color: var(--color-main-lighter);
+}
+
+.modalEdit {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
