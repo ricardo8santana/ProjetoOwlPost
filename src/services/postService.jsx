@@ -339,6 +339,29 @@ export const getPostsFixados = async () => {
     }    
 }
 
-export const createPost = (post) => {
-    posts.push(post);
+export const createPost = async (userID, title, content, tags) => {
+    try {
+        const response = await axios.post(urlAPI + `/postagens`, {
+            userID: userID,
+            title: title,
+            content: content,
+        });
+
+        console.log(`criando post para o usuário ${userID}. ${title}, ${tags.map(x => x.name)}`);
+
+        const postID = response.data.postID;
+
+        await Promise.all(tags.map(async (tag) => {
+            console.log(`criando tags ${tag.id}${tag.name} para post ${postID}`);
+            const r = await axios.post(urlAPI + `/post-tags`, {
+                tagID: tag.id,
+                postID: postID,
+            });
+            return r.data;
+        }));
+        
+    } catch (err) {
+        console.error(`Erro ao criar postagens. erro: ${err}`);
+    }
+    
 };

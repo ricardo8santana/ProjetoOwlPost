@@ -40,7 +40,7 @@ export const getTags = async () => {
 
 export const getTagsSync = async (onGetTags) => {
     const tags = await getTags();
-    onGetTags([...[new Tag(0, 'Nenhum')], ...tags]);
+    onGetTags(tags);
 }
 
 export const getTagsByPostID = async (postID) => {

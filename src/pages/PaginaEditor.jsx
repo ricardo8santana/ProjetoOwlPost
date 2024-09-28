@@ -1,6 +1,6 @@
 import './PaginaEditor.css'
 
-import { Button, ButtonGroup, Dropdown, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Dropdown, Modal, Form } from "react-bootstrap";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -38,176 +38,200 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 - [Como escrever Markdown](https://markdown.net.br/sintaxe-basica/)
 `;
 
-const Tag = ({tag, onDelete, isReadOnly}) => {
-  const nome = tag.name || 'tag';
-  
-  return (
-    <div className="tag">
-      <p>{nome}</p>
-      {
-        !isReadOnly
-          ? <FontAwesomeIcon 
-            className="tag-btn-remove btn-owl danger" 
-            icon={faCircleXmark} 
-            onClick={onDelete}/>
-          : null
-      }
-    </div>
-  )
+const Tag = ({ tag, onDelete, isReadOnly }) => {
+    const nome = tag.name || 'tag';
+
+    return (
+        <div className="tag">
+            <p>{nome}</p>
+            {
+                !isReadOnly
+                    ? <FontAwesomeIcon
+                        className="tag-btn-remove btn-owl danger"
+                        icon={faCircleXmark}
+                        onClick={onDelete} />
+                    : null
+            }
+        </div>
+    )
 };
 
 
 const PaginaEditor = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const { postID } = useParams();
-  
-  const [post, setPost] = useState(null);
+    const { postID } = useParams();
 
-  const [content, setContent] = useState(postID != 0 ? '' : defaultContent);
-  const [title, setTitle] = useState('');
-  const [tags, setTags] = useState([]);
+    const [post, setPost] = useState(new Post(postID, 0, '', defaultContent, false, false, null));
+    const [tags, setTags] = useState([]);
 
-  const [availableTags, setAvailableTags] = useState([]);
-  const [user, setUser] = useState(false);
+    const [availableTags, setAvailableTags] = useState([]);
+    const [user, setUser] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener('user-logout', () => {
-      navigate('/');
-    });
+    const [modalMessage, setModalMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
-    const getPost = async () => {
-      const post = await postService.getPostByID(parseInt(postID));
-      console.log(`Trying loading post with id: ${postID}. Result: ${post}`);
-      
-      setPost(post);
-      setTitle(post.title);
-      setContent(post.content);
-      
-      const tags = await tagService.getTagsByPostID(postID);
-      setTags(tags);
+    useEffect(() => {
+        window.addEventListener('user-logout', () => {
+            navigate('/');
+        });
 
-      const availableTags = await tagService.getTags();
-      setAvailableTags(availableTags);
+        const loadContent = async () => {
+            const user = await authService.getLoggedUser();
+            setPost({ ...post, userID: user.id });
+            setUser(user);
+
+            const availableTags = await tagService.getTags();
+            setAvailableTags(availableTags);
+        };
+
+        if (postID !== 0) {
+            console.warn('Editar postagens ainda não é suportado.')
+        }
+
+        routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
+        loadContent();
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('post-backup', JSON.stringify(post));
+        localStorage.setItem('post-tags', JSON.stringify(tags));
+        console.log(post);
+        console.log(tags);
+    }, [post, tags]);
+
+    const onContentChanged = (content) => {
+        setPost({ ...post, content: content });
     }
 
-    if (postID !== 0) {
-      getPost();
-    }
-    else {
-      setContent(defaultContent);
-    }
-   
-    routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
-    authService.getLoggedUserSync(user => setUser(user));
-  }, [])
-
-  const onContentChanged = (content) => {
-    setContent(content);
-  }
-
-  const onTitleChanged = (e) => {
-    setTitle(e.target.value);
-  }
-
-  const onSubmitClicked = () => {
-    if (title === null) {
-      console.warn("Falta preencher o nome!");
-      return;
+    const onTitleChanged = (e) => {
+        setPost({ ...post, title: e.target.value });
     }
 
-    if (post !== null) {
-      console.warn("Ainda não é possível editar posts");
-      return;
-    }
+    const handleRemoveTag = async (tag) => {
+        const index = tags.indexOf(tag);
+        if (index < 0) {
+            return;
+        }
 
-    const date = new Date();
-    const tags = [getTags()[0]];
+        const updatedTags = tags.filter(t => t !== tag);
+        setTags(updatedTags);
 
-    postService.createPost(new Post(user.id, date, tags, title, content));
+        const allTags = await tagService.getTags();
+        setAvailableTags(allTags.filter(t => !updatedTags.includes(t)));
+    };
 
-    navigate('/posts');
-  };
+    const handleInsertTag = async (tag) => {
+        const updatedTags = [...tags, tag]
+        setTags(updatedTags);
 
-  const handleRemoveTag = (tag) => {
-    const index = tags.indexOf(tag);
-    if (index < 0) {
-      return;
-    }
+        const allTags = await tagService.getTags();
+        setAvailableTags(allTags.filter(t => !updatedTags.includes(t)));
+    };
 
-    const updatedTags = tags.filter(t => t !== tag);
-    setTags(updatedTags);
+    const handleOnSubmit = async (e) => {
+        e.preventDefault();
 
-    setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
-  };
+        if (post.title === '') {
+            setModalMessage('Sua postagem precisa de um título! Volte e de um nome interessante para ela.');
+            setShowModal(true);
+            e.stopPropagation();
+            return;
+        }
+        
+        if (!tags || tags.length === 0) {
+            setModalMessage('Sua postagem precisa de pelo menos uma tag! Volte e adicione algumas.');
+            setShowModal(true);
+            e.stopPropagation();
+            return;
+        }
 
-  const handleInsertTag = (tag) => {
-    const updatedTags = [...tags, tag]
-    setTags(updatedTags);
+        if (post.content === '') {
+            setModalMessage('Sua postagem precisa de conteúdo! Volte e escreva um pouco.');
+            setShowModal(true);
+            e.stopPropagation();
+            return;
+        }
 
-    setAvailableTags(tagService.getTags().filter(t => !tags.includes(t)));
-  };
+        try {
+            await postService.createPost(user.id, post.title, post.content, tags);
+            navigate('/posts');
+        }
+        catch (err) {
+            setModalMessage('Algo estranho aconteceu, tente novamente mais tarde.');
+            setShowModal(true);
+        }
+    };
 
-  return (
-    <>
-      <Navbar />
-      <div className="editor-page-root">
-        <Form className="editor-page">
-          <h2 className="editor-page-title">{post ? post.title : 'Criar Post'}</h2>
-          <input 
-            type='text' 
-            className="alt editor-page-post" 
-            placeholder="Um nome interessante para o seu post" 
-            hidden={post}
-            onChange={onTitleChanged} />
-          <div className="tag-container">
-            <div className="tag-list">
-              {
-                tags.map(tag => 
-                  <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post !== 0}/>
-                )
-              }
+    return (
+        <>
+            <Navbar />
+            <div className="editor-page-root">
+                <Form className="editor-page" onSubmit={handleOnSubmit}>
+                    <input
+                        type='text'
+                        className="alt editor-page-post"
+                        placeholder="Um nome interessante para o seu post"
+                        onChange={onTitleChanged} />
+                    <div className="tag-container">
+                        <div className="tag-list">
+                            {
+                                tags.map(tag =>
+                                    <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} />
+                                )
+                            }
+                        </div>
+                        <TagButton availableTags={availableTags} onSubmit={tag => handleInsertTag(tag)} />
+                    </div>
+                    <PostEditor content={post.content} contentChanged={onContentChanged} />
+                    <Button className="editor-submit-btn" variant="owl-primary" type='submit'>Postar</Button>
+                </Form>
+
+                <Modal show={showModal} centered={true} onHide={() => setShowModal(false)}>
+                    <Modal.Header>
+                        <Modal.Title>Ops! Algo errado aconteceu.</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{modalMessage}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowModal(false)}>OK</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
-            <TagButton hidden={post} availableTags={availableTags} onSubmit={tagName => handleInsertTag({ name: tagName })} />
-          </div>
-          <PostEditor content={content} contentChanged={onContentChanged} />
-          <Button hidden={post} className="editor-submit-btn" variant="owl-primary" onClick={onSubmitClicked}>Postar</Button>
-        </Form>
-      </div>
-      <Footer />
-    </>
-  )
+            <Footer />
+        </>
+    )
 };
 
-function TagButton ({availableTags, onSubmit, hidden}) {
-  const [tagName, setTagName] = useState('');
+function TagButton({ availableTags, onSubmit, hidden }) {
+    const [tagName, setTagName] = useState('');
 
-  return (
-    <ButtonGroup hidden={hidden}>
-      <input 
-        type='text' 
-        list='tags' 
-        className="input-tag alt" 
-        placeholder="Adicionar Tag" 
-        value={tagName}
-        onChange={e => setTagName(e.target.value)}/>
+    return (
+        <ButtonGroup hidden={hidden}>
+            <input
+                type='text'
+                list='tags'
+                className="input-tag alt"
+                placeholder="Adicionar Tag"
+                value={tagName}
+                onChange={e => setTagName(e.target.value)} />
 
-      <Button className="btn-tag btn-owl secondary" onClick={e => {
-          onSubmit(tagName);
-          setTagName('');
-        }}>
-        <FontAwesomeIcon icon={faPlus} />
-      </Button>
+            <Button className="btn-tag btn-owl secondary" onClick={() => {
+                const t = availableTags.find(t => t.name === tagName)
+                onSubmit(t);
+                setTagName('');
+            }}>
+                <FontAwesomeIcon icon={faPlus} />
+            </Button>
 
-      <datalist id="tags">
-        {
-          availableTags.map(tag => 
-            <option key={tag.id} value={tag.name}/>
-          )
-        }
-      </datalist>
-    </ButtonGroup> 
-  )
+            <datalist id="tags">
+                {
+                    availableTags.map(tag =>
+                        <option key={tag.id} value={tag.name} />
+                    )
+                }
+            </datalist>
+        </ButtonGroup>
+    )
 }
 
 export default PaginaEditor;
