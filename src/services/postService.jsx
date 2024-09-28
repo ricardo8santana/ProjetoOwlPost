@@ -4,12 +4,11 @@ import { urlAPI } from './apiConnection';
 import * as tagService from './tagService';
 
 export class Post {
-    constructor(id, userID, title, content, stars, isFixed, isUpdated, lastActivity) {
+    constructor(id, userID, title, content, isFixed, isUpdated, lastActivity) {
         this.id = id;
         this.userID = userID;
         this.title = title; 
         this.content = content;
-        this.stars = stars;
         this.isFixed = isFixed;
         this.isUpdated = isUpdated;
         this.lastActivity = lastActivity;
@@ -22,7 +21,6 @@ const createPostFromDatabase = (postData) => {
         postData.idUsuario,
         postData.titulo,
         postData.conteudo,
-        postData.estrelas,
         postData.fixado,
         postData.atualizado,
         postData.ultimaAtividade);
@@ -317,8 +315,6 @@ export const getPostByID = async (id) => {
     }
 }; 
 
-
-
 export const getPostsByUserID = async (userID) => {
     try {
         const response = await axios.get(urlAPI + `/postagens/user?userID=${userID}`);
@@ -329,10 +325,19 @@ export const getPostsByUserID = async (userID) => {
     catch (err) {
         console.error(`Erro ao buscar postagem por id do usuário. erro: ${err}`);
         return null;
-    }
-
-    
+    }    
 };
+
+export const getPostsFixados = async () => {
+    try {
+        const posts = await getPosts();
+        return posts.filter(post => post.isFixed);
+    }
+    catch (err) {
+        console.error(`Erro ao buscar postagem por id do usuário. erro: ${err}`);
+        return null;
+    }    
+}
 
 export const createPost = (post) => {
     posts.push(post);
