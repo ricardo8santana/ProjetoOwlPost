@@ -114,25 +114,6 @@ div > .post-card-author-name {
     height: 2.5rem;
 }
 
-
-
-.wmde-markdown {
-    background-color: transparent !important;
-    max-width: 800px !important;
-    display: flex;
-    flex-direction: column;
-}
-
-.wmde-markdown *:is(h1, h2, h3, h4, h5, h6) {
-    border: none !important;
-    margin-bottom: 2rem;
-}
-
-.wmde-markdown p:has(img) {
-    text-align: center;
-    margin: 2rem;
-}
-
 @media screen and (max-width: 425px) {
     .post-page-content .post-page-info {
         flex-direction: column;

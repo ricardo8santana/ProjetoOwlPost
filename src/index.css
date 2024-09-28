@@ -5,6 +5,7 @@
 @import url('./styles/colors.css');
 @import url('./styles/inputs.css');
 @import url('./styles/buttons.css');
+@import url('./styles/markdownEditor.css');
 
 :root {
   font-synthesis: none;

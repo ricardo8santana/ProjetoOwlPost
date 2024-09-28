@@ -68,7 +68,7 @@ const PaginaEditor = () => {
   const [canEdit, setCanEdit] = useState(false);
   const [user, setUser] = useState(false);
 
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(defaultContent);
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState([]);
 
@@ -81,24 +81,24 @@ const PaginaEditor = () => {
     });
 
     const loadContent = async () => {
-      const post = await postService.getPostByID(postID) || null;
-      setPost(post);
+      const user = await authService.getLoggedUser();
+      setUser(user);
+      
+      if (postID > 0) {
+        const post = await postService.getPostByID(postID);
 
-      if (post) {
+        setPost(post);
         setTitle(post.title);
         setContent(post.content);
 
         const tags = await tagService.getTagsByPostID(postID);
         setTags(tags);
-      }
 
-      const user = await authService.getLoggedUser();
-      setUser(user);
+        setCanEdit(post && post.userID === user.id);
+      }
 
       const availableTags = await tagService.getTags();
       setAvailableTags(availableTags);
-      
-      setCanEdit(post && post.userID === user.id);
     };
 
     routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
@@ -173,7 +173,7 @@ const PaginaEditor = () => {
     <div className='post-editor'>
       <Navbar />
       {
-        postID !== 0 && !post
+        postID > 0 && !post
           ? <LoadingScreen />
           : (
             <div className="editor-page-root">

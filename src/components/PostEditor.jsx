@@ -1,5 +1,5 @@
-import MDEditor, { commands } from "@uiw/react-md-editor"
-
+import MDEditor from '@uiw/react-md-editor';
+import React from 'react';
 
 import './PostEditor.css';
 import { extraToolbarCommands, toolbarCommands } from "./PostEditorToolbarItems";
@@ -12,7 +12,9 @@ const PostEditor = ({content, contentChanged}) => {
             textareaProps={{spellCheck: true}}
             onChange={contentChanged}
             commands={toolbarCommands} 
-            extraCommands={extraToolbarCommands}       
+            extraCommands={extraToolbarCommands}    
+            visibleDragbar={false}
+            highlightEnable={false}
             />
     )
 }
