@@ -42,7 +42,7 @@ const PaginaHome = () => {
       setSlideDestaques(posts.slice(0, 4).map((post, index) => {
         return {
           titulo: post.title,
-          descricao: post.content.substring(0, 30),
+          descricao: postService.getResumeFromContent(post.content, true, true, 200),
           to: `/posts/${post.id}`,
           imagem: slideBackgrounds[index % slideBackgrounds.length],
         }

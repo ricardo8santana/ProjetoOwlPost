@@ -159,3 +159,24 @@ export const deletePost = async (postID) => {
         console.error(`Erro ao deletar postagem. erro: ${err}`);
     }
 }
+
+/** @param {String} content @param {Boolean} useCompact @param {Boolean} includeTitles @param {Number} maxLength @returns {String}*/
+export const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
+    const lines = content.split('\n');
+    
+    const result = lines.map(line => {
+        if (line.match(/^[ a-z\u00df-\u00ff]/i)) {
+            const result = `${line}${useCompact ? ' ' : '\n'}`;
+            return result;
+        }
+
+        // if (includeTitles && line.match(/^[ #]+/i)) {
+        //     const result = line.replace(/^[#]{1,6}\s+(.*\n)/i, /$1/);
+        //     return result.trim() + '\n'
+        // }
+
+        return;
+    });
+    
+    return result.join('').substring(0, maxLength);
+};
