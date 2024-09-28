@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
+import { Modal } from "react-bootstrap";
 
 import LoadingScreen from "../components/LoadingScreen";
 import FotoPerfil from '../components/FotoPerfil';
@@ -15,6 +16,11 @@ import { Post } from "../services/postService";
 
 import './PaginaPostagem.css';
 import '../components/PostCard.css';
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import Footer from "../components/Footer";
 
 const PaginaPostagem = () => {
     const navigate = useNavigate();
@@ -26,6 +32,11 @@ const PaginaPostagem = () => {
     const [tags, setTags] = useState([]);
     const [user, setUser] = useState(false);
 
+    const [modalMessage, setModalMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
+    const [showOptions, setShowOptions] = useState(false);
+
     useEffect(() => {
         const loadContent = async () => {
             const post = await postService.getPostByID(parseInt(postID));
@@ -36,6 +47,9 @@ const PaginaPostagem = () => {
 
             const user = await userService.getUser(post.userID);
             setUser(user);
+
+            const loggedUser = await authService.getLoggedUser();
+            setShowOptions(loggedUser.isAdmin || post.userID === loggedUser.id);
         }
 
         if (postID === 0) {
@@ -46,41 +60,77 @@ const PaginaPostagem = () => {
         loadContent();
     }, []);
 
+    const handleDeletePost = async () => {
+        console.warn(`deletando uma postagem com id ${postID}`);
+        await postService.deletePost(postID);
+        setShowModal(false);
+        navigate('/posts');
+    }
+
     const isLoading = !post || !tags || !user;
 
-    return isLoading
-        ? <LoadingScreen />
-        : (
-            <div className='post-page'>
-                <Navbar />
-                <div className="post-page-content">
-                    <h1 className="post-page-title">{post.title}</h1>
-                    <div className="post-page-info">
-                        <div className='post-card-author'>
-                            <FotoPerfil src={user.profilePicture} />
-                            <div className='post-card-author-info'>
-                                <div>
-                                    <span className='post-card-author-name'>{user.username}</span>
-                                    <span className='post-card-author-time'>{getTimeSincePost(post)}</span>
+    return (
+        <div className='post-page'>
+            <Navbar />
+            {
+                isLoading 
+                    ? <LoadingScreen />
+                    : (
+                        <div className="post-page-content">
+                            <h1 className="post-page-title">{post.title}</h1>
+                            <div className="post-page-info">
+                                <div className='post-card-author'>
+                                    <FotoPerfil src={user.profilePicture} />
+                                    <div className='post-card-author-info'>
+                                        <div>
+                                            <span className='post-card-author-name'>{user.username}</span>
+                                            <span className='post-card-author-time'>{getTimeSincePost(post)}</span>
+                                        </div>
+                                        <p className='post-card-author-location'>Postado em <b>{`${tags.map(x => x.name).join(', ')}`}</b></p>
+                                    </div>
                                 </div>
-                                <p className='post-card-author-location'>Postado em <b>{`${tags.map(x => x.name).join(', ')}`}</b></p>
+                                <div className='post-page-tag-options'>
+                                    <div className="post-page-tag-container">
+                                        <div className="post-page-tag-list">
+                                            {
+                                                tags.map(tag =>
+                                                    <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post !== 0} />
+                                                )
+                                            }
+                                        </div>
+                                    </div>
+                                    <div hidden={!showOptions} className="post-page-options">
+                                        <Button href={`/editor/${postID}`} variant='owl-secondary'>
+                                            <FontAwesomeIcon icon={faPen} />
+                                        </Button>
+                                        <Button variant='owl-danger' onClick={() => setShowModal(true)}>
+                                            <FontAwesomeIcon icon={faTrashCan} />
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
+                            <hr />
+                            <MDEditor.Markdown source={post.content} style={{ minHeight: '100vh' }} />
+                            <Modal show={showModal} centered={true} onHide={() => setShowModal(false)}>
+                                <Modal.Header>
+                                    <p style={{ margin: '0' }}><FontAwesomeIcon icon={faWarning} /> Aviso</p>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <p>Certeza que deseja excluir essa postagem? Essa ação não pode ser disfeita!</p>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="owl-danger" onClick={handleDeletePost}>
+                                        Sim
+                                    </Button>
+                                    <Button variant="owl" onClick={() => setShowModal(false)}>Não</Button>
+                                </Modal.Footer>
+                            </Modal>
                         </div>
-                        <div className="post-page-tag-container">
-                            <div className="post-page-tag-list">
-                                {
-                                    tags.map(tag =>
-                                        <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post !== 0} />
-                                    )
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <hr />
-                    <MDEditor.Markdown source={post.content} style={{ minHeight: '100vh' }} />
-                </div>
-            </div>
-        )
+                    )
+                }
+            <Footer />
+        </div>
+    )
 }
 
 function Tag({ tag }) {

@@ -8,22 +8,23 @@ import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
 import { urlAPI } from "./apiConnection";
 
 export class User {
-    constructor(id, username, email, password, profilePicture) {
+    constructor(id, username, email, password, profilePicture, isAdmin) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.profilePicture = profilePicture;
+        this.isAdmin = isAdmin;
     }
 }
 
 // export const defaultUser = new User(0, 'username', 'username@email.com', 'password', defaultImage);
-export const defaultUser = new User(0, 'Username', 'username@email.com', 'password', defaultProfilePicture);
+export const defaultUser = new User(0, 'Username', 'username@email.com', 'password', defaultProfilePicture, false);
 
 const getUsers = async () => {
     try {
         const response = await axios.get(urlAPI + '/usuarios/');
-        return response.data.map(({id, nome, email, senha, fotoPerfil, fotoFormato}) => {
+        return response.data.map(({id, nome, email, senha, fotoPerfil, fotoFormato, admin}) => {
             let profileImage = defaultProfilePicture;
         
             const hasProfileImage = fotoPerfil && fotoFormato;
@@ -34,7 +35,7 @@ const getUsers = async () => {
                 profileImage = `data:${fotoFormato};base64,${image}`
             }
 
-            return new User(id, nome, email, senha, profileImage);
+            return new User(id, nome, email, senha, profileImage, admin);
         });
     }
     catch (err) {
@@ -46,7 +47,7 @@ const getUsers = async () => {
 export const getUser = async (userID) => {
     try {
         const response = await axios.get(urlAPI + `/usuarios/${userID}`);
-        const { id, nome, email, senha, fotoPerfil, fotoFormato } = response.data.user;
+        const { id, nome, email, senha, fotoPerfil, fotoFormato, admin} = response.data.user;
         
         let profileImage = defaultProfilePicture;
         
@@ -58,7 +59,7 @@ export const getUser = async (userID) => {
             profileImage = `data:${fotoFormato};base64,${image}`
         }
 
-        return new User(id, nome, email, senha, profileImage);
+        return new User(id, nome, email, senha, profileImage, admin);
     } 
     catch (err) {
         console.error(`Erro ao buscar usuário! ${err}`);
