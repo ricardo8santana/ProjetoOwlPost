@@ -1,29 +1,23 @@
-import './PostViewPage.css'
-
-import {
-    Form,
-    Dropdown,
-    DropdownMenu,
-    DropdownButton,
-    Button,
-    Spinner
-} from 'react-bootstrap';
-
-import { faArrowDownShortWide, faFilter, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import MDEditor from '@uiw/react-md-editor';
 import React from 'react';
 
+import { Form, Dropdown, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import { faArrowDownShortWide, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import LoadingScreen from '../components/LoadingScreen';
 import PostCard from '../components/PostCard';
 import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
 import * as tagService from '../services/tagService';
 
-import { Link } from 'react-router-dom';
 import { getTags } from '../services/tagService';
 import Footer from '../components/Footer';
+
+import './PostViewPage.css'
 
 const CustomMenu = React.forwardRef(
     ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
@@ -54,22 +48,6 @@ const CustomMenu = React.forwardRef(
     },
 );
 
-const PostViewEmpty = () => {
-    return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
-            <FontAwesomeIcon icon={faCircleNotch} spin style={{ width: '2rem', height: '2rem'}}/>
-        </div>
-        // <>
-        //     <h2>Nenhum post ainda, volte mais tarde</h2>
-        // </>
-    )
-};
-
-// const tags = [
-//     'Nenhum',
-//     'Anime',
-//     'Aulas',
-// ];
 
 const orders = [
     'Padrão',
@@ -89,11 +67,6 @@ const PostViewList = () => {
         tagService.getTagsSync(tags => setTags(tags));
     }, []);
 
-    useEffect(() => {
-
-
-    }, [filtro])
-
     const handleFilterSelected = (selected) => {
         const getFilteredPost = async () => {
             const posts = await postService.getPostsByTagID([filtro.id === 0 ? null : filtro.id]);
@@ -104,72 +77,70 @@ const PostViewList = () => {
     }
 
     return (
-        <>
-            <div className='post-view'>
-                <div className='post-view-filters'>
-                    <div className='post-view-filter left'>
-                        {/* <span>Filtrar</span> */}
-                        <Dropdown onSelect={handleFilterSelected}>
-                            <Dropdown.Toggle id="dropdown-custom-components">
-                                <FontAwesomeIcon icon={faFilter} />
-                                <span className='icon-filters'>{filtro.name}</span>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
-                                {
-                                    tags.map(tag =>
-                                        <Dropdown.Item eventKey={tag.id}>{tag.name}</Dropdown.Item>
-                                    )
-                                }
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
-                    <div className='post-view-search'>
-                        <input type='text' placeholder='Pesquisar' />
-                    </div>
-                    <div className='post-view-filter right'>
-                        {/* <span>Ordenar</span> */}
-                        <Dropdown onSelect={e => setOrder(e)}>
+        <div className='post-view'>
+            <div className='post-view-filters'>
+                <div className='post-view-filter left'>
+                    {/* <span>Filtrar</span> */}
+                    <Dropdown onSelect={handleFilterSelected}>
+                        <Dropdown.Toggle id="dropdown-custom-components">
+                            <FontAwesomeIcon icon={faFilter} />
+                            <span className='icon-filters'>{filtro.name}</span>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
+                            {
+                                tags.map(tag =>
+                                    <Dropdown.Item key={tag.id} eventKey={tag.id}>{tag.name}</Dropdown.Item>
+                                )
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+                <div className='post-view-search'>
+                    <input type='text' placeholder='Pesquisar' />
+                </div>
+                <div className='post-view-filter right'>
+                    {/* <span>Ordenar</span> */}
+                    <Dropdown onSelect={e => setOrder(e)}>
                         <Dropdown.Toggle id="dropdown-custom-components"><FontAwesomeIcon icon={faArrowDownShortWide} /><span className='icon-filters'>{order}</span></Dropdown.Toggle>
-                            <Dropdown.Menu >
-                                {
-                                    orders.map(order => <Dropdown.Item eventKey={order}>{order}</Dropdown.Item>)
-                                }
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
+                        <Dropdown.Menu >
+                            {
+                                orders.map((order, index) =>
+                                    <Dropdown.Item key={index} eventKey={order}>{order}</Dropdown.Item>)
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
-                <div className='post-view-options'>
-                    <Link className='btn-owl btn-create' to='/editor/0'>Criar Post</Link>
-                </div>
-                {
-                    posts.map(post =>
-                        <PostCard key={post.id} post={post} />
-                    )
-                }
-                {/* <input type='button' className='btn-owl btn-load' value='Carregar Mais' /> */}
-                <Button variant='owl'>Carregar Mais</Button>
             </div>
-            <Footer />
-        </>
+            <div className='post-view-options'>
+                <Link className='btn-owl btn-create' to='/editor/0'>Criar Post</Link>
+            </div>
+            {
+                posts.map(post =>
+                    <PostCard key={post.id} post={post} />
+                )
+            }
+            <Button variant='owl'>Carregar Mais</Button>
+        </div>
     )
 };
 
 const PostViewPage = () => {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(null);
 
     useEffect(() => {
         postService.getPostsSync(posts => setPosts(posts));
     }, []);
 
     return (
-        <>
+        <div className='posts-page'>
             <Navbar />
             {
-                posts.length === 0
-                    ? <PostViewEmpty />
+                posts === null
+                    ? <LoadingScreen />
                     : <PostViewList posts={posts} />
             }
-        </>
+            <Footer />
+        </div>
     );
 };
 

@@ -12,8 +12,8 @@ const CarroselHome = ({ slides }) => {
   return (
     <Carousel controls={true} interval={7000} pause='hover' touch>
       {
-        slides.map(slide =>
-          <Carousel.Item>
+        slides.map((slide, index) =>
+          <Carousel.Item key={index}>
             <DestaqueSlideCard slide={slide}/>
           </Carousel.Item>
         )

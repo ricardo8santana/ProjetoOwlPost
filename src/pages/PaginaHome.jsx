@@ -114,8 +114,8 @@ const PaginaHome = () => {
 
           <div className="integrantes">
             {
-              integrantesGrupo.map(integrante => 
-                <IntegranteGrupo nome={integrante.nome} githubUserID={integrante.githubID} />
+              integrantesGrupo.map((integrante, index) => 
+                <IntegranteGrupo key={index} integrante={integrante}/>
               )
             }
           </div>
@@ -131,12 +131,12 @@ const PaginaHome = () => {
 
 
 
-function IntegranteGrupo({ nome, githubUserID }) {
+function IntegranteGrupo({ integrante }) {
   /* https://github.com/{username}.png?size=40 */
   return (
     <div className="integrante">
-      <FotoPerfil src={`https://avatars.githubusercontent.com/u/${githubUserID}?s=250&v=4`} />
-      <p>{nome}</p>
+      <FotoPerfil src={`https://avatars.githubusercontent.com/u/${integrante.githubID}?s=250&v=4`} />
+      <p>{integrante.nome}</p>
     </div>
   )
 }
