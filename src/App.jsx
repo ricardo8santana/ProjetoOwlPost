@@ -2,6 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { useEffect } from 'react';
+
+import * as darkModeService from './services/darkModeService';
+
 import PaginaPerfil from './pages/PaginaPerfil';
 import PaginaCadastro from './pages/PaginaCadastro';
 import PaginaLogin from './pages/PaginaLogin';
@@ -13,7 +17,7 @@ import PaginaEditor from './pages/PaginaEditor';
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <PaginaHome />    
+    element: <PaginaHome />
   },
   {
     path: '/posts',
@@ -42,8 +46,12 @@ const routes = createBrowserRouter([
 ]);
 
 function App() {
+  useEffect(() => {
+    darkModeService.setTheme(darkModeService.loadTheme());
+  }, []);
+
   return (
-    <RouterProvider router={routes}/>
+    <RouterProvider router={routes} />
   )
 }
 
