@@ -3,6 +3,32 @@
     font-weight: 800;
 }
 
+/* .my-section {
+    height: 100vh;
+    padding: 0 clamp(0rem, 12vw, 20rem);
+    display: grid;
+    place-content: center;
+
+    p {
+        font-size: clamp(2rem, 5vw, 8rem);
+    }
+} */
+
+.page-section:has(.sobre){
+    height: 150vh;
+    padding: 0 clamp(4rem, 12vw, 20em);
+    display: grid;
+    place-content: center;
+
+    p {
+        font-size: 23px;
+    }
+
+    h5 {
+        font-size: 27px;
+    }
+}
+
 .page-section:has(.destaques),
 .page-section:has(.grupo) {
     display: flex;
@@ -233,3 +259,23 @@
         padding: 0.5rem;
     }
 }
+
+html.lenis, html.lenis body {
+    height: auto;
+  }
+  
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }

@@ -1,9 +1,11 @@
 import CarroselHome from "../components/Carrosel";
 import Navbar from "../components/Navbar";
 import PageSection from "../components/PageSection";
-import { useLayoutEffect } from "react";
+import { useEffect, useRef } from 'react';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+import Lenis from 'lenis'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import Logo from '../assets/images/Group.svg';
@@ -88,25 +90,77 @@ const IntegranteGrupo = ({ nome, githubUserID }) => {
 const PaginaHome = () => {
   const slideDestaques = slides.slice(0, 4);
 
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.to(".about-site", {
-      x: 0,
-      opacity: 1,
-      scrollTrigger: {
-        trigger: ".secondary",
-        markers: true,
-        start: "top 520px",
-        end: "bottom 600px",
-        scrub: true
-      }
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+  
+    const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
+    
+    splitTypes.forEach((char,i) => {
+      const bg = char.dataset.bgColor
+      const fg = char.dataset.fgColor
+      
+      const text = new SplitType(char, { types: 'chars'})
+      
+      // gsap.fromTo(text.chars,
+      //   {
+      //   color: bg
+      //   },
+      //   {
+      //     color: fg,
+      //     duration: 0.2,
+      //     stagger: 0.2,
+      //     scrollTrigger: {
+      //       trigger: char,
+      //       start: 'top 25%',
+      //       end: 'top 20%',
+      //       scrub: 2,
+      //       markers: false,
+      //     },
+      // })
+
+      // gsap.from(text.chars, {
+      //   scrollTrigger: {
+      //     trigger: char,
+      //     start: 'top 25%',
+      //     end: 'top 18%',
+      //     scrub: 4,
+      //     markers: false
+      //   },
+      //   opacity: 0.2,
+      //   stagger: 0.01
+      // })
+
+      // gsap.from(text.chars, {
+      //   scrollTrigger: {
+      //     trigger: char,
+      //     start: 'top 50%',
+      //     end: 'top 50%',
+      //     scrub: 1,
+      //     markers: false
+      //   },
+      //   scaleY: 0,
+      //   y: -20,
+      //   transformOrigin: 'top',
+      //   stagger: 0.01
+      // })
     })
+  })
+  
+ 
+  
+  const lenis = new Lenis()
+  
+  lenis.on('scroll', (e) => {
+    console.log(e)
+  })
+  
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+  requestAnimationFrame(raf)
 
-    return () => {
-      gsap.killTweensOf(".about-site")
-    }
-  }, [])
-
+  
   return (
     <div className="home">
       <Navbar />
@@ -132,32 +186,38 @@ const PaginaHome = () => {
 
       </PageSection>
       <PageSection variant='secondary'>
-        <div className="sobre">
-              <h1>Um pouco sobre o site</h1>
+        <div className="sobre" >
+              <h1 className="title" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Um pouco sobre o site</h1>
           <hr />
 
+              {/* <img className="corujinha" src={Logo} style={{width: "50px"}} /> */}
           <div className="sobre-buble testando-1">
-            <img className="corujinha" src={Logo} style={{width: "50px"}} />
-            <h5>Porque Owlpost?</h5>
-            <p>O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar, 
-              e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado), 
-              seria o seu ponto de referência enquanto você está explorando novos conhecimentos. 
-              E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+            <section>
+              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Porque Owlpost?</h5>
+              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar, 
+                e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado), 
+                seria o seu ponto de referência enquanto você está explorando novos conhecimentos. 
+                E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+            </section>
           </div>
 
           <div className="sobre-buble">
-            <h5>Como surgiu a ideia da gamificação?</h5>
-            <p>No início, não tínhamos uma ideia clara do que criar. No entanto, surgiu a oportunidade de desenvolver algo
-              que pudesse ajudar a turma de enfermagem. Com isso em mente, decidimos criar um jogo. Usando a ideia da
-              gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
+            <section>
+              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da gamificação?</h5>
+              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">No início, não tínhamos uma ideia clara do que criar. No entanto, surgiu a oportunidade de desenvolver algo
+                que pudesse ajudar a turma de enfermagem. Com isso em mente, decidimos criar um jogo. Usando a ideia da
+                gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
+            </section>
           </div>
 
           <div className="sobre-buble">
-            <h5>Como surgiu a ideia da plataforma?</h5>
-            <p>Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
-              em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
-              e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
-              acessar esse conteúdo.</p>
+            <section>
+              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da plataforma?</h5>
+              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
+                em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
+                e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
+                acessar esse conteúdo.</p>
+            </section>
           </div>
         </div>
       </PageSection>
