@@ -92,15 +92,15 @@ const PaginaHome = () => {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
-  
+
     const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
-    
-    splitTypes.forEach((char,i) => {
+
+    splitTypes.forEach((char, i) => {
       const bg = char.dataset.bgColor
       const fg = char.dataset.fgColor
-      
-      const text = new SplitType(char, { types: 'chars'})
-      
+
+      const text = new SplitType(char, { types: 'chars' })
+
       // gsap.fromTo(text.chars,
       //   {
       //   color: bg
@@ -133,8 +133,8 @@ const PaginaHome = () => {
       // gsap.from(text.chars, {
       //   scrollTrigger: {
       //     trigger: char,
-      //     start: 'top 50%',
-      //     end: 'top 50%',
+      //     start: 'top 80%',
+      //     end: 'top 100%',
       //     scrub: 1,
       //     markers: false
       //   },
@@ -145,22 +145,22 @@ const PaginaHome = () => {
       // })
     })
   })
-  
- 
-  
+
+
+
   const lenis = new Lenis()
-  
+
   lenis.on('scroll', (e) => {
     console.log(e)
   })
-  
+
   function raf(time) {
     lenis.raf(time)
     requestAnimationFrame(raf)
   }
   requestAnimationFrame(raf)
 
-  
+
   return (
     <div className="home">
       <Navbar />
@@ -185,22 +185,25 @@ const PaginaHome = () => {
         </div>
 
       </PageSection>
-      <PageSection variant='secondary'>
+      <PageSection variant='secondary' hugContent>
         <div className="sobre" >
-              <h1 className="title" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Um pouco sobre o site</h1>
+          <h1 className="title" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Um pouco sobre o site</h1>
           <hr />
 
-              {/* <img className="corujinha" src={Logo} style={{width: "50px"}} /> */}
+          {/* <img className="corujinha" src={Logo} style={{width: "50px"}} /> */}
           <div className="sobre-buble testando-1">
-            <section>
-              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Porque Owlpost?</h5>
-              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar, 
-                e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado), 
-                seria o seu ponto de referência enquanto você está explorando novos conhecimentos. 
-                E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
-            </section>
-          </div>
 
+              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Porque Owlpost?</h5>
+              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar,
+                e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado),
+                seria o seu ponto de referência enquanto você está explorando novos conhecimentos.
+                E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+
+          </div>
+        </div>
+      </PageSection>
+      <PageSection hugContent>
+        <div className="sobre" >
           <div className="sobre-buble">
             <section>
               <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da gamificação?</h5>
@@ -209,6 +212,10 @@ const PaginaHome = () => {
                 gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
             </section>
           </div>
+        </div>
+      </PageSection>
+      <PageSection variant='secondary' hugContent>
+        <div className="sobre" >
 
           <div className="sobre-buble">
             <section>
@@ -228,7 +235,7 @@ const PaginaHome = () => {
 
           <div className="integrantes">
             {
-              integrantesGrupo.map(integrante => 
+              integrantesGrupo.map(integrante =>
                 <IntegranteGrupo nome={integrante.nome} githubUserID={integrante.githubID} />
               )
             }
@@ -237,7 +244,7 @@ const PaginaHome = () => {
         </div>
       </PageSection>
       <Footer />
-      
+
     </div>
   )
 };

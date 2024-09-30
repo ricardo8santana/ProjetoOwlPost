@@ -15,17 +15,16 @@
 } */
 
 .page-section:has(.sobre){
-    height: 150vh;
     padding: 0 clamp(4rem, 12vw, 20em);
     display: grid;
     place-content: center;
 
     p {
-        font-size: 23px;
+        font-size: 1rem;
     }
 
     h5 {
-        font-size: 27px;
+        font-size: 1.25rem;
     }
 }
 
@@ -119,7 +118,7 @@
 .grupo,
 .sobre {
     width: 100%;
-    padding: 4rem;
+    padding: 10rem 4rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -229,6 +228,7 @@
 
     .sobre {
         padding: 3rem 0.5rem !important;
+        font-size: 0.9rem !important;
     }
 
     .sobre-buble {
