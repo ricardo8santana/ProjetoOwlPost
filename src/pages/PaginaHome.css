@@ -14,20 +14,6 @@
     }
 } */
 
-.page-section:has(.sobre){
-    padding: 0 clamp(4rem, 12vw, 20em);
-    display: grid;
-    place-content: center;
-
-    p {
-        font-size: 1rem;
-    }
-
-    h5 {
-        font-size: 1.25rem;
-    }
-}
-
 .page-section:has(.destaques),
 .page-section:has(.grupo) {
     display: flex;
@@ -51,6 +37,23 @@
 .home h1, hr {
     padding: 0;
     margin: 0;
+}
+
+.teste {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 7rem;
+}
+
+.testando-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 5rem; */
 }
 
 .home hr {
@@ -112,13 +115,25 @@
 
 
 .page-section:has(.sobre) {
-    display: flex;
+    padding: 6rem 4rem;
+    height: 111vh !important;
+    
+    h5 {
+        font-size: 1.60rem;
+    }
+
+    p {
+        font-size: clamp(1.30rem, 1.30vw, 1.8rem);
+    }
 }
+
+
 
 .grupo,
 .sobre {
     width: 100%;
-    padding: 10rem 4rem;
+    /* height: 100%;  */
+    padding: 14rem 4rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -127,14 +142,19 @@
     color: var(--color-neutral-0);
 }
 
+.sobre-start {
+    width: 100%;
+    padding: 2rem;
+}
+
 /* .corujinha {
     transform: translateX(-700px);
     opacity: 0;
 } */
 
 .sobre-buble {
-    width: min(100%, 75vw);
-    padding: 2rem;
+    width: min(100%, 60vw);
+    padding: 4rem;  /*Aqui que da uma diminuida na largura*/
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -257,6 +277,10 @@
     .integrante {
         width: 150px;
         padding: 0.5rem;
+    }
+
+    .page-section:has(.sobre) {
+        min-height: 100% !important;
     }
 }
 
