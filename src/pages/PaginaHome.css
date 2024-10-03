@@ -20,7 +20,7 @@
     flex-direction: column;
     gap: 2rem;
 
-    width: 100vw;
+    width: 100%;
 }
 
 .home h1, hr {
