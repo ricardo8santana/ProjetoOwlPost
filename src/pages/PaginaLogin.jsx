@@ -1,46 +1,56 @@
 import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
 import './PaginaLogin.css'
 
-import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Form, Button, Col } from 'react-bootstrap';
+import { useEffect, useRef, useState } from 'react';
 
-import * as authService from '../services/authService';
-import * as routingService from '../services/routingService';
+import * as userService from '../services/userService.jsx';
 
 const PaginaLogin = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
     const [validated, setValidated] = useState('true');
     const [failedToLogin, setFailedToLogin] = useState(false);
 
     const navigate = useNavigate();
 
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
     const isValidEmail = () => {
+        // const emailValidationRegex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
         const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
         return email && email.match(emailValidationRegex);
     }
 
     const handleOnSubmit = async (event) => {
         event.preventDefault();
-        event.stopPropagation();
         
         const form = event.currentTarget;
+        
         if (form.checkValidity() === false || !isValidEmail() || failedToLogin) {
-            setValidated('false');
+            event.preventDefault();
+            event.stopPropagation();
             return;
         }
 
-        const user = await authService.login(email, password);
+        const user = await userService.login(email, password);
 
         if (!user) {
+            console.error(`Falha ao realizar login para ${email} ${password}`);
+            event.preventDefault();
+            event.stopPropagation();
             setFailedToLogin(true);
             setValidated('false');
             return;
         } 
 
+        console.warn(`Usuário logou! user: ${user.id} : ${user.username}`);
+
         setValidated('true');
-        routingService.redirectBackFromLogin(navigate);
+
+        const loginDestination = localStorage.getItem('loginDestination') || '/';
+        localStorage.removeItem('loginDestination');
+        navigate(loginDestination, { replace: true });
     };
 
     return (
