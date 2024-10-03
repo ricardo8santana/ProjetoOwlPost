@@ -1,0 +1,5 @@
+/* Classes para os estilos globais do site */
+
+:root {
+    --border-radius: 8px;
+}

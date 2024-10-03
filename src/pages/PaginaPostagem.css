@@ -1,0 +1,122 @@
+.post-page {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.post-page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    padding: 4rem 1rem;
+}
+
+.post-page-content .post-page-title,
+.post-page-content .post-page-info,
+.post-page-content .wmde-markdown,
+.post-page-content hr {
+    max-width: 960px;
+    width: 100%;
+}
+
+.post-page-content .wmde-markdown *:is(h1),
+.post-page-content .post-page-title {
+    text-align: center;
+    text-wrap: pretty;
+}
+
+.post-page-content hr {
+    margin: 2rem 0rem;
+    background-color: var(--color-text-disabled);
+}
+
+.post-page-tag-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+}
+
+.post-page-content .post-page-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-page-content .fotoPerfil {
+    width: 75px !important;
+    height: 75px !important;
+}
+
+div > .post-card-author-name {
+    align-items: center;
+}
+
+.post-page-content .post-card-author-name {
+    font-size: large !important;
+}
+.post-page-content .post-card-author-time {
+    font-size: medium !important;
+}
+.post-page-content .post-card-author-location {
+    font-size: small !important;
+}
+
+.post-page-tag-list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.post-page-tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    background-color: var(--color-bg-alt);
+    padding: 0rem 0.75rem;
+    height: 2.5rem;
+    border-radius: var(--border-radius);
+
+    margin-top: 10px;
+    margin-right: 10px;
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.post-page-tag-options {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.post-page-tag-options .post-page-tag {
+    margin: 0;
+}
+
+.post-page-options {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.post-page-options .btn {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+@media screen and (max-width: 425px) {
+    .post-page-content .post-page-info {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}

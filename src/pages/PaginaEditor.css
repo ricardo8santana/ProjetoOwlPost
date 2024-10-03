@@ -1,0 +1,123 @@
+.post-editor {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.editor-page-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3rem 0 3rem 0 ;
+}
+
+.editor-page {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: start;
+
+    width: min(1280px, 80vw);
+}
+
+.editor-page input[type='text'] {
+    width: 100%;
+    text-align: center;
+}
+
+.editor-page .editor-submit-btn {
+    margin-left: 70%;
+    width: 30%;
+}
+
+/* --- Tags ----------------------------------------------------------------- */
+
+.tag-container * {
+    margin: 0;
+    padding: 0;
+}
+
+.tag-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+}
+
+.tag-list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.tag-list:hover {
+    overflow: overlay;
+}
+
+.tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    background-color: var(--color-bg-alt);
+    padding: 0rem 0.75rem;
+    height: 2.5rem;
+    border-radius: var(--border-radius);
+
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.tag .tag-btn-remove {
+    position: absolute;
+    width: 25px !important;
+    height: 25px !important;
+    padding: 0;
+    top: -10px;
+    right: -10px;
+
+    border-radius: 50%;
+}
+
+.tag-container .btn-group {
+    width: 25%;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.input-tag {
+    padding: 0.5rem 0.5rem !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.btn-tag {
+    width: max-content !important;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.5rem 1rem !important;
+}
+
+@media screen and (max-width: 768px) {
+    .tag-container {
+        flex-direction: column;
+        align-items: end;
+        gap: 0.25rem;
+    }
+
+    .tag-list {
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+}

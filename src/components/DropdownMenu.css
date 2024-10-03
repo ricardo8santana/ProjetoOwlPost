@@ -76,6 +76,7 @@ a.dropdown-box.dropdown-item:focus {
     justify-content: end;
     height: 100%;
     align-items: baseline;
+    margin-bottom: 5px;
 }
 
 .style-button {
@@ -146,16 +147,27 @@ a.dropdown-box.dropdown-item:hover {
 }
 
 .button-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block !important;
+    background-color: transparent !important;
     width: 35px !important;
     height: 35px !important;
-    padding: 0;
+    padding: 0 !important;
+    border: none!important;
 }
 
-.button-login svg {
-    margin: 0;
+
+.profile-button {
+    background-color: transparent !important;
+    color: #fafafc !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 45px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+}
+
+.profile-button svg {
+    background-color: transparent !important;
     width: 100% !important;
     height: 100% !important;
 }

@@ -47,6 +47,24 @@
     gap: 3rem;
 }
 
+.editPerfil {
+    position: relative;
+}
+
+.editPerfil .edit-foto-form {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.editPerfil .edit-foto-form .btn {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--color-main-normal);
+}
+
+
 /* --- Lista de jogos -------------------------------------------- */
 
 .gameList {
@@ -77,16 +95,19 @@
 
 /* --- Cartão dos jogos ---------------------------------------------------- */
 
-.enquadroCartaoJogo {
-    width: min(90vw, 800px);
-    
-    display: flex;
-    gap: 2rem;
-
+.rootCartaoJogo {
     background-color: var(--color-bg-main);
     border-radius: 0.5rem;
     padding: 1rem;
 }
+
+.enquadroCartaoJogo {
+    width: min(90vw, 800px);
+    display: flex;
+    gap: 2rem;
+}
+
+
 
 .cartaoJogoImagem {
     flex-shrink: 0;
@@ -128,8 +149,108 @@
     padding: 0;
 }
 
+.XLR8 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
 
+.XLR8 hr{
+    width: 100%;
 
+}
+
+.XLR8 button {
+    width: 100% !important;
+}
+
+.XLR8.accordion {
+    cursor: default;
+}
+
+/* --- CartaoConquista ------------------------------------------------------*/
+.enquadroCartaoConquista {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    cursor: default;
+}
+
+.cartaoConquistaImagem {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.cartaoConquistaImagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.cartaoConquistaDetalhes {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: left;
+}
+
+.cartaoConquistaDetalhes h4{
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: left;
+    font-size: 1.2rem;
+    color: var(--color-text-main);
+}
+
+.cartaoConquistaDetalhes p{
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: left;
+    font-size: 0.9rem;
+    color: var(--color-text-alt);
+}
+
+.accordion-header {
+    width: 100%;
+}
+
+.accordion-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+.accordion-header button::after {
+    display: none;
+}
+
+.accordion-collapse {
+    width: 100%;
+}
+
+.accordion-body{
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    cursor: default;
+}
 /* --- Progresso ----------------------------------------------------------- */
 
 .progresso {
@@ -206,6 +327,10 @@
 
     /*--- Cartão de jogo --------------------------------------------------- */
     
+    .rootCartaoJogo {
+        padding: 20px 10px;
+    }
+
     .cartaoJogoImagem {
         position: relative;
         width: 100%;
@@ -247,5 +372,50 @@
     .cartaoJogoInfo .progresso,
     .infoProgresso .progresso {
         align-items: center;
+    }
+
+    /* --- CartaoConquista ------------------------------------------------- */
+    
+    .cartaoConquistaImagem {
+        flex-shrink: 0;
+        width: 65px;
+        height: 65px;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .cartaoConquistaImagem img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .cartaoConquistaDetalhes h4{
+        display: flex;
+        flex-direction: column;
+        justify-content: top;
+        align-items: left;
+        font-size: 1.2rem;
+        color: var(--color-text-main);
+    }
+
+    .cartaoConquistaDetalhes p{
+        display: flex;
+        flex-direction: column;
+        justify-content: top;
+        align-items: left;
+        font-size: 0.9rem;
+        color: var(--color-text-alt);
+    }
+
+    .accordion-body{
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        cursor: default;
+        padding:20px  10px;
     }
 }

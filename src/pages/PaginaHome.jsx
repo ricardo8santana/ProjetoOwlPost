@@ -1,7 +1,13 @@
-import CarroselHome from "../components/Carrosel";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from "react-i18next";
+
 import PageSection from "../components/PageSection";
-import { useEffect, useRef } from 'react';
+import FotoPerfil from "../components/FotoPerfil";
+import CarroselHome from "../components/Carrosel";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { DestaqueCard } from '../components/DestaqueCard';
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
@@ -14,81 +20,58 @@ import './PaginaHome.css';
 
 import Carousel0 from '../assets/images/carousel_0.jpg';
 import Carousel1 from '../assets/images/carousel_1.jpg';
-import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import FotoPerfil from "../components/FotoPerfil";
+import Carousel2 from '../assets/images/carousel_1.jpg';
 
-const slides = [
-  {
-    nome: 'Magnam',
-    descricao: 'Lorem ipsum dolor sit amet.',
-    imagem: Carousel0
-  },
-  {
-    nome: 'Incidunt',
-    descricao: 'Qui voluptatem esse est delectus.',
-    imagem: Carousel1
-  },
-  {
-    nome: 'Magnam possimus',
-    descricao: 'Est facilis quisquam ab quae rerum et consectetur.',
-    imagem: Carousel0
-  },
-  {
-    nome: 'Voluptatem recusandae',
-    descricao: 'Et enim mollitia eos reiciendis.',
-    imagem: Carousel1
-  },
-];
+const slideBackgrounds = [Carousel0, Carousel1, Carousel2];
 
 const integrantesGrupo = [
-  {
-    nome: "Vinicius Lima Campos",
-    githubID: "172276584",
-  },
-  {
-    nome: "Jonatas Tavares Pepolin",
-    githubID: "165349828",
-  },
-  {
-    nome: "Michaell Senna Amaral Cordeiro",
-    githubID: "172276017",
-  },
-  {
-    nome: "Luis Ricardo De Santana",
-    githubID: "51215442",
-  },
-  {
-    nome: "Gustavo Dos Santos Magalhães",
-    githubID: "172276584",
-  },
-  {
-    nome: "Matheus Cruz da Silva",
-    githubID: "66685044",
-  },
-]
+  { nome: "Vinicius Lima Campos", githubID: "172276584", },
+  { nome: "Jonatas Tavares Pepolin", githubID: "165349828", },
+  { nome: "Michaell Senna Amaral Cordeiro", githubID: "172276017", },
+  { nome: "Luis Ricardo De Santana", githubID: "51215442", },
+  { nome: "Matheus Cruz da Silva", githubID: "66685044", },
+  // { nome: "Gustavo Dos Santos Magalhães", githubID: "172276584", },
+];
 
-const ConteudoDestaque = ({ titulo, descricao }) => {
-  return (
-    <div className="content-card">
-      <h5>{titulo}</h5>
-      <span>{descricao}</span>
-    </div>
-  )
-}
-
-const IntegranteGrupo = ({ nome, githubUserID }) => {
-  /* https://github.com/{username}.png?size=40 */
-  return (
-    <div className="integrante">
-      <FotoPerfil src={`https://avatars.githubusercontent.com/u/${githubUserID}?s=250&v=4`} />
-      <p>{nome}</p>
-    </div>
-  )
-}
 
 const PaginaHome = () => {
-  const slideDestaques = slides.slice(0, 4);
+  const [slideDestaques, setSlideDestaques] = useState([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const posts = await postService.getPostsFixados();
+      if (posts.length < 4) {
+        const otherPosts = await postService.getPosts();
+        posts = [...otherPosts.filter(x => posts.includes(x))];
+      }
+
+      setSlideDestaques(posts.slice(0, 4).map((post, index) => {
+        return {
+          titulo: post.title,
+          descricao: postService.getResumeFromContent(post.content, true, true, 200),
+          to: `/posts/${post.id}`,
+          imagem: slideBackgrounds[index % slideBackgrounds.length],
+        }
+      }));
+    };
+
+    loadContent();
+  });
+
+  const { 
+    t,
+    i18n: { changeLanguage, language },
+  } = useTranslation()
+
+  const [currentLanguage, setCurrentLanguage] = useState(language)
+
+  const handleChangeLanguage = () => {
+    const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
+    changeLanguage(newLanguage)
+    setCurrentLanguage(newLanguage)
+  }
+
+  
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -165,19 +148,17 @@ const PaginaHome = () => {
 
 
 
-  const lenis = new Lenis()
+  // const lenis = new Lenis()
 
-  lenis.on('scroll', (e) => {
-    console.log(e)
-  })
+  
 
-  lenis.on('scroll', ScrollTrigger.update)
+  // lenis.on('scroll', ScrollTrigger.update)
 
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000)
-  })
+  // gsap.ticker.add((time) => {
+  //   lenis.raf(time * 1000)
+  // })
 
-  gsap.ticker.lagSmoothing(0);
+  // gsap.ticker.lagSmoothing(0);
 
 
   return (
@@ -185,18 +166,18 @@ const PaginaHome = () => {
       <Navbar />
       <PageSection isStart>
         <div className="destaques">
-          <h1>Destaques</h1>
+          <h1>{t('highlights')}</h1>
           <hr />
           <div className="home-carousel">
             <div className="home-carousel-container">
               <div className="home-carousel">
-                <CarroselHome slides={slides} />
+                <CarroselHome slides={slideDestaques} />
               </div>
             </div>
             <div className="home-content-container">
               {
-                slideDestaques.map(slide =>
-                  <ConteudoDestaque titulo={slide.nome} descricao={slide.descricao} />
+                slideDestaques.map((slide, index) =>
+                  <DestaqueCard key={index} slide={slide} />
                 )
               }
             </div>
@@ -204,6 +185,8 @@ const PaginaHome = () => {
         </div>
 
       </PageSection>
+      
+
       <PageSection variant='secondary' hugContent>
         <div className="sobre sobre-start">
           <div className="teste">
@@ -230,6 +213,7 @@ const PaginaHome = () => {
                 que pudesse ajudar a turma de enfermagem. Com isso em mente, decidimos criar um jogo. Usando a ideia da
                 gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
             </section>
+          
           </div>
         </div>
       </PageSection>
@@ -248,13 +232,14 @@ const PaginaHome = () => {
       </PageSection>
       <PageSection>
         <div className="grupo">
-          <h1>Os integrantes do grupo </h1>
+          <h1>{t('members')}</h1>
           <hr />
 
           <div className="integrantes">
             {
-              integrantesGrupo.map(integrante =>
-                <IntegranteGrupo nome={integrante.nome} githubUserID={integrante.githubID} />
+      
+              integrantesGrupo.map((integrante, index) => 
+                <IntegranteGrupo key={index} integrante={integrante}/>
               )
             }
           </div>
@@ -266,5 +251,18 @@ const PaginaHome = () => {
     </div>
   )
 };
+
+
+
+
+function IntegranteGrupo({ integrante }) {
+  /* https://github.com/{username}.png?size=40 */
+  return (
+    <div className="integrante">
+      <FotoPerfil src={`https://avatars.githubusercontent.com/u/${integrante.githubID}?s=250&v=4`} />
+      <p>{integrante.nome}</p>
+    </div>
+  )
+}
 
 export default PaginaHome;

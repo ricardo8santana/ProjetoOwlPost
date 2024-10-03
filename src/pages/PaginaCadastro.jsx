@@ -6,8 +6,8 @@ import { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 
-import * as userService from '../services/userService.jsx';
-
+import * as userService from '../services/userService';
+import * as authService from '../services/authService';
 
 
 const PaginaCadastro = () => {
@@ -51,7 +51,7 @@ const PaginaCadastro = () => {
         }
 
         await userService.createUser(username, email, password);
-        const user = await userService.login(email, password);
+        const user = await authService.login(email, password);
         if (!user) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();

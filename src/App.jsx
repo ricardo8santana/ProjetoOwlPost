@@ -1,30 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { useEffect } from 'react';
+
+import * as darkModeService from './services/darkModeService';
+
 import PaginaPerfil from './pages/PaginaPerfil';
 import PaginaCadastro from './pages/PaginaCadastro';
 import PaginaLogin from './pages/PaginaLogin';
-import PostTitulo from './components/PostTitulo';
+import PaginaPostagem from './pages/PaginaPostagem';
 import PostViewPage from './pages/PostViewPage'
 import PaginaHome from './pages/PaginaHome';
-import PostEditorPage from './pages/PostEditorPage'
-import Sobrenos from './components/Sobrenos';
-
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-
+import PaginaEditor from './pages/PaginaEditor';
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <PaginaHome />    
+    element: <PaginaHome />
   },
   {
-    path: '/post',
+    path: '/posts',
     element: <PostViewPage />
   },
   {
-    path: '/post-edit',
-    element: <PostEditorPage />
+    path: '/editor/:postID',
+    element: <PaginaEditor />
   },
   {
     path: '/login',
@@ -39,14 +40,18 @@ const routes = createBrowserRouter([
     element: <PaginaPerfil />
   },
   {
-    path: '/post-titulo',
-    element: <PostTitulo />
+    path: '/posts/:postID',
+    element: <PaginaPostagem />
   }
 ]);
 
 function App() {
+  useEffect(() => {
+    darkModeService.setTheme(darkModeService.loadTheme());
+  }, []);
+
   return (
-    <RouterProvider router={routes}/>
+    <RouterProvider router={routes} />
   )
 }
 

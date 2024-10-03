@@ -9,6 +9,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  gap: 16px;
   background: var(--gradient-header);
   /* background-image: linear-gradient(to right, #002199, #0027b2, #002ccb, #0032e5, #0037ff);  */
   /* background-image: linear-gradient(to right,
@@ -20,14 +21,16 @@
 .logo {
   display: flex;
   align-items: center;
-  margin-left: 30px;
+  margin-left: 25px;
   cursor: pointer;
+  gap: 8px;
+  height: 40px !important;
+  margin-left: 15px;
+  margin-right: 20px;
 }
 
 .logo-image {
-  width: 24.85px;
-  height: 33.1px;
-  margin-right: 6px;
+  height: 40px;
 }
 
 .logo-text {
@@ -43,8 +46,8 @@
   color: var(--color-neutral-0);
   list-style-type: none;
   display: flex;
-  flex: 0.9;
-  gap: 36px;
+  flex-grow: 1;
+  gap: 12px;
 }
 
 .nav-link {
@@ -55,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 32px;
-  margin-right: 0;
+  margin-right: 18px;
 }
 
 .sign {
@@ -66,39 +69,62 @@
 
 .sign-in-button {
   background-color: transparent;
-  /* color: #ffffff; */
   color: var(--color-neutral-0);
-  /* border: 1px solid #ffffff; */
   border: 1px solid var(--color-neutral-0);
   border-radius: 8px;
   width: 86px;
   height: 39px;
+  padding: 0 !important;
 }
 
 .sign-up-button {
-  /* background-color: #ffffff; */
   background-color: var(--color-neutral-0);
-  /* color: #0037FF; */
   color: var(--color-main-normal);
   border: none;
   border-radius: 8px;
   height: 39px;
   width: 119px;
+  padding: 0 !important;
 }
 
 
-.profile-button {
-  width: 31px;
-  height: 31px;
-  color: #fafafc;
-  margin-top: 5px;
+.menu-friendbuttons, .menu-authbuttons {
+  display: flex;
+  gap: 18px;
 }
 
-.button-login {
-  border: none!important;
-  background-color: inherit!important;
- }
+
 
 .profile-img {
   cursor: pointer;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .navbar {
+    padding: 0 15px;
+  }
+
+  .logo {
+    margin-left: 5px;
+  }
+
+  .mobile-menu {
+    display: block;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 10px;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+
+  .mobile-menu {
+    margin-right: 15px;
+  }
 }

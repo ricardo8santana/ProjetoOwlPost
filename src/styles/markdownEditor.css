@@ -1,0 +1,239 @@
+.w-md-editor-show-live .w-md-editor-content::after {
+    position: absolute;
+    content: '';
+    background-color: var(--color-bg-alt);
+    width: 1px;
+    top: 2rem;
+    bottom: 2rem;
+    left: 50%;
+}
+
+.w-md-editor-area, .w-md-editor-text {
+    height: 100%;
+}
+
+.w-md-editor-preview,
+.w-md-editor-toolbar,
+.w-md-editor-content,
+.w-md-editor-area,
+.w-md-editor {
+    scrollbar-width: thin;
+    border: none;
+    resize: none;
+    box-shadow: none;
+}
+
+.w-md-editor-bar {
+    display: none;
+}
+/*
+    Estilo dos componentes do MDeditor
+*/
+.w-md-editor-toolbar *,
+.w-md-editor-content *,
+.w-md-editor-preview * {
+    color: var(--color-text-main);
+    font-family: 'Montserrat' !important;
+    font-size: 0.9rem;
+}
+
+/* .wmde-markdown *,
+.w-md-editor-preview * {
+    background-color: transparent;
+} */
+
+.wmde-markdown img,
+.w-md-editor-preview img {
+    border-radius: var(--border-radius);
+}
+
+.wmde-markdown hr,
+.w-md-editor-preview hr {
+    background-color: var(--color-text-disabled);
+    border-radius: var(--border-radius);
+    border: none;
+}
+
+.wmde-markdown blockquote,
+.w-md-editor-preview blockquote {
+    background-color: var(--color-bg-alt);
+    color: var(--color-text-alt);
+    border-radius: var(--border-radius);
+    border: none;
+    position: relative;
+    padding: 0.5rem;
+    padding-left: calc(20px);
+    /* border-radius: 0.125rem 0.5rem 0.5rem 0.125rem; */
+    /* border-left: 0.5em solid var(--color-main-normal); */
+}
+
+.wmde-markdown blockquote::before,
+.w-md-editor-preview blockquote::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    border-radius: var(--border-radius);
+    background-color: var(--color-main-normal);
+    width: 6px;
+    height: 100%;
+}
+
+.wmde-markdown pre,
+.w-md-editor-preview pre {
+    background-color: transparent;
+}
+
+.wmde-markdown code,
+.w-md-editor-preview code {
+    overflow: auto;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 0 0 1px var(--color-text-disabled);
+    border: none !important;
+}
+
+.wmde-markdown input[type='checkbox'],
+.w-md-editor-preview input[type='checkbox'] {
+    width: 1rem;
+    height: 1rem;
+}
+
+.wmde-markdown *:is(table, tr, td, th),
+.w-md-editor-preview *:is(table, tr, td, th) {
+    background-color: var(--color-bg-main) !important;
+    border: none !important;
+}
+
+.wmde-markdown table,
+.w-md-editor-preview table {
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 0 1px var(--color-text-disabled) !important;
+    overflow: hidden;
+}
+
+.wmde-markdown th
+.w-md-editor-preview th {
+    background-color: var(--color-main-normal) !important;
+    color: var(--color-neutral-0);
+}
+.wmde-markdown tr:not(:nth-child(1)),
+.w-md-editor-preview tr:not(:nth-child(1)) {
+    border-top: 1px solid var(--color-text-disabled) !important;
+}
+.wmde-markdown th:not(:nth-child(1)),
+.w-md-editor-preview th:not(:nth-child(1)) {
+    border-left: 1px solid var(--color-neutral-2) !important;
+}
+
+.wmde-markdown td:not(:nth-child(1)),
+.w-md-editor-preview td:not(:nth-child(1)) {
+    border-left: 1px solid var(--color-text-disabled) !important;
+}
+
+.wmde-markdown {
+    background-color: transparent !important;
+    color: var(--color-text-main);
+    max-width: 800px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.wmde-markdown *:is(h1, h2, h3, h4, h5, h6) {
+    border: none !important;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.wmde-markdown p:has(img) {
+    text-align: center;
+    margin: 2rem;
+}
+
+/* Talvez colocar isso em um arquivo separdo só para o MDEditor */
+body .wmde-markdown code,
+body .w-md-editor-preview code {
+    background-color: #FFFFFF !important;
+    color: #236ebf !important;
+
+    .token.keyword {
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .token.class-name {
+        color: var(--color-prettylights-syntax-classname) !important;
+        font-weight: bold;
+    }
+    
+    .token.function {
+        color: var(--color-prettylights-syntax-functionname) !important;
+    }
+}
+
+body.dark-mode .wmde-markdown code,
+body.dark-mode .w-md-editor-preview code {
+    background-color: #282822 !important;
+    color: #a7dbf7 !important;
+
+    .token.keyword {
+        font-weight: bold;
+        font-style: italic;
+    }
+
+
+    .token.keyword, .token.function, .token.variable, .toke.comment {
+        font-style: italic;
+    }
+
+    .token.class-name {
+        color: var(--color-prettylights-syntax-classname) !important;
+    }
+    
+    .token.function {
+        color: var(--color-prettylights-syntax-functionname) !important;
+        font-style: italic;
+    }
+}
+
+body .wmde-markdown,
+body .wmde-markdown-var {
+
+    --color-prettylights-syntax-comment: #357b42 !important;
+    --color-prettylights-syntax-constant: #174781 !important;
+    --color-prettylights-syntax-entity: #0444ac !important;
+    --color-prettylights-syntax-storage-modifier-import: #0991b6 !important;
+    --color-prettylights-syntax-entity-tag: #0444ac !important;
+    --color-prettylights-syntax-keyword: #0991b6 !important;
+    --color-prettylights-syntax-string: #a44185 !important;
+    --color-prettylights-syntax-variable: #2f86d2 !important;
+    --color-prettylights-syntax-classname: #7c2cbd !important;
+    --color-prettylights-syntax-functionname: #b1108e !important;
+    --color-prettylights-syntax-invalid-illegal-text: #975f94 !important;
+    --color-prettylights-syntax-invalid-illegal-bg: #207bb8 !important;
+    --color-prettylights-syntax-string-regexp: #c63ed3 !important;
+    --color-prettylights-syntax-markup-list: #207bb8 !important;
+    --color-prettylights-syntax-markup-heading: #4FB4D8 !important;
+    --color-prettylights-syntax-markup-italic: #C792EA !important;
+    --color-prettylights-syntax-markup-bold: #4e76b5 !important;
+}
+
+body.dark-mode .wmde-markdown,
+body.dark-mode .wmde-markdown-var {
+    --color-prettylights-syntax-comment: #999999 !important;
+    --color-prettylights-syntax-constant: #A170C6 !important;
+    --color-prettylights-syntax-entity: #d29ffc !important;
+    --color-prettylights-syntax-storage-modifier-import: #00bff9 !important;
+    --color-prettylights-syntax-entity-tag: #6dbdfa !important;
+    --color-prettylights-syntax-keyword: #00bff9 !important;
+    --color-prettylights-syntax-string: #bcf0c0 !important;
+    --color-prettylights-syntax-variable: #a4ceee !important;
+    --color-prettylights-syntax-classname: #f7ecb5 !important;
+    --color-prettylights-syntax-functionname: #87aff4 !important;
+    --color-prettylights-syntax-invalid-illegal-text: #6dbdfa !important;
+    --color-prettylights-syntax-invalid-illegal-bg: #ef5350 !important;
+    --color-prettylights-syntax-string-regexp: #82AAFF !important;
+    --color-prettylights-syntax-markup-list: #6dbdfa !important;
+    --color-prettylights-syntax-markup-heading: #4FB4D8 !important;
+    --color-prettylights-syntax-markup-italic: #C792EA !important;
+    --color-prettylights-syntax-markup-bold: #57cdff !important;
+}
