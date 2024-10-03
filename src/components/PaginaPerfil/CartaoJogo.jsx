@@ -36,10 +36,8 @@ const CartaoJogo = () => {
       </div>
       <hr />
       <Accordion className="XLR8">
-        <Accordion.Header>
-          <Button variant="owl-secondary">
-            <FontAwesomeIcon icon={faChevronDown}/>
-          </Button>
+        <Accordion.Header className="btn-owl secondary">
+          <FontAwesomeIcon icon={faChevronDown}/>
         </Accordion.Header>
         <Accordion.Body>
           <CartaoConquista />
