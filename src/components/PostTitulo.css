@@ -21,3 +21,34 @@
     margin-left: 30%;
     margin-right: 30%;
 }
+/* Estilos para telas pequenas (móveis) */
+@media (max-width: 768px) {
+    .container {
+      width: 90%;
+    }
+  
+    .titulo {
+      font-size: 20px;
+    }
+  
+    .texto {
+      font-size: 16px;
+    }
+  }
+  
+  /* Estilos para telas médias (tablets) */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+      width: 75%;
+    }
+  
+    .titulo {
+      font-size: 24px;
+    }
+  
+    .texto {
+      font-size: 18px;
+    }
+  }
+  
+  

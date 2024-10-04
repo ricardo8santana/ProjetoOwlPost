@@ -1,0 +1,44 @@
+.enquadro-footer {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    background: var(--gradient-header) !important;
+    color: var(--color-neutral-0);
+}
+
+.enquadro-footer * {
+    margin: 0;
+    padding: 0;
+}
+
+.enquadro-footer hr {
+    color: var(--color-neutral-0);
+    width: 100%;
+}
+
+.enquadro-footer a {
+    color: var(--color-neutral-0);
+    text-decoration: none;
+}
+
+.enquadro-footer a:hover {
+    color: var(--color-neutral-2);
+}
+
+.enquadro-footer .socials-links {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.enquadro-footer .socials-links svg {
+    height: 30px;
+    width: 30px;
+}
+
+.enquadro-footer .sercice-links {
+    display: flex;
+    gap: 1rem;
+}
