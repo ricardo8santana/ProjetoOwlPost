@@ -9,6 +9,12 @@
     flex-direction: column;
     align-items: center;
     margin: 3rem 0 3rem 0 ;
+
+    
+}
+.editor-page-root .page-title-divider {
+    width: min(1280px, 80vw);
+    margin-bottom: 2rem;
 }
 
 .editor-page {
@@ -22,7 +28,14 @@
     width: min(1280px, 80vw);
 }
 
-.editor-page input[type='text'] {
+.editor-page .post-title {
+    width: 100%;
+}
+.editor-page .post-title label {
+    margin-bottom: 0.25rem;
+}
+
+.editor-page .post-title input[type='text'] {
     width: 100%;
     text-align: center;
 }
@@ -45,19 +58,18 @@
     justify-content: space-between;
     align-items: start;
     gap: 2rem;
+    
 }
 
 .tag-list {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    height: 100%;
 
     flex-grow: 1;
     flex-wrap: wrap;
-}
 
-.tag-list:hover {
-    overflow: overlay;
 }
 
 .tag {
@@ -66,11 +78,10 @@
     align-items: center;
 
     background-color: var(--color-bg-alt);
-    padding: 0rem 0.75rem;
+    padding: 0rem 0.5rem;
     height: 2.5rem;
     border-radius: var(--border-radius);
 
-    margin-top: 10px;
     margin-right: 10px;
 }
 
@@ -87,9 +98,20 @@
 
 .tag-container .btn-group {
     width: 25%;
+    height: 2.5rem;
     border-radius: var(--border-radius);
     overflow: hidden;
-    margin-top: 10px;
+    display: flex;
+    
+    input {
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn {
+        width: 2.5rem;
+        padding: 0;
+    }
 }
 
 .input-tag {
@@ -109,15 +131,46 @@
 }
 
 @media screen and (max-width: 768px) {
+    
+    .editor-page .editor-submit-btn {
+        margin-left: 25%;
+        width: 75%;
+    }
+
     .tag-container {
         flex-direction: column;
         align-items: end;
         gap: 0.25rem;
+        height: fit-content;
     }
 
     .tag-list {
         width: 100%;
+        height: unset;
+        padding-top: 10px;
         flex-wrap: nowrap;
         overflow-x: auto;
+        overflow-y: visible;
+
+        transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .tag-container .btn-group {
+        width: 75%;
+        height: 2.5rem;
+
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        display: flex;
+        
+        input {
+            width: 100%;
+            text-align: center;
+        }
+    
+        .btn {
+            width: 2.5rem;
+            padding: 0;
+        }
     }
 }

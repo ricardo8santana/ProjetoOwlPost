@@ -40,220 +40,245 @@ Quer aprender mais sobre **Markdown**? começe por esses links:
 `;
 
 const Tag = ({ tag, onDelete, isReadOnly }) => {
-  const nome = tag.name || 'tag';
+    const nome = tag.name || 'tag';
 
-  return (
-    <div className="tag">
-      <p>{nome}</p>
-      {
-        !isReadOnly
-          ? <FontAwesomeIcon
-            className="tag-btn-remove btn-owl danger"
-            icon={faCircleXmark}
-            onClick={onDelete} />
-          : null
-      }
-    </div>
-  )
+    return (
+        <div className="tag">
+            <p>{nome}</p>
+            {
+                !isReadOnly
+                    ? <FontAwesomeIcon
+                        className="tag-btn-remove btn-owl danger"
+                        icon={faCircleXmark}
+                        onClick={onDelete} />
+                    : null
+            }
+        </div>
+    )
 };
 
 
 const PaginaEditor = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const { postID } = useParams();
-  const [post, setPost] = useState(null);
+    const { postID } = useParams();
+    const [post, setPost] = useState(null);
 
-  const [availableTags, setAvailableTags] = useState([]);
-  const [canEdit, setCanEdit] = useState(false);
-  const [user, setUser] = useState(false);
+    const [availableTags, setAvailableTags] = useState([]);
+    const [canEdit, setCanEdit] = useState(true);
+    const [user, setUser] = useState(null);
 
-  const [content, setContent] = useState(defaultContent);
-  const [title, setTitle] = useState('');
-  const [tags, setTags] = useState([]);
+    const [content, setContent] = useState(defaultContent);
+    const [title, setTitle] = useState('');
+    const [tags, setTags] = useState([]);
 
-  const [modalMessage, setModalMessage] = useState('');
-  const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
-  const handleOnUserLogout = () => {
-    navigate('/');
-  };
-
-  useEffect(() => {
-    window.addEventListener('user-logout', handleOnUserLogout);
-
-    const loadContent = async () => {
-      const user = await authService.getLoggedUser();
-      setUser(user);
-      
-      if (postID > 0) {
-        const post = await postService.getPostByID(postID);
-
-        setPost(post);
-        setTitle(post.title);
-        setContent(post.content);
-
-        const tags = await tagService.getTagsByPostID(postID);
-        setTags(tags);
-
-        setCanEdit(post && post.userID === user.id);
-      }
-
-      const availableTags = await tagService.getTags();
-      setAvailableTags(availableTags);
-
-      return () => {
-        window.removeEventListener('user-logout', handleOnUserLogout);
-      }
+    const handleOnUserLogout = () => {
+        navigate('/');
     };
 
-    routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
-    loadContent();
-  }, [])
+    useEffect(() => {
+        window.addEventListener('user-logout', handleOnUserLogout);
 
-  const onContentChanged = (content) => setContent(content);
-  const onTitleChanged = (event) => setTitle(event.target.value);
+        const loadContent = async () => {
+            const user = await authService.getLoggedUser();
+            setUser(user);
 
-  const handleRemoveTag = async (tag) => {
-    const index = tags.indexOf(tag);
-    if (index < 0) {
-      return;
-    }
+            if (postID !== '0') {
+                const post = await postService.getPostByID(postID);
 
-    const updatedTags = tags.filter(t => t !== tag);
-    setTags(updatedTags);
+                setPost(post);
+                setTitle(post.title);
+                setContent(post.content);
 
-    const allTags = await tagService.getTags();
-    setAvailableTags(allTags.filter(t => !updatedTags.includes(t)));
-  };
+                const tags = await tagService.getTagsByPostID(postID);
+                setTags(tags);
 
-  const handleInsertTag = async (tag) => {
-    const updatedTags = [...tags, tag]
-    setTags(updatedTags);
+                setCanEdit(post !== null && post.userID === user.id);
+            }
 
-    const allTags = await tagService.getTags();
-    setAvailableTags(allTags.filter(t => !updatedTags.includes(t)));
-  };
+            const availableTags = await tagService.getTags();
+            setAvailableTags(availableTags);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+            return () => {
+                window.removeEventListener('user-logout', handleOnUserLogout);
+            }
+        };
 
-    if (post.title === '') {
-      setModalMessage('Sua postagem precisa de um título! Volte e de um nome interessante para ela.');
-      setShowModal(true);
-      e.stopPropagation();
-      return;
-    }
+        routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
+        loadContent();
+    }, [])
 
-    if (!tags || tags.length === 0) {
-      setModalMessage('Sua postagem precisa de pelo menos uma tag! Volte e adicione algumas.');
-      setShowModal(true);
-      e.stopPropagation();
-      return;
-    }
+    const onContentChanged = (content) => setContent(content);
+    const onTitleChanged = (event) => setTitle(event.target.value);
 
-    if (post.content === '') {
-      setModalMessage('Sua postagem precisa de conteúdo! Volte e escreva um pouco.');
-      setShowModal(true);
-      e.stopPropagation();
-      return;
-    }
+    const handleRemoveTag = async (tag) => {
+        const index = tags.indexOf(tag);
+        if (index < 0) {
+            return;
+        }
 
-    try {
-      if (postID !== 0) {
-        await postService.updatePost(postID, title, content);
-        navigate(`/posts/${postID}`);
-      } 
-      else {
-        const postID = await postService.createPost(user.id, title, content, tags);
-        navigate(`/posts/${postID}`);
-      }
-    }
-    catch (err) {
-      setModalMessage('Algo estranho aconteceu, tente novamente mais tarde.');
-      setShowModal(true);
-    }
-  };
+        const updatedTags = tags.filter(t => t !== tag);
+        setTags(updatedTags);
 
-  return (
-    <div className='post-editor'>
-      <Navbar />
-      {
-        postID > 0 && !post
-          ? <LoadingScreen />
-          : (
-            <div className="editor-page-root">
-              <h1>{postID !== 0 ? canEdit ? 'Editar Postagem' : 'Visualizar Postagem' : 'Criar Postagem'}</h1>
-              <Form className="editor-page" onSubmit={handleOnSubmit}>
-                <input
-                  type='text'
-                  className="alt editor-page-post"
-                  placeholder="Um nome interessante para o seu post"
-                  value={title}
-                  onChange={onTitleChanged} />
-                <div className="tag-container">
-                  <div className="tag-list">
-                    {
-                      tags.map(tag =>
-                        <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post} />
-                      )
-                    }
-                  </div>
-                  <TagButton availableTags={availableTags} onSubmit={tag => handleInsertTag(tag)} hidden={post} />
-                </div>
-                <PostEditor content={content} contentChanged={onContentChanged} />
-                <Button hidden={postID !== 0 && !canEdit} className="editor-submit-btn" variant="owl-primary" type='submit'>
-                  {postID === 0 ? 'Postar' : 'Salvar'}
-                </Button>
-              </Form>
+        const allTags = await tagService.getTags();
+        const updatedAvailable = allTags.filter(t => !updatedTags.some(ut => t.id == ut.id));
+        setAvailableTags(updatedAvailable);
+    };
 
-              <Modal show={showModal} centered={true} onHide={() => setShowModal(false)}>
-                <Modal.Header>
-                  <Modal.Title>Ops! Algo errado aconteceu.</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>{modalMessage}</Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={() => setShowModal(false)}>OK</Button>
-                </Modal.Footer>
-              </Modal>
-            </div>
-          )
-      }
-      <Footer />
-    </div>
-  )
+    const handleInsertTag = async (tag) => {
+        if (!tag) {
+            return;
+        }
+
+        const alreadyHasTag = tags.some(x => x.id === tag.id);
+        if (alreadyHasTag) {
+            setModalMessage(`Você já adicionou a tag ${tag.name}.`);
+            setShowModal(true);
+            return;
+        }
+
+        const MaxTagCount = 6;
+        if (tags.length >= MaxTagCount) {
+            setModalMessage(`Você pode adicionar somente ${MaxTagCount} tags a uma postagem.`);
+            setShowModal(true);
+            return;
+        }
+
+        const updatedTags = [...tags, tag]
+        setTags(updatedTags);
+
+        const allTags = await tagService.getTags();
+        const updatedAvailable = allTags.filter(t => !updatedTags.some(ut => t.id == ut.id));
+        setAvailableTags(updatedAvailable);
+    };
+
+    const handleOnSubmit = async (e) => {
+        e.preventDefault();
+
+        if (title === '') {
+            setModalMessage('Sua postagem precisa de um título! Volte e de um nome interessante para ela.');
+            setShowModal(true);
+            e.stopPropagation();
+            return;
+        }
+
+        if (!tags || tags.length === 0) {
+            setModalMessage('Sua postagem precisa de pelo menos uma tag! Volte e adicione algumas.');
+            setShowModal(true);
+            e.stopPropagation();
+            return;
+        }
+
+        if (content === '') {
+            setModalMessage('Sua postagem precisa de conteúdo! Volte e escreva um pouco.');
+            setShowModal(true);
+            e.stopPropagation();
+            return;
+        }
+
+        try {
+            if (postID !== '0') {
+                await postService.updatePost(parseInt(postID), title, content);
+                navigate(`/posts/${postID}`);
+            }
+            else {
+                const postID = await postService.createPost(user.id, title, content, tags);
+                navigate(`/posts/${postID}`);
+            }
+        }
+        catch (err) {
+            setModalMessage('Algo estranho aconteceu, tente novamente mais tarde.');
+            setShowModal(true);
+        }
+    };
+
+    return (
+        <div className='post-editor'>
+            <Navbar />
+            {
+                postID > 0 && !post
+                    ? <LoadingScreen />
+                    : (
+                        <div className="editor-page-root">
+                            <h3>{postID !== 0 ? canEdit ? 'Editar Postagem' : 'Visualizar Postagem' : 'Criar Postagem'}</h3>
+                            <hr className='page-title-divider' />
+                            <Form className="editor-page" onSubmit={handleOnSubmit}>
+                                <div className='post-title'>
+                                    <label htmlFor='post-title-input'>Título da postagem</label>
+                                    <input
+                                        id='post-title-input'
+                                        type='text'
+                                        className="alt editor-page-post"
+                                        placeholder="Um nome interessante para o seu post"
+                                        value={title}
+                                        onChange={onTitleChanged} />
+                                </div>
+                                <div className="tag-container">
+                                    <div className="tag-list">
+                                        {
+                                            tags.map(tag =>
+                                                <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post} />
+                                            )
+                                        }
+                                    </div>
+                                    <TagButton availableTags={availableTags} onSubmit={handleInsertTag} hidden={post} />
+                                </div>
+                                <PostEditor content={content} contentChanged={onContentChanged} />
+                                <Button hidden={postID !== 0 && !canEdit} className="editor-submit-btn" variant="owl-primary" type='submit'>
+                                    {postID === 0 ? 'Postar' : 'Salvar'}
+                                </Button>
+                            </Form>
+
+                            <Modal show={showModal} centered={true} onHide={() => setShowModal(false)}>
+                                <Modal.Header>
+                                    <Modal.Title>Ops! Algo errado aconteceu.</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>{modalMessage}</Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={() => setShowModal(false)}>OK</Button>
+                                </Modal.Footer>
+                            </Modal>
+                        </div>
+                    )
+            }
+            <Footer />
+        </div>
+    )
 };
 
 function TagButton({ availableTags, onSubmit, hidden }) {
-  const [tagName, setTagName] = useState('');
+    const [tagName, setTagName] = useState('');
 
-  return (
-    <ButtonGroup hidden={hidden}>
-      <input
-        type='text'
-        list='tags'
-        className="input-tag alt"
-        placeholder="Adicionar Tag"
-        value={tagName}
-        onChange={e => setTagName(e.target.value)} />
+    return (
+        <ButtonGroup hidden={hidden}>
+            <input
+                type='text'
+                list='tags'
+                className="input-tag alt"
+                placeholder="Adicionar Tag"
+                value={tagName}
+                onChange={e => setTagName(e.target.value)} />
 
-      <Button className="btn-tag btn-owl secondary" onClick={() => {
-        const t = availableTags.find(t => t.name === tagName)
-        onSubmit(t);
-        setTagName('');
-      }}>
-        <FontAwesomeIcon icon={faPlus} />
-      </Button>
+            <Button className="btn-tag btn-owl secondary" onClick={() => {
+                const t = availableTags.find(t => t.name === tagName)
+                onSubmit(t);
+                setTagName('');
+            }}>
+                <FontAwesomeIcon icon={faPlus} />
+            </Button>
 
-      <datalist id="tags">
-        {
-          availableTags.map(tag =>
-            <option key={tag.id} value={tag.name} />
-          )
-        }
-      </datalist>
-    </ButtonGroup>
-  )
+            <datalist id="tags">
+                {
+                    availableTags.map(tag =>
+                        <option key={tag.id} value={tag.name} />
+                    )
+                }
+            </datalist>
+        </ButtonGroup>
+    )
 }
 
 export default PaginaEditor;
