@@ -13,20 +13,17 @@ import { useAccordionButton } from 'react-bootstrap'
 
 import { Button } from "react-bootstrap";
 
-
+import gameCover from '../../assets/images/carousel_owlcalc.jpg';
 
 const CartaoJogo = () => {
   return (
     <div className="rootCartaoJogo">
       <div className="enquadroCartaoJogo">
         <div className="cartaoJogoImagem">
-          <img
-            src="https://store-images.s-microsoft.com/image/apps.25322.14537704372270848.6ecb6038-5426-409a-8660-158d1eb64fb0.d230176a-d7a2-4696-ad23-ff53a6e004df"
-            alt=""
-          />
+          <img src={gameCover} alt="" />
         </div>
         <div className="cartaoJogoDetalhes">
-          <h2 className="cartaoJogoNome">Anel do Velho</h2>
+          <h2 className="cartaoJogoNome">Em Breve</h2>
           <div className="cartaoJogoInfo">
             <Progresso titulo="Tempo de jogo" icone={faClock} valor="30h" />
             <Progresso titulo="Conquistas" icone={faTrophy} valor="7 / 33" />

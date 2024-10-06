@@ -1,6 +1,12 @@
 /* TelaPerfil */
 @import url('../App.css');
 
+.pagina-perfil-root {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
 /* ----------------------------------------------------------------------------
 --- Desktop -------------------------------------------------------------------
 ---------------------------------------------------------------------------- */
@@ -92,6 +98,19 @@
     width: 100%;
 }
 
+.postListEmpty {
+    background-color: var(--color-bg-main);
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+    font-size: larger;
+    border-radius: var(--border-radius);
+}
+
 
 /* --- Cartão dos jogos ---------------------------------------------------- */
 
@@ -160,17 +179,18 @@
     border-radius: 0.5rem;
 }
 
-.XLR8 hr{
+.rootCartaoJogo hr{
     width: 100%;
-
-}
-
-.XLR8 button {
-    width: 100% !important;
+    margin-block: 1rem !important;
 }
 
 .XLR8.accordion {
-    cursor: default;
+    /* cursor: default; */
+    padding: 0;
+}
+
+.XLR8.accordion .accordion-header button svg{
+    color: var(--color-text-main) !important;
 }
 
 /* --- CartaoConquista ------------------------------------------------------*/
@@ -293,6 +313,11 @@
     opacity: 1.0;
     background-color: var(--color-text-main);
     color: var(--color-bg-main);
+}
+
+.tab-content {
+    width: 100%;
+    width: min(90vw, 800px);
 }
 
 /* ----------------------------------------------------------------------------

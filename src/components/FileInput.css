@@ -32,6 +32,7 @@
 
 .modalEdit .btn {
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
     gap: 1rem;
@@ -40,6 +41,15 @@
         padding: 0;
         margin: 0;
     }
+}
+
+.modalEdit div {
+    width: 100%;
+}
+
+.modalEdit input[type='text'],
+.modalEdit input[type='file'] {
+    width: 100%;
 }
 
 .modal-content {

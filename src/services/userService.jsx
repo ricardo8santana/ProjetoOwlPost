@@ -96,6 +96,20 @@ export const createUser = async (username, email, password) => {
     }
 };
 
+export const atualizarNome = async (nome) => {
+    try {
+        const usuario = await authService.getLoggedUser();
+        await axios.patch(urlAPI + '/usuarios/', {
+            id: usuario.id,
+            username: nome, 
+        });
+
+        window.dispatchEvent(onUserUpdated);
+    } catch (err) {
+        console.error(`Erro ao atualizar nome de usuário! ( ${err} )`);
+    }
+}
+
 export const atualizarFotos = async (path, name) => {
     try {
         const usuario = await authService.getLoggedUser();
@@ -113,7 +127,7 @@ export const atualizarFotos = async (path, name) => {
 
         console.log(`patch: ${name} (${path})`);
 
-        await axios.patch(urlAPI + '/usuarios/', formData, {
+        await axios.patch(urlAPI + '/usuarios/updatePic', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
@@ -129,9 +143,11 @@ export const atualizarFotos = async (path, name) => {
 export const removerFotos = async () => {
     try {
         const usuario = await authService.getLoggedUser();
-        await axios.patch(urlAPI + '/usuarios/delete', {
+        await axios.patch(urlAPI + '/usuarios/deletePic', {
             id: usuario.id,
         });
+
+        window.dispatchEvent(onUserUpdated);
     }
     catch (err) {
         console.error(`Erro ao remover foto usuários! ( ${err} )`);

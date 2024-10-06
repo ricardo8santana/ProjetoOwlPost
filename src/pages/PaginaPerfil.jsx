@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
+import OwlpostIcon from '../assets/owlpost-icon'
+
+import LoadingScreen from '../components/LoadingScreen';
 import CartaoJogo from "../components/PaginaPerfil/CartaoJogo";
 import Progresso from "../components/PaginaPerfil/Progresso";
 import FotoPerfil from "../components/FotoPerfil";
@@ -23,6 +26,7 @@ const PaginaPerfil = () => {
 
     const [user, setUser] = useState(userService.defaultUser);
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const loadUserData = async () => {
         const user = await authService.getLoggedUser();
@@ -30,59 +34,68 @@ const PaginaPerfil = () => {
 
         setUser(user);
         setPosts(posts);
+
+        setIsLoading(false);
     };
 
     const handleOnUserLogout = () => {
         navigate('/');
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         window.addEventListener('user-logout', handleOnUserLogout);
+        window.addEventListener('user-updated', loadUserData);
 
         routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
-        loadUserData(); 
-        
+        loadUserData();
+
         return () => {
             window.removeEventListener('user-logout', handleOnUserLogout);
+            window.removeEventListener('user-updated', loadUserData);
         }
     }, []);
 
     return (
-        <>
+
+        <div className='pagina-perfil-root'>
             <Navbar />
-            <div className="enquadroPagina">
-                <div className='enquadroPerfil'>
-                    <div className='editPerfil'>
-                        <FotoPerfil src={user.profilePicture} />
-                        <Form profilePic={user.profilePicture} onUpdateProfile={() => loadUserData()} />
-                    </div>
-                    <div className='infoPerfil'>
-                        <h2 className='infoUsername'>{user.username}</h2>
-                        <div className="infoProgresso">
-                            <Progresso titulo='Conquistas' icone={faTrophy} valor='10 / 100' />
-                            <Progresso titulo='EXP' icone={faStar} valor='69000' />
-                            <Progresso titulo='Postagens' icone={faNewspaper} valor='3' />
+            {
+                isLoading ? <LoadingScreen />
+                    : (
+                        <div className="enquadroPagina">
+                            <div className='enquadroPerfil'>
+                                <div className='editPerfil'>
+                                    <FotoPerfil src={user.profilePicture} />
+                                    <Form username={user.username} profilePic={user.profilePicture} onUpdateProfile={() => loadUserData()} />
+                                </div>
+                                <div className='infoPerfil'>
+                                    <h2 className='infoUsername'>{user.username}</h2>
+                                    <div className="infoProgresso">
+                                        <Progresso titulo='Conquistas' icone={faTrophy} valor='10 / 100' />
+                                        <Progresso titulo='EXP' icone={faStar} valor='69000' />
+                                        <Progresso titulo='Postagens' icone={faNewspaper} valor='3' />
+                                    </div>
+                                </div>
+                            </div>
+                            <Tabs variant='tabs' defaultActiveKey={1} >
+                                <Tab eventKey={0} title='Jogos'>
+                                    <UserGameList />
+                                </Tab>
+                                <Tab eventKey={1} title='Postagens'>
+                                    <UserPostList posts={posts} />
+                                </Tab>
+                            </Tabs>
                         </div>
-                    </div>
-                </div>
-                <Tabs variant='tabs' defaultActiveKey={0} >
-                    <Tab eventKey={0} title='Jogos'>
-                        <UserGameList />
-                    </Tab>
-                    <Tab eventKey={1} title='Postagens'>
-                        <UserPostList posts={posts} />
-                    </Tab>
-                </Tabs>
-            </div>
+                    )
+            }
             <Footer />
-        </>
+        </div>
     )
 };
 
-function UserGameList () {
+function UserGameList() {
     return (
         <div className="gameList">
-            <CartaoJogo />
             <CartaoJogo />
             <CartaoJogo />
         </div>
@@ -91,13 +104,22 @@ function UserGameList () {
 
 function UserPostList({ posts }) {
     return (
-        <div className="postList">
-            {
-                posts.map(post =>
-                    <PostCard key={post.id} post={post} />
-                )
-            }
-        </div>
+        posts.length === 0
+            ? (
+                <div className="postListEmpty">
+                    <OwlpostIcon />
+                    <p>Está vazio demais aqui, que tal criar alguns posts.</p>
+                </div>
+            )
+            : (
+                <div className="postList">
+                    {
+                        posts.map(post =>
+                            <PostCard key={post.id} post={post} />
+                        )
+                    }
+                </div>
+            )
     )
 };
 
