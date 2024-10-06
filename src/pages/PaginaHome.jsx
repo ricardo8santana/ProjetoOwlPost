@@ -10,12 +10,15 @@ import { DestaqueCard } from '../components/DestaqueCard';
 import LoadingScreen from '../components/LoadingScreen'
 
 import * as postService from '../services/postService';
+import * as env from '../models/env';
 
 import './PaginaHome.css';
 
 import Carousel0 from '../assets/images/carousel_0.jpg';
 import Carousel1 from '../assets/images/carousel_1.jpg';
-import Carousel2 from '../assets/images/carousel_1.jpg';
+import Carousel2 from '../assets/images/carousel_2.jpg';
+import GameBG from '../assets/images/carousel_6.jpg';
+import { randomizeArray } from '../models/utils';
 
 const slideBackgrounds = [Carousel0, Carousel1, Carousel2];
 
@@ -35,26 +38,57 @@ const PaginaHome = () => {
 
   useEffect(() => {
     const loadContent = async () => {
-      let posts = await postService.getPostsFixados();
-      if (posts.length < 4) {
-        const otherPosts = await postService.getPosts();
-        posts = [...otherPosts.filter(x => posts.includes(x))];
+      let slides = [];
+
+      if (env.GAME_0 !== '') {
+        console.log(env.GAME_0);
+        const data = JSON.parse(env.GAME_0);
+        slides.push({
+          titulo: data.name, to: data.link, openNewTab: true, imagem: data.imagem,
+          descricao: 'Lorem ipsum dolor sit amet. Qui illo velit qui esse dolorum qui quia consequatur non beatae reiciendis',
+        });
       }
 
-      setSlideDestaques(posts.slice(0, 4).map((post, index) => {
+      if (env.GAME_1 !== '') {
+        console.log(env.GAME_1);
+        const data = JSON.parse(env.GAME_1);
+        slides.push({
+          titulo: data.name, to: data.link, openNewTab: true, imagem: data.imagem, 
+          descricao: 'Lorem ipsum dolor sit amet. Qui illo velit qui esse dolorum qui quia consequatur non beatae reiciendis',
+        });
+      }
+
+      const slidesCount = 4 - slides.length;
+
+      let posts = await postService.getPostsFixados();
+      const content = randomizeArray(posts).slice(0, slidesCount).map((post, index) => {
         return {
           titulo: post.title,
-          descricao: postService.getResumeFromContent(post.content, true, true, 200),
           to: `/posts/${post.id}`,
+          openNewTab: true,
+          descricao: postService.getResumeFromContent(post.content, true, true, 200),
           imagem: slideBackgrounds[index % slideBackgrounds.length],
         }
-      }));
+      });
+
+      slides = [...slides, ...content];
+
+      setSlideDestaques(slides);
+
+      // setSlideDestaques(posts.slice(0, 4).map((post, index) => {
+      //   return {
+      //     titulo: post.title,
+      //     descricao: postService.getResumeFromContent(post.content, true, true, 200),
+      //     to: `/posts/${post.id}`,
+      //     imagem: slideBackgrounds[index % slideBackgrounds.length],
+      //   }
+      // }));
 
       setIsLoading(false);
     };
 
     loadContent();
-  });
+  }, []);
 
   const {
     t,
