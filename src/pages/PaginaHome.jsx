@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+// import { ReactLenis, useLenis } from 'lenis/react'
+import Lenis from 'lenis'
+import SplitType from "split-type";
 import { useTranslation } from "react-i18next";
+import * as postService from '../services/postService'
 
 import PageSection from "../components/PageSection";
 import FotoPerfil from "../components/FotoPerfil";
@@ -8,10 +15,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { DestaqueCard } from '../components/DestaqueCard';
 
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitType from "split-type";
-import Lenis from 'lenis'
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import Logo from '../assets/images/Group.svg';
@@ -33,10 +37,11 @@ const integrantesGrupo = [
   // { nome: "Gustavo Dos Santos Magalhães", githubID: "172276584", },
 ];
 
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const PaginaHome = () => {
   const [slideDestaques, setSlideDestaques] = useState([]);
-
+  
   useEffect(() => {
     const loadContent = async () => {
       const posts = await postService.getPostsFixados();
@@ -44,7 +49,7 @@ const PaginaHome = () => {
         const otherPosts = await postService.getPosts();
         posts = [...otherPosts.filter(x => posts.includes(x))];
       }
-
+      
       setSlideDestaques(posts.slice(0, 4).map((post, index) => {
         return {
           titulo: post.title,
@@ -54,71 +59,30 @@ const PaginaHome = () => {
         }
       }));
     };
-
+    
     loadContent();
-  });
-
+  }, []);
+  
   const { 
     t,
     i18n: { changeLanguage, language },
   } = useTranslation()
-
+  
   const [currentLanguage, setCurrentLanguage] = useState(language)
-
+  
   const handleChangeLanguage = () => {
     const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
     changeLanguage(newLanguage)
     setCurrentLanguage(newLanguage)
   }
-
   
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-
+  
+  const main = useRef();
+  
+  useGSAP(() => {
     const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
-
     splitTypes.forEach((char, i) => {
-      const bg = char.dataset.bgColor
-      const fg = char.dataset.fgColor
-
-      // const text = new SplitType(char, { types: 'chars' })
       const text = new SplitType(char, { types: 'chars' })
-
-      // gsap.from(char, {
-      //   scrollTrigger: char, // start the animation when ".box" enters the viewport (once)
-      //   x: -500
-      // });
-
-      // gsap.fromTo(text.chars,
-      //   {
-      //   color: bg
-      //   },
-      //   {
-      //     color: fg,
-      //     duration: 0.2,
-      //     stagger: 0.2,
-      //     scrollTrigger: {
-      //       trigger: char,
-      //       start: 'top 25%',
-      //       end: 'top 20%',
-      //       scrub: 2,
-      //       markers: false,
-      //     },
-      // })
-
-      // gsap.from(text.chars, {
-      //   scrollTrigger: {
-      //     trigger: char,
-      //     start: 'top 25%',
-      //     end: 'top 18%',
-      //     scrub: 4,
-      //     markers: false
-      //   },
-      //   opacity: 0.2,
-      //   stagger: 0.01
-      // })
-
       gsap.from(text.chars, {
         scrollTrigger: {
           trigger: char,
@@ -133,35 +97,27 @@ const PaginaHome = () => {
         transformOrigin: 'left',
         stagger: 0.01
       })
-
-      // gsap.from(text.lines, {
-      //   scrollTrigger: {
-      //     trigger: char,
-      //     toggleActions: 'restart none restart none',
-      //   },
-      //   x: -100,
-      //   transformOrigin: 'left',
-      //   stagger: 0.01
-      // })
     })
+  });
+
+  const lenis = new Lenis()
+
+  lenis.on('scroll', (e) => {
+    console.log(e)
   })
 
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
 
-
-  // const lenis = new Lenis()
+  requestAnimationFrame(raf)
 
   
 
-  // lenis.on('scroll', ScrollTrigger.update)
-
-  // gsap.ticker.add((time) => {
-  //   lenis.raf(time * 1000)
-  // })
-
-  // gsap.ticker.lagSmoothing(0);
-
 
   return (
+    // <ReactLenis ref={lenisRef} autoRaf={true}>
     <div className="home">
       <Navbar />
       <PageSection isStart>
@@ -213,22 +169,21 @@ const PaginaHome = () => {
                 que pudesse ajudar a turma de enfermagem. Com isso em mente, decidimos criar um jogo. Usando a ideia da
                 gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
             </section>
-          
           </div>
         </div>
       </PageSection>
       <PageSection variant='secondary' hugContent>
-        <div className="sobre" >
-          <div className="sobre-buble">
-            <section>
-              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da plataforma?</h5>
-              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
-                em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
-                e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
-                acessar esse conteúdo.</p>
-            </section>
-          </div>
+      <div className="sobre" >
+        <div className="sobre-buble">
+          <section>
+            <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da plataforma?</h5>
+            <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
+              em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
+              e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
+              acessar esse conteúdo.</p>
+          </section>
         </div>
+      </div>
       </PageSection>
       <PageSection>
         <div className="grupo">
@@ -249,6 +204,7 @@ const PaginaHome = () => {
       <Footer />
 
     </div>
+  //  </ReactLenis>
   )
 };
 
