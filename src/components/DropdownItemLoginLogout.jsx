@@ -7,14 +7,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 
 import * as authService from '../services/authService';
+import * as routingService from '../services/routingService';
 
 const DropdownItemLogin = ({eventKey}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleOnClick = () => {
-    localStorage.setItem('last-route', location.pathname);
-    navigate('/login');
+    routingService.redirectToLogin(navigate, location);
   };
 
   return (

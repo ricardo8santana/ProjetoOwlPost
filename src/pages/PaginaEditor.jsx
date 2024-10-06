@@ -75,10 +75,12 @@ const PaginaEditor = () => {
   const [modalMessage, setModalMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
 
+  const handleOnUserLogout = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
-    window.addEventListener('user-logout', () => {
-      navigate('/');
-    });
+    window.addEventListener('user-logout', handleOnUserLogout);
 
     const loadContent = async () => {
       const user = await authService.getLoggedUser();
@@ -99,6 +101,10 @@ const PaginaEditor = () => {
 
       const availableTags = await tagService.getTags();
       setAvailableTags(availableTags);
+
+      return () => {
+        window.removeEventListener('user-logout', handleOnUserLogout);
+      }
     };
 
     routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);

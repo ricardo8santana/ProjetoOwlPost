@@ -9,6 +9,7 @@ import { faAngleRight, faGlobe, faMedal } from '@fortawesome/free-solid-svg-icon
 
 import { useEffect, useState } from "react";
 import * as authService from '../services/authService';
+import * as routingService from '../services/routingService';
 
 import FotoPerfil from './FotoPerfil';
 

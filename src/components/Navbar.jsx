@@ -2,7 +2,7 @@ import './Navbar.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserNurse } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 
@@ -13,10 +13,14 @@ import DropdownMenu from './DropdownMenu';
 import DropdownBar from './DropdownBar';
 
 import * as authService from '../services/authService';
+import * as routingService from '../services/routingService';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.isUserLoggedIn());
   const navigate = useNavigate();
+  const location = useLocation();
+  
+
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.isUserLoggedIn());
 
   useEffect(() => {
     setIsLoggedIn(authService.isUserLoggedIn());
@@ -69,8 +73,11 @@ const Navbar = () => {
         </div> */}
         <div className='menu-authbuttons'>
           <div className="auth-buttons">
-            <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" onClick={() => navigate('/login')}>{t('login')}</Button>
-            <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" onClick={() => navigate('/cadastro')}>{t('sign up')}</Button>
+            <Button hidden={isLoggedIn} variant='owl-outline-alt' className="sign sign-in-button" 
+              onClick={() => routingService.redirectToLogin(navigate, location)}>{t('login')}</Button>
+
+            <Button hidden={isLoggedIn} variant='owl-alt' className="sign sign-up-button" 
+              onClick={() => routingService.redirectToSignIn(navigate, location)}>{t('sign up')}</Button>
             <div>
               <DropdownMenu />
             </div>

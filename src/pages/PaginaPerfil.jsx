@@ -32,13 +32,19 @@ const PaginaPerfil = () => {
         setPosts(posts);
     };
 
-    useEffect(() => {
-        window.addEventListener('user-logout', () => {
-            navigate('/');
-        });
+    const handleOnUserLogout = () => {
+        navigate('/');
+      };
+    
+      useEffect(() => {
+        window.addEventListener('user-logout', handleOnUserLogout);
 
         routingService.redirectToLoginWhenNoUser(navigate, '/perfil');
-        loadUserData();        
+        loadUserData(); 
+        
+        return () => {
+            window.removeEventListener('user-logout', handleOnUserLogout);
+        }
     }, []);
 
     return (
