@@ -1,4 +1,4 @@
-import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
+import OwlpostIcon from '../assets/owlpost-icon';
 import './PaginaLogin.css'
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -47,7 +47,7 @@ const PaginaLogin = () => {
         <div className='login-page'>
             <div className='login-body'>
                 <div className='login-logo'>
-                    <OwlpostSquareLogo />
+                    <OwlpostIcon />
                 </div>
                 
                 <h3>Entrar na conta</h3>

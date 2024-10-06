@@ -1,6 +1,6 @@
 import './PaginaLogin.css';
 
-import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
+import OwlpostIcon from '../assets/owlpost-icon';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
@@ -71,7 +71,7 @@ const PaginaCadastro = () => {
         <div className='login-page'>
             <div className='login-body'>
                 <div className='login-logo'>
-                    <OwlpostSquareLogo />
+                    <OwlpostIcon />
                 </div>
 
                 <h3>Criar nova conta</h3>
