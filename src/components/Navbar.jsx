@@ -22,12 +22,17 @@ const Navbar = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(authService.isUserLoggedIn());
 
+  const handleUserLogout = () => {
+    setIsLoggedIn(false);
+  }
+
   useEffect(() => {
     setIsLoggedIn(authService.isUserLoggedIn());
+    window.addEventListener('user-logout', handleUserLogout);
 
-    window.addEventListener('user-logout', () => {
-      setIsLoggedIn(false);
-    });
+    return () => {
+      window.removeEventListener('user-logout', handleUserLogout);
+    }
   }, []);
 
   const { 

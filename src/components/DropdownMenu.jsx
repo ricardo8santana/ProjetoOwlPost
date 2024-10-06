@@ -21,64 +21,82 @@ import './DarkModeToggle.css';
 import './DropdownMenu.css'
 
 function DropdownMenu() {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    window.addEventListener('user-logout', () => {
-      setUser(null);
-    });
+    const handleUserLogout = () => {
+        setUser(null);
+    }
 
-    authService.getLoggedUserSync((user) => setUser(user));
-  }, []);
-  const { 
-    t,
-    i18n: { changeLanguage, language },
-  } = useTranslation()
+    const handleUserUpdated = async () => {
+        const user = await authService.getLoggedUser();
+        setUser(user);
+    }
 
-  const [currentLanguage, setCurrentLanguage] = useState(language)
+    useEffect(() => {
+        window.addEventListener('user-logout', handleUserLogout);
+        window.addEventListener('user-updated', handleUserUpdated);
 
-  const handleChangeLanguage = () => {
-    const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
-    changeLanguage(newLanguage)
-    setCurrentLanguage(newLanguage)
-  }
+        handleUserUpdated();
 
-  return (
-    <Dropdown>
-      <Dropdown.Toggle id="dropdown-autoclose-true" className='btn-owl link-alt button-login'>
-        {
-          user !== null
-            ? <FotoPerfil className='' src={user.profilePicture} />
-            : <FontAwesomeIcon className='btn-owl link-alt profile-button' icon={faCircleUserRegular} />
-        }
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <DropdownItemLink name={t('profile')} icon={faCircleUserSolid} to="/perfil" eventKey="1"/>
+        return () => {
+            window.removeEventListener('user-logout', handleUserLogout);
+            window.removeEventListener('user-updated', handleUserUpdated);
+        };
+    }, []);
+    const {
+        t,
+        i18n: { changeLanguage, language },
+    } = useTranslation()
 
-        {/* Matheus: Não tirei esse pq não sei como vai funcionar o idioma */}
-        <Dropdown.Item  onClick={handleChangeLanguage} className='dropdown-box' eventKey="2">
-          <div className='alinhamento-div'>
-            <div className='dropdown-icone dropdown-alinhamento'>
-              <FontAwesomeIcon icon={faGlobe} />
-            </div>
-            <div className='espacamento-words'>
-              <span className='fonte-dropdown'>{t('language')}</span>
-            </div>
-          </div>
-          <div className='arrow-right dropdown-alinhamento'>
-            <FontAwesomeIcon icon={faAngleRight} />
-          </div>
-        </Dropdown.Item>
+    const [currentLanguage, setCurrentLanguage] = useState(language)
 
-        <DropdownItemDarkModoToggle name={t('dark-theme')} eventKey="3"/>
-        <DropdownItemLink name={t('achievements')} icon={faMedal} eventKey="4" to="/perfil/#conquistas" />
-        
-        <Dropdown.Divider />
+    const handleChangeLanguage = () => {
+        const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
+        changeLanguage(newLanguage)
+        setCurrentLanguage(newLanguage)
+    }
 
-        <DropdownItemLoginLogout eventKey="5"/>
-      </Dropdown.Menu>
-    </Dropdown>
-  );
+    return (
+        <Dropdown>
+            <Dropdown.Toggle id="dropdown-autoclose-true" className='btn-owl link-alt button-login'>
+                {
+                    user !== null
+                        ? (
+                            <div className='profile-button-logged'>
+                                <p>{user.username}</p>
+                                <FotoPerfil className='' src={user.profilePicture} />
+                            </div>
+                        )
+                        : <FontAwesomeIcon className='btn-owl link-alt profile-button' icon={faCircleUserRegular} />
+                }
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <DropdownItemLink name={t('profile')} icon={faCircleUserSolid} to="/perfil" eventKey="1" />
+
+                {/* Matheus: Não tirei esse pq não sei como vai funcionar o idioma */}
+                <Dropdown.Item onClick={handleChangeLanguage} className='dropdown-box' eventKey="2">
+                    <div className='alinhamento-div'>
+                        <div className='dropdown-icone dropdown-alinhamento'>
+                            <FontAwesomeIcon icon={faGlobe} />
+                        </div>
+                        <div className='espacamento-words'>
+                            <span className='fonte-dropdown'>{t('language')}</span>
+                        </div>
+                    </div>
+                    <div className='arrow-right dropdown-alinhamento'>
+                        <FontAwesomeIcon icon={faAngleRight} />
+                    </div>
+                </Dropdown.Item>
+
+                <DropdownItemDarkModoToggle name={t('dark-theme')} eventKey="3" />
+                <DropdownItemLink name={t('achievements')} icon={faMedal} eventKey="4" to="/perfil/#conquistas" />
+
+                <Dropdown.Divider />
+
+                <DropdownItemLoginLogout eventKey="5" />
+            </Dropdown.Menu>
+        </Dropdown>
+    );
 };
 
 export default DropdownMenu;

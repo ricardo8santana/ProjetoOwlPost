@@ -102,13 +102,14 @@ const PaginaEditor = () => {
             const availableTags = await tagService.getTags();
             setAvailableTags(availableTags);
 
-            return () => {
-                window.removeEventListener('user-logout', handleOnUserLogout);
-            }
         };
-
+        
         routingService.redirectToLoginWhenNoUser(navigate, `/editor/${postID}`);
         loadContent();
+        
+        return () => {
+            window.removeEventListener('user-logout', handleOnUserLogout);
+        }
     }, [])
 
     const onContentChanged = (content) => setContent(content);

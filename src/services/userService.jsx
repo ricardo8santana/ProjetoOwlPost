@@ -7,6 +7,8 @@ import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
 
 import { urlAPI } from "./apiConnection";
 
+const onUserUpdated = new Event('user-updated');
+
 export class User {
     constructor(id, username, email, password, profilePicture, isAdmin) {
         this.id = id;
@@ -116,6 +118,8 @@ export const atualizarFotos = async (path, name) => {
                 'Content-Type': 'multipart/form-data',
             }
         });
+
+        window.dispatchEvent(onUserUpdated);
     }
     catch (err) {
         console.error(`Erro ao atualizar foto usuários! ( ${err} )`);
