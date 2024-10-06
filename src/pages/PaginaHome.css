@@ -123,9 +123,13 @@
 .integrante {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
 
-    width: 250px;
+    flex: 1 1 25%;
+    max-width: calc(100% / 3);
+
     padding: 1rem;
 }
 
@@ -136,7 +140,7 @@
 }
 
 .integrante .fotoPerfil {
-    width: 100% !important;
+    width: 250px !important;
     height: unset !important;
     aspect-ratio: 1;
 

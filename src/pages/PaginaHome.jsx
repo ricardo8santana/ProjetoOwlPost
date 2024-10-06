@@ -7,6 +7,7 @@ import CarroselHome from "../components/Carrosel";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { DestaqueCard } from '../components/DestaqueCard';
+import LoadingScreen from '../components/LoadingScreen'
 
 import * as postService from '../services/postService';
 
@@ -30,10 +31,11 @@ const integrantesGrupo = [
 
 const PaginaHome = () => {
   const [slideDestaques, setSlideDestaques] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadContent = async () => {
-      const posts = await postService.getPostsFixados();
+      let posts = await postService.getPostsFixados();
       if (posts.length < 4) {
         const otherPosts = await postService.getPosts();
         posts = [...otherPosts.filter(x => posts.includes(x))];
@@ -47,12 +49,14 @@ const PaginaHome = () => {
           imagem: slideBackgrounds[index % slideBackgrounds.length],
         }
       }));
+
+      setIsLoading(false);
     };
 
     loadContent();
   });
 
-  const { 
+  const {
     t,
     i18n: { changeLanguage, language },
   } = useTranslation()
@@ -65,7 +69,7 @@ const PaginaHome = () => {
     setCurrentLanguage(newLanguage)
   }
 
-  
+
 
   return (
     <div className="home">
@@ -76,21 +80,27 @@ const PaginaHome = () => {
           <hr />
           <div className="home-carousel">
             <div className="home-carousel-container">
-              <div className="home-carousel">
-                <CarroselHome slides={slideDestaques} />
-              </div>
+              {
+                isLoading ? <LoadingScreen />
+                  : (
+                    <div className="home-carousel">
+                      <CarroselHome slides={slideDestaques} />
+                    </div>
+                  )
+              }
             </div>
             <div className="home-content-container">
               {
-                slideDestaques.map((slide, index) =>
-                  <DestaqueCard key={index} slide={slide} />
-                )
+                isLoading ? <LoadingScreen />
+                  : slideDestaques.map((slide, index) =>
+                    <DestaqueCard key={index} slide={slide} />
+                  )
               }
             </div>
           </div>
         </div>
-
       </PageSection>
+
       <PageSection variant='secondary'>
         <div className="sobre">
           <h1>{t('about us')}</h1>
@@ -114,8 +124,8 @@ const PaginaHome = () => {
 
           <div className="integrantes">
             {
-              integrantesGrupo.map((integrante, index) => 
-                <IntegranteGrupo key={index} integrante={integrante}/>
+              integrantesGrupo.map((integrante, index) =>
+                <IntegranteGrupo key={index} integrante={integrante} />
               )
             }
           </div>
@@ -123,7 +133,7 @@ const PaginaHome = () => {
         </div>
       </PageSection>
       <Footer />
-      
+
     </div>
   )
 };
