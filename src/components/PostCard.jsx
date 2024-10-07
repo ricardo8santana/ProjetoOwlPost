@@ -9,17 +9,35 @@ import * as tagService from '../services/tagService';
 
 import FotoPerfil from '../components/FotoPerfil';
 
+import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
+
 const PostCard = ({post}) => {
     const navigate = useNavigate();
     
     const [tags, setTags] = useState([]);
     const [user, setUser] = useState(userService.defaultUser);
 
+    const loadUser = async () => {
+        const user = await userService.getUser(post.userID);
+        if (user) {
+            setUser(user);
+        }
+    }
+
+    const loadTags = async () => {
+        const tags = await tagService.getTagsByPostID(post.id);
+        setTags(tags.map(x => x.name).join(', '));
+    }
+
     useEffect(() => {
-        userService.getUserSync(post.userID, user => setUser(user));
-        tagService.getTagsByPostIDSync(post.id, (tags) => { 
-            return setTags(tags.map(x => x.name).join(', '))
-        });
+        window.addEventListener('user-updated', loadUser);
+
+        loadUser();
+        loadTags();
+        
+        return () => {
+            window.removeEventListener('user-updated', loadUser);
+        }
     }, []);
 
     const handleOnClick = () => {
