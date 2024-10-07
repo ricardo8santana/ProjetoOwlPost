@@ -70,7 +70,7 @@ function FormFileInput({ username, profilePic }) {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Selecionar nova foto de perfil</Modal.Title>
+                    <Modal.Title>Alterar informações do perfil.</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='modalBody'>
                     <FotoPerfil src={file} />
