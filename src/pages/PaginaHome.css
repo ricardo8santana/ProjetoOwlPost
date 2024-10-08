@@ -97,10 +97,10 @@
 
 .page-section:has(.sobre) {
     padding: 6rem 4rem;
-    height: 111vh !important;
+    height: 135vh !important;
     
     h5 {
-        font-size: 1.60rem;
+        font-size: 1.50rem;
     }
 
     p {
@@ -193,7 +193,23 @@
     box-shadow: 0 0px 12px -4px  rgba(0,0,0,0.125);
 }
 
+
+@media screen and (max-width: 1024px) {
+    .sobre-buble {
+        padding: 3.15rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
+
+    .page-section:has(.sobre) {
+        padding: 3rem;
+
+        h5 {
+            font-size: 1.45rem;
+        }
+    }
+
     .home-carousel {
         flex-direction: column;
         padding: 1rem;
@@ -233,6 +249,10 @@
         padding: 0;
     }
 
+    .page-space {
+        margin-top: 40%;
+    }
+
     .content-card {
         min-width: 280px;
         flex-grow: 1;
@@ -258,6 +278,15 @@
     }
 
     .page-section:has(.sobre) {
+        h5 {
+            font-size: 1.45rem;
+        }
+    
+        p {
+            font-size: clamp(1.26rem, 1.30vw, 1.8rem);
+        }
+
+        padding: 1rem;
         min-height: 100% !important;
     }
 }

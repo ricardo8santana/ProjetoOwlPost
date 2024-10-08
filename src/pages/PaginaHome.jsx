@@ -44,7 +44,7 @@ const PaginaHome = () => {
   
   useEffect(() => {
     const loadContent = async () => {
-      const posts = await postService.getPostsFixados();
+      let posts = await postService.getPostsFixados();
       if (posts.length < 4) {
         const otherPosts = await postService.getPosts();
         posts = [...otherPosts.filter(x => posts.includes(x))];
@@ -162,7 +162,7 @@ const PaginaHome = () => {
       </PageSection>
       <PageSection variant='tertiary' hugContent>
         <div className="sobre" >
-          <div className="sobre-buble">
+          <div className="sobre-buble page-space">
             <section>
               <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da gamificação?</h5>
               <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">No início, não tínhamos uma ideia clara do que criar. No entanto, surgiu a oportunidade de desenvolver algo
@@ -174,7 +174,7 @@ const PaginaHome = () => {
       </PageSection>
       <PageSection variant='secondary' hugContent>
       <div className="sobre" >
-        <div className="sobre-buble">
+        <div className="sobre-buble page-space">
           <section>
             <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da plataforma?</h5>
             <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
