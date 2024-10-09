@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap';
 
 import { useTranslation } from "react-i18next";
 import NomeLogo from '../assets/images/NameLogo.svg';
-import Logo from '../assets/images/Group.svg';
+import Logo from '../assets/images/owlpost-white.png';
 import DropdownMenu from './DropdownMenu';
 import DropdownBar from './DropdownBar';
 
