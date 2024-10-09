@@ -3,7 +3,7 @@ import * as crypto from './crypto';
 import { Buffer } from 'buffer';
 import * as authService from './authService'
 
-import defaultProfilePicture from '../assets/images/defaultProfilePic.jpg';
+import defaultProfilePicture from '../assets/images/owlpost-default-user.png';
 
 import { urlAPI } from "./apiConnection";
 

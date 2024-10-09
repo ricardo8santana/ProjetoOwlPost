@@ -9,7 +9,8 @@
     gap: 2rem;
 
     text-align: left;
-    transition: filter 0.125s ease-in-out;
+    transition: filter 0.250s ease-in-out;
+    cursor: pointer;
 }
 
 .post-card:hover {
