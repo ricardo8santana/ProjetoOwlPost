@@ -1,12 +1,15 @@
 import './PaginaLogin.css';
 
-import OwlpostIcon from '../assets/owlpost-icon';
+import iconLight from '../assets/images/owlpost-black.png';
+import iconDark from '../assets/images/owlpost-white.png';
+
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 
 import * as userService from '../services/userService';
+import * as darkModeService from '../services/darkModeService';
 import * as authService from '../services/authService';
 
 
@@ -20,6 +23,8 @@ const PaginaCadastro = () => {
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
 
+    const prefersDark = darkModeService.loadTheme();
+    
     const isValidUsername = () => {
         return username !== '';
     }
@@ -70,8 +75,8 @@ const PaginaCadastro = () => {
     return (
         <div className='login-page'>
             <div className='login-body'>
-                <div className='login-logo'>
-                    <OwlpostIcon />
+            <div className='login-logo'>
+                    <img src={prefersDark ? iconDark : iconLight } />
                 </div>
 
                 <h3>Criar nova conta</h3>

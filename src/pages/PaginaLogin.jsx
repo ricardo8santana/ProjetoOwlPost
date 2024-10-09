@@ -1,4 +1,6 @@
-import OwlpostIcon from '../assets/owlpost-icon';
+import iconLight from '../assets/images/owlpost-black.png';
+import iconDark from '../assets/images/owlpost-white.png';
+import NomeLogo from '../assets/images/NameLogo.svg';
 import './PaginaLogin.css'
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,6 +8,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 import * as authService from '../services/authService';
+import * as darkModeService from '../services/darkModeService';
 import * as routingService from '../services/routingService';
 
 const PaginaLogin = () => {
@@ -15,6 +18,7 @@ const PaginaLogin = () => {
     const [failedToLogin, setFailedToLogin] = useState(false);
 
     const navigate = useNavigate();
+    const prefersDark = darkModeService.loadTheme();
 
     const isValidEmail = () => {
         const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
@@ -47,7 +51,7 @@ const PaginaLogin = () => {
         <div className='login-page'>
             <div className='login-body'>
                 <div className='login-logo'>
-                    <OwlpostIcon />
+                    <img src={prefersDark ? iconDark : iconLight } />
                 </div>
                 
                 <h3>Entrar na conta</h3>
