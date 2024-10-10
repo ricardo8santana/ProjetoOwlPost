@@ -104,7 +104,7 @@
     }
 
     p {
-        font-size: clamp(1.30rem, 1.30vw, 1.8rem);
+        font-size: clamp(1.30rem, 1.30vw, 1.5rem);
     }
 }
 
@@ -196,7 +196,7 @@
 
 @media screen and (max-width: 1024px) {
     .sobre-buble {
-        padding: 3.15rem;
+        padding: 3rem;
     }
 }
 
@@ -283,13 +283,21 @@
         }
     
         p {
-            font-size: clamp(1.26rem, 1.30vw, 1.8rem);
+            font-size: clamp(1.1rem, 1.30vw, 1.8rem);
         }
 
         padding: 1rem;
         min-height: 100% !important;
     }
 }
+
+@media screen and (max-width: 375px) {
+    .sobre {
+        padding: 3rem 3rem !important;
+        text-wrap: pretty;
+    }
+}
+
 
 html.lenis, html.lenis body {
     height: auto;

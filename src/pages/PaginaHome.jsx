@@ -82,8 +82,8 @@ const PaginaHome = () => {
   useGSAP(() => {
     const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
     splitTypes.forEach((char, i) => {
-      const text = new SplitType(char, { types: 'chars' })
-      gsap.from(text.chars, {
+      const text = new SplitType(char, { types: 'words' })
+      gsap.from(text.words, {
         scrollTrigger: {
           trigger: char,
           start: 'top 80%',
@@ -155,7 +155,7 @@ const PaginaHome = () => {
               <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar,
                 e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado),
                 seria o seu ponto de referência enquanto você está explorando novos conhecimentos.
-                E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+                E por último, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
             </section>
           </div>
         </div>
