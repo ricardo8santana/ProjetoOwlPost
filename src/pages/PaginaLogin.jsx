@@ -1,6 +1,7 @@
 import iconLight from '../assets/images/owlpost-black.png';
 import iconDark from '../assets/images/owlpost-white.png';
-import NomeLogo from '../assets/images/NameLogo.svg';
+import nameLight from '../assets/images/owlpostName-white.png';
+import nameDark from '../assets/images/owlpostName-black.png';
 import './PaginaLogin.css'
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -52,6 +53,7 @@ const PaginaLogin = () => {
             <div className='login-body'>
                 <div className='login-logo'>
                     <img src={prefersDark ? iconDark : iconLight } />
+                    <img src={prefersDark ? nameLight : nameDark } />
                 </div>
                 
                 <h3>Entrar na conta</h3>
