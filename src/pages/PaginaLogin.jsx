@@ -53,6 +53,8 @@ const PaginaLogin = () => {
             <div className='login-body'>
                 <div className='login-logo'>
                     <img src={prefersDark ? iconDark : iconLight } />
+                </div>
+                <div className='name-logo'>
                     <img src={prefersDark ? nameLight : nameDark } />
                 </div>
                 
