@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+// import { ReactLenis, useLenis } from 'lenis/react'
+import Lenis from 'lenis'
+import SplitType from "split-type";
 import { useTranslation } from "react-i18next";
+import * as postService from '../services/postService'
 
 import PageSection from "../components/PageSection";
 import FotoPerfil from "../components/FotoPerfil";
@@ -9,7 +16,10 @@ import Navbar from "../components/Navbar";
 import { DestaqueCard } from '../components/DestaqueCard';
 import LoadingScreen from '../components/LoadingScreen'
 
-import * as postService from '../services/postService';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faYoutube, faXTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import Logo from '../assets/images/Group.svg';
 import * as env from '../models/env';
 
 import './PaginaHome.css';
@@ -31,6 +41,7 @@ const integrantesGrupo = [
   // { nome: "Gustavo Dos Santos Magalhães", githubID: "172276584", },
 ];
 
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const PaginaHome = () => {
   const [slideDestaques, setSlideDestaques] = useState([]);
@@ -45,7 +56,7 @@ const PaginaHome = () => {
         const data = JSON.parse(env.GAME_0);
         slides.push({
           titulo: data.name, to: data.link, openNewTab: true, imagem: data.imagem,
-          descricao: 'Lorem ipsum dolor sit amet. Qui illo velit qui esse dolorum qui quia consequatur non beatae reiciendis',
+          descricao: data.descricao
         });
       }
 
@@ -54,7 +65,7 @@ const PaginaHome = () => {
         const data = JSON.parse(env.GAME_1);
         slides.push({
           titulo: data.name, to: data.link, openNewTab: true, imagem: data.imagem, 
-          descricao: 'Lorem ipsum dolor sit amet. Qui illo velit qui esse dolorum qui quia consequatur non beatae reiciendis',
+          descricao: data.descricao
         });
       }
 
@@ -86,7 +97,7 @@ const PaginaHome = () => {
 
       setIsLoading(false);
     };
-
+    
     loadContent();
   }, []);
 
@@ -94,9 +105,9 @@ const PaginaHome = () => {
     t,
     i18n: { changeLanguage, language },
   } = useTranslation()
-
+  
   const [currentLanguage, setCurrentLanguage] = useState(language)
-
+  
   const handleChangeLanguage = () => {
     const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
     changeLanguage(newLanguage)
@@ -104,8 +115,49 @@ const PaginaHome = () => {
   }
 
 
+  
+  
+  const main = useRef();
+  
+  useGSAP(() => {
+    const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
+    splitTypes.forEach((char, i) => {
+      const text = new SplitType(char, { types: 'chars' })
+      gsap.from(text.chars, {
+        scrollTrigger: {
+          trigger: char,
+          start: 'top 80%',
+          end: 'top 100%',
+          scrub: 1,
+          markers: false
+        },
+        scaleY: 0,
+        x: -10,
+        y: -20,
+        transformOrigin: 'left',
+        stagger: 0.01
+      })
+    })
+  });
+
+  const lenis = new Lenis()
+
+  // lenis.on('scroll', (e) => {
+  //   console.log(e)
+  // })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+
+  requestAnimationFrame(raf)
+
+  
+
 
   return (
+    // <ReactLenis ref={lenisRef} autoRaf={true}>
     <div className="home">
       <Navbar />
       <PageSection isStart>
@@ -134,22 +186,47 @@ const PaginaHome = () => {
           </div>
         </div>
       </PageSection>
-
-      <PageSection variant='secondary'>
-        <div className="sobre">
-          <h1>{t('about us')}</h1>
-          <hr />
-
-          <div className="sobre-buble">
-            <h5>{t('idea')}</h5>
-            <p>{t('gamification')}</p>
+      <PageSection variant='secondary' hugContent>
+        <div className="sobre sobre-start">
+          <div className="teste">
+            <h1 className="title" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Um pouco sobre o site</h1>
+            <hr />
           </div>
-
-          <div className="sobre-buble">
-            <h5>{t('platform')}</h5>
-            <p>{t('nursing')}</p>
+          <div className="sobre-buble testando-1">
+            <section>
+              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Porque Owlpost?</h5>
+              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar,
+                e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado),
+                seria o seu ponto de referência enquanto você está explorando novos conhecimentos.
+                E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+            </section>
           </div>
         </div>
+      </PageSection>
+      <PageSection variant='tertiary' hugContent>
+        <div className="sobre" >
+          <div className="sobre-buble page-space">
+            <section>
+              <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da gamificação?</h5>
+              <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">No início, não tínhamos uma ideia clara do que criar. No entanto, surgiu a oportunidade de desenvolver algo
+                que pudesse ajudar a turma de enfermagem. Com isso em mente, decidimos criar um jogo. Usando a ideia da
+                gamificação, estamos empenhados em desenvolver um jogo que torne o aprendizado de conteúdos complexos mais fácil e divertido.</p>
+            </section>
+          </div>
+        </div>
+      </PageSection>
+      <PageSection variant='secondary' hugContent>
+      <div className="sobre" >
+        <div className="sobre-buble page-space">
+          <section>
+            <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da plataforma?</h5>
+            <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
+              em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
+              e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
+              acessar esse conteúdo.</p>
+          </section>
+        </div>
+      </div>
       </PageSection>
       <PageSection>
         <div className="grupo">
@@ -169,6 +246,7 @@ const PaginaHome = () => {
       <Footer />
 
     </div>
+  //  </ReactLenis>
   )
 };
 

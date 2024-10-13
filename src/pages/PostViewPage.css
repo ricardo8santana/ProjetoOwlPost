@@ -27,6 +27,11 @@
     width: min(1024px, 80vw);
 }
 
+.dropdown-item {
+    --bs-dropdown-link-color: var(--color-text-alt) !important;
+    --bs-dropdown-link-hover-color: var(--color-text-main) !important;
+}
+
 .post-view-filter {
     width: 0;
     display: flex;

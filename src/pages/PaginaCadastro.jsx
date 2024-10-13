@@ -2,6 +2,8 @@ import './PaginaLogin.css';
 
 import iconLight from '../assets/images/owlpost-black.png';
 import iconDark from '../assets/images/owlpost-white.png';
+import nameLight from '../assets/images/owlpostName-white.png';
+import nameDark from '../assets/images/owlpostName-black.png';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
@@ -75,9 +77,12 @@ const PaginaCadastro = () => {
     return (
         <div className='login-page'>
             <div className='login-body'>
-            <div className='login-logo'>
-                    <img src={prefersDark ? iconDark : iconLight } />
-                </div>
+                    <div className='login-logo'>
+                        <img src={prefersDark ? iconDark : iconLight } />
+                    </div>
+                    <div className='name-logo'>
+                        <img src={prefersDark ? nameLight : nameDark } />
+                    </div>
 
                 <h3>Criar nova conta</h3>
 

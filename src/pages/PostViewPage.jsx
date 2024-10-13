@@ -13,10 +13,9 @@ import Navbar from '../components/Navbar';
 
 import * as postService from '../services/postService';
 import * as tagService from '../services/tagService';
+import { useDebounce } from 'use-debounce';
 
-import { getTags } from '../services/tagService';
 import Footer from '../components/Footer';
-
 import './PostViewPage.css'
 
 const CustomMenu = React.forwardRef(
@@ -50,62 +49,78 @@ const CustomMenu = React.forwardRef(
 
 
 const orders = [
-    'Padrão',
-    'Recente',
-    'Popular',
+    { id: 'default', display: 'Padrão' },
+    { id: 'newest', display: 'Mais Recente' },
+    { id: 'oldest', display: 'Mais Antiga' },
 ];
 
+const EmptyFilter = new tagService.Tag(0, 'Nenhum');
+
 const PostViewList = () => {
+    const [isLoading, setIsLoading] = useState(false);
 
     const [tags, setTags] = useState([]);
     const [posts, setPosts] = useState([]);
-    const [filtro, setFiltro] = useState({ id: 0, name: 'Nenhum' });
+    const [filtro, setFiltro] = useState(EmptyFilter);
     const [order, setOrder] = useState(orders[0]);
+    const [search, setSearch] = useState('');
+
+    const [searchValue] = useDebounce(search, 500);
+
+    const getFilteredPost = async () => {
+        const posts = await postService.getFilteredPosts(filtro, searchValue, order.id);
+        setPosts(posts);
+    }
 
     useEffect(() => {
-        postService.getPostsSync(posts => setPosts(posts));
-        tagService.getTagsSync(tags => setTags(tags));
+        const loadData = async () => {
+            setIsLoading(true);
+
+            const posts = await postService.getPosts();
+            setPosts(posts);
+
+            const tags = await tagService.getTags();
+            setTags([...[EmptyFilter], ...tags]);
+
+            setIsLoading(false);
+        };
+
+        loadData();
     }, []);
 
-    const handleFilterSelected = (selected) => {
-        const getFilteredPost = async () => {
-            const posts = await postService.getPostsByTagID([filtro.id === 0 ? null : filtro.id]);
-            setPosts(posts);
-        }
-
+    useEffect(() => {
         getFilteredPost();
-    }
+    }, [filtro, order, searchValue]);
 
     return (
         <div className='post-view'>
             <div className='post-view-filters'>
                 <div className='post-view-filter left'>
-                    {/* <span>Filtrar</span> */}
-                    <Dropdown onSelect={handleFilterSelected}>
+                    <Dropdown onSelect={e => setFiltro(tags[e])}>
                         <Dropdown.Toggle id="dropdown-custom-components">
                             <FontAwesomeIcon icon={faFilter} />
                             <span className='icon-filters'>{filtro.name}</span>
                         </Dropdown.Toggle>
-                        <Dropdown.Menu as={CustomMenu} onSelect={e => console.log(e)} >
+                        <Dropdown.Menu as={CustomMenu}>
                             {
-                                tags.map(tag =>
-                                    <Dropdown.Item key={tag.id} eventKey={tag.id}>{tag.name}</Dropdown.Item>
+                                tags.map((tag, index) =>
+                                    <Dropdown.Item key={index} eventKey={index}>{tag.name}</Dropdown.Item>
                                 )
                             }
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
                 <div className='post-view-search'>
-                    <input type='text' placeholder='Pesquisar' />
+                    <input type='text' placeholder='Pesquisar' onChange={e => setSearch(e.target.value)} />
                 </div>
                 <div className='post-view-filter right'>
                     {/* <span>Ordenar</span> */}
-                    <Dropdown onSelect={e => setOrder(e)}>
-                        <Dropdown.Toggle id="dropdown-custom-components"><FontAwesomeIcon icon={faArrowDownShortWide} /><span className='icon-filters'>{order}</span></Dropdown.Toggle>
+                    <Dropdown onSelect={e => setOrder(orders[e])}>
+                        <Dropdown.Toggle id="dropdown-custom-components"><FontAwesomeIcon icon={faArrowDownShortWide} /><span className='icon-filters'>{order.display}</span></Dropdown.Toggle>
                         <Dropdown.Menu >
                             {
                                 orders.map((order, index) =>
-                                    <Dropdown.Item key={index} eventKey={order}>{order}</Dropdown.Item>)
+                                    <Dropdown.Item key={index} eventKey={index}>{order.display}</Dropdown.Item>)
                             }
                         </Dropdown.Menu>
                     </Dropdown>
@@ -115,11 +130,13 @@ const PostViewList = () => {
                 <Link className='btn-owl btn-create' to='/editor/0'>Criar Post</Link>
             </div>
             {
-                posts.map(post =>
-                    <PostCard key={post.id} post={post} />
-                )
+                isLoading
+                    ? <LoadingScreen />
+                    : posts.map(post =>
+                        <PostCard key={post.id} post={post} />
+                    )
             }
-            <Button variant='owl'>Carregar Mais</Button>
+            {/* <Button variant='owl'>Carregar Mais</Button> */}
         </div>
     )
 };

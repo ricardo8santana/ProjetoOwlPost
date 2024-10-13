@@ -160,6 +160,33 @@ export const deletePost = async (postID) => {
     }
 }
 
+export const getFilteredPosts = async (tag, search, order) => {
+    try {
+        const query = [];
+        if (tag && tag.id != 0) { 
+            query.push('withTags=' + tag.id); 
+        }
+        
+        if (search && search !== '') { 
+            query.push('search=' + search); 
+        }
+
+        if (order) { 
+            const o = order !== 'oldest' ? 'desc' : 'asc';
+            query.push('orderBy=ultimaAtividade&sort=' + o); 
+        }
+
+        const response = await axios.get(urlAPI + '/postagens/filter?' + query.join('&'));
+        return response.data.map(postData => {
+            return createPostFromDatabase(postData);
+        });
+    }
+    catch (err) {
+        console.error(`Erro ao buscar postagem. erro: ${err}`);
+        return [];
+    }
+}
+
 /** @param {String} content @param {Boolean} useCompact @param {Boolean} includeTitles @param {Number} maxLength @returns {String}*/
 export const getResumeFromContent = (content, useCompact, includeTitles, maxLength) => {
     const lines = content.split('\n');

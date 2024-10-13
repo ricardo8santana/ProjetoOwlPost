@@ -20,7 +20,7 @@
 
     border-radius: 0.5rem;
     width: min(400px, 80vw);
-    height: 600px;
+    height: 650px;
     padding: 2rem;
     
     background-color: var(--color-bg-main);
@@ -65,8 +65,12 @@
 } */
 
 .login-logo {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 85px;
+  }
+
+  .name-logo img {
+    width: 100px;
   }
   
   .login-logo img {
