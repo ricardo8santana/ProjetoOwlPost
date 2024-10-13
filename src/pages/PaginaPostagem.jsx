@@ -19,6 +19,7 @@ import '../components/PostCard.css';
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../components/Footer";
 
@@ -92,11 +93,9 @@ const PaginaPostagem = () => {
                                 <div className='post-page-tag-options'>
                                     <div className="post-page-tag-container">
                                         <div className="post-page-tag-list">
-                                            {
-                                                tags.map(tag =>
-                                                    <Tag key={tag.id} tag={tag} onDelete={() => handleRemoveTag(tag)} isReadOnly={post !== 0} />
-                                                )
-                                            }
+                                            <Button>
+                                                <FontAwesomeIcon icon={faHeart} /> Like
+                                            </Button>
                                         </div>
                                     </div>
                                     <div hidden={!showOptions} className="post-page-options">
