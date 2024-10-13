@@ -30,7 +30,8 @@
     "react-i18next": "^15.0.1",
     "react-router-dom": "^6.26.0",
     "sodium-plus": "^0.9.0",
-    "split-type": "^0.3.4"
+    "split-type": "^0.3.4",
+    "use-debounce": "^10.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
