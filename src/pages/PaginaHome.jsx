@@ -56,7 +56,7 @@ const PaginaHome = () => {
         const data = JSON.parse(env.GAME_0);
         slides.push({
           titulo: data.name, to: data.link, openNewTab: true, imagem: data.imagem,
-          descricao: 'Lorem ipsum dolor sit amet. Qui illo velit qui esse dolorum qui quia consequatur non beatae reiciendis',
+          descricao: data.descricao
         });
       }
 
@@ -65,7 +65,7 @@ const PaginaHome = () => {
         const data = JSON.parse(env.GAME_1);
         slides.push({
           titulo: data.name, to: data.link, openNewTab: true, imagem: data.imagem, 
-          descricao: 'Lorem ipsum dolor sit amet. Qui illo velit qui esse dolorum qui quia consequatur non beatae reiciendis',
+          descricao: data.descricao
         });
       }
 
