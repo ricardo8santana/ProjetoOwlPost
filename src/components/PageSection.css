@@ -16,7 +16,7 @@
 }
 
 .page-section.fill-screen { min-height: 110vh; }
-.page-section.hug-content { min-height: unset; }
+.page-section.hug-content { min-height: unset; height: 100%; }
 
 .section-start::before { 
     mask-image: url(../assets/svgs/section-bg-begin.svg) !important; 
@@ -29,4 +29,5 @@
 
 .page-section.primary::before { background-color: var(--color-bg-body); }
 .page-section.secondary::before { background-color: var(--color-main-normal); }
+.page-section.tertiary::before { background-color: var(--color-main-dark); }
 .page-section.alternative::before { background-color: var(--color-main-dark); }

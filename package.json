@@ -16,17 +16,21 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@gsap/react": "^2.1.1",
     "@uiw/react-md-editor": "^4.0.4",
     "axios": "^1.7.5",
     "bootstrap": "^5.3.3",
     "buffer": "^6.0.3",
+    "gsap": "^3.12.5",
     "i18next": "^23.14.0",
+    "lenis": "^1.1.13",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.0.1",
     "react-router-dom": "^6.26.0",
-    "sodium-plus": "^0.9.0"
+    "sodium-plus": "^0.9.0",
+    "split-type": "^0.3.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
