@@ -30,7 +30,7 @@ A plataforma também funciona como forma de acesso para o minigame ([Owlcalc](ht
 [![React][react-shield]][react-url] 
 [![Vite][vite-shield]][vite-url]
 [![JavaScript][js-shield]][js-url]
-[![Bootstrap][bs-shield]][bs-url]
+[![Bootstrap][bs-shield]][bs-url]  
 [![FontAwesome][fa-shield]][fa-url]
 [![Axios][axios-shield]][axios-url]
 [![GSAP][gsap-shield]][gsap-url]
@@ -53,7 +53,7 @@ A plataforma também funciona como forma de acesso para o minigame ([Owlcalc](ht
 
 [![Matheus Senna][matheus-shield]][matheus-url]
 [![Michaell Senna][michaell-shield]][michaell-url]
-[![Jonatas Tavares][jonatas-shield]][jonatas-url]
+[![Jonatas Tavares][jonatas-shield]][jonatas-url]  
 [![Luis Ricardo][ricardo-shield]][ricardo-url]
 [![Vinicius Lima][vinicius-shield]][vinicius-url]
 
