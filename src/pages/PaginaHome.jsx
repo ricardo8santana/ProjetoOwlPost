@@ -122,8 +122,8 @@ const PaginaHome = () => {
   useGSAP(() => {
     const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
     splitTypes.forEach((char, i) => {
-      const text = new SplitType(char, { types: 'chars' })
-      gsap.from(text.chars, {
+      const text = new SplitType(char, { types: 'words' })
+      gsap.from(text.words, {
         scrollTrigger: {
           trigger: char,
           start: 'top 80%',
@@ -198,7 +198,7 @@ const PaginaHome = () => {
               <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">O nome é formado por duas palavras, "Owl" (Coruja) o animal que representa a sabedoria e a inteligência e "Post" de postar,
                 e a plataforma segue essa ideia de entregar e compartilhar conhecimentos. A pronuncia também lembra a palavra outpost (posto avançado),
                 seria o seu ponto de referência enquanto você está explorando novos conhecimentos.
-                E por ultimo, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
+                E por último, pra quem gosta, é uma referência ao sistema de correios de corujas usado em Harry Potter.</p>
             </section>
           </div>
         </div>
@@ -221,7 +221,7 @@ const PaginaHome = () => {
           <section>
             <h5 className="gap" data-bg-color="#353535" data-fg-color="var(--color-acc-normal)">Como surgiu a ideia da plataforma?</h5>
             <p className="scroll-edit" data-bg-color="#353535" data-fg-color="#fafaff">Como não seria possível criar um jogo que cobriria a quantidade de conteúdo da turma de enfermagem, começamos a pensar
-              em outras maneiras de fazer isso. Foi assim que surgiu a ideia trazer todo esse conteúdo para um único lugar. Professores
+              em outras maneiras de fazer isso. Foi assim que surgiu a ideia de trazer todo esse conteúdo para um único lugar. Professores
               e alunos compartilham conteúdos que eles conheçam e que estariam espalhados em livros, ou sites e outros alunos poderam
               acessar esse conteúdo.</p>
           </section>
