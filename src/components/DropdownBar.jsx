@@ -1,20 +1,18 @@
-import React from 'react';
-import { useEffect, useState } from "react";
-import * as userService from '../services/userService';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import React from 'react';
 
-import { faBars } from '@fortawesome/free-solid-svg-icons'
-import { faCircleUser as faCircleUserSolid } from '@fortawesome/free-solid-svg-icons';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { faBullhorn } from '@fortawesome/free-solid-svg-icons';
-import { faNotesMedical } from '@fortawesome/free-solid-svg-icons';
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { faHeadset } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRightToBracket, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { 
+  faBars, 
+  faXmark,
+  faGlobe,
+  faBullhorn, 
+  faNotesMedical,
+  faAngleRight,
+  faCircleUser,
+  faHeadset,
+  faMedal } from '@fortawesome/free-solid-svg-icons';
 
 import './DropdownBar.css'
 import './DropdownMenu.css'
@@ -22,21 +20,21 @@ import DropdownItemLoginLogout from './DropdownItemLoginLogout';
 import DropdownItemLink from './DropdownItemLink';
 import DropdownItemDarkModoToggle from './DropdownItemDarkModeToggle';
 
-
-const ThemeStorageKey = 'theme';
-const ThemeDark = 'dark';
-const ThemeLight = 'light';
-
-
 function MenuShow() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  }
+
   return (
-    <Dropdown>
+    <Dropdown show={isDropdownOpen} onToggle={toggleDropdown}>
       <Dropdown.Toggle id="dropdown-autoclose-true" className='button-login'>
-        <FontAwesomeIcon className='profile-button' icon={faBars} />
+        <FontAwesomeIcon className='profile-button' icon={isDropdownOpen ? faXmark : faBars} />
       </Dropdown.Toggle>
       <Dropdown.Menu>
         
-        <DropdownItemLink name="Perfil" icon={faCircleUserSolid} to="/perfil" eventKey="1" />
+        <DropdownItemLink name="Perfil" icon={faCircleUser} to="/perfil" eventKey="1" />
         
         {/* Matheus: Não tirei esse pq não sei como vai funcionar o idioma */}
         <Dropdown.Item className='dropdown-box' eventKey="2">
