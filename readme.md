@@ -23,11 +23,11 @@ Este projeto foi criado como parte de um trabalho escolar, [Projeto Integrador (
 
 <br/>
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/fdb6ba59-0a2e-4797-9b8c-6c9614ae3566" width="420" alt="Página mostrando todas as postagens publicadas." />
-    <img src="https://github.com/user-attachments/assets/b6d5cf3b-02f3-4d87-be1d-8ab6b7b305da" width="420" alt="Página mostrando um perfil de usuário." />
+    <img src="https://github.com/user-attachments/assets/fdb6ba59-0a2e-4797-9b8c-6c9614ae3566" width="400" alt="Página mostrando todas as postagens publicadas." />
+    <img src="https://github.com/user-attachments/assets/b6d5cf3b-02f3-4d87-be1d-8ab6b7b305da" width="400" alt="Página mostrando um perfil de usuário." />
     <br/>
-    <img src="https://github.com/user-attachments/assets/8f5061d1-f40a-489f-a5d1-5c435ce97f46" width="420" alt="Página mostrando um pouco sobre o site." />
-    <img src="https://github.com/user-attachments/assets/0c482531-09be-462f-b3fc-75d2f0421563" width="420" alt="Página mostrando o editor de publicações." />
+    <img src="https://github.com/user-attachments/assets/8f5061d1-f40a-489f-a5d1-5c435ce97f46" width="400" alt="Página mostrando um pouco sobre o site." />
+    <img src="https://github.com/user-attachments/assets/0c482531-09be-462f-b3fc-75d2f0421563" width="400" alt="Página mostrando o editor de publicações." />
 </div>
 <br/>
 
