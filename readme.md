@@ -9,11 +9,27 @@
 </div>
 <br/>
 
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/35c6ec42-23ea-4709-9b06-6aab5accf2e3" width="550" alt="Página inicial do site, um carrosel com as principais postagens." />
+</div>
+<br/>
+<br/>
+
 O Objetivo da plataforma é ajudar os usuários a encontrarem o conteúdo que desejam estudar, sem precisar procurar em diversos sites ou ler livros inteiros para retirar pequenos trechos de conteúdo.
 
 Foi criado usando [React][react-url] + [Vite][vite-url] e algumas bibliotecas para facilitar o desenvolvimento.
 
 Este projeto foi criado como parte de um trabalho escolar, [Projeto Integrador (P.I)](#sobre-o-projeto-integrador), com o objetivo de demonstrar habilidades adquiridas no decorrer das unidades curriculares.
+
+<br/>
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/fdb6ba59-0a2e-4797-9b8c-6c9614ae3566" width="420" alt="Página mostrando todas as postagens publicadas." />
+    <img src="https://github.com/user-attachments/assets/b6d5cf3b-02f3-4d87-be1d-8ab6b7b305da" width="420" alt="Página mostrando um perfil de usuário." />
+    <br/>
+    <img src="https://github.com/user-attachments/assets/8f5061d1-f40a-489f-a5d1-5c435ce97f46" width="420" alt="Página mostrando um pouco sobre o site." />
+    <img src="https://github.com/user-attachments/assets/0c482531-09be-462f-b3fc-75d2f0421563" width="420" alt="Página mostrando o editor de publicações." />
+</div>
+<br/>
 
 <br/>
 
