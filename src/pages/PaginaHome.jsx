@@ -129,7 +129,7 @@ const PaginaHome = () => {
     
     splitTypes.forEach(char => {
       const text = new SplitType(char, { 
-        types: 'lines, words',
+        types: 'words',
       });
 
       const scrollAnim = gsap.from(text.words, {
@@ -138,6 +138,7 @@ const PaginaHome = () => {
           start: 'top 75%',
           end: 'bottom 95%',
           scrub: 1,
+          invalidateOnRefresh: true,
           // markers: true,
           toggleActions: "play pause resume none",
         },

@@ -97,7 +97,7 @@
 
 .page-section:has(.sobre) {
     padding: 6rem 4rem;
-    height: 135vh !important;
+    height: max(100%, 135vh) !important;
     
     h5 {
         font-size: 1.50rem;
