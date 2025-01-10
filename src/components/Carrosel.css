@@ -29,7 +29,7 @@
     transition: transform 0.6s ease-in-out !important;
 } */
 
-.carousel-item img {
+.carousel-item .destaque-slide-card {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -88,4 +88,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .carousel .carousel-indicators button {
+        width: 0.5rem !important;
+        height: 0.5rem !important;
+    }
+
+    .carousel .carousel-control-prev,
+    .carousel .carousel-control-next {
+        width: 1.5rem;
+        margin: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 425px) and (pointer: coarse) {
+    .carousel .carousel-control-prev,
+    .carousel .carousel-control-next {
+        display: none;
+    }
 }

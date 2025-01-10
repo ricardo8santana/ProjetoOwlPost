@@ -1,13 +1,18 @@
 import './PaginaLogin.css';
 
-import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
+import iconLight from '../assets/images/owlpost-black.png';
+import iconDark from '../assets/images/owlpost-white.png';
+import nameLight from '../assets/images/owlpostName-white.png';
+import nameDark from '../assets/images/owlpostName-black.png';
+
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 
-import * as userService from '../services/userService.jsx';
-
+import * as userService from '../services/userService';
+import * as darkModeService from '../services/darkModeService';
+import * as authService from '../services/authService';
 
 
 const PaginaCadastro = () => {
@@ -20,6 +25,8 @@ const PaginaCadastro = () => {
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
 
+    const prefersDark = darkModeService.loadTheme();
+    
     const isValidUsername = () => {
         return username !== '';
     }
@@ -38,7 +45,8 @@ const PaginaCadastro = () => {
     //     setPasswordsMatched(password === confirmation);
     // }, [password, confirmation]);
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
         
         const form = event.currentTarget;
 
@@ -49,8 +57,9 @@ const PaginaCadastro = () => {
             return;
         }
 
-        userService.createUser(username, email, password);
-        if (!userService.login(email, password)) {
+        await userService.createUser(username, email, password);
+        const user = await authService.login(email, password);
+        if (!user) {
             console.error(`Falha ao realizar login para ${username} ${password}`);
             event.preventDefault();
             event.stopPropagation();
@@ -59,20 +68,21 @@ const PaginaCadastro = () => {
 
         setValidated('true');
 
-        const lastRoute = localStorage.getItem('last-route');
+        const loginDestination = localStorage.getItem('loginDestination') || '/';
+        localStorage.removeItem('loginDestination');
 
-        navigate(lastRoute ? lastRoute : '/');
-        
-        localStorage.removeItem('last-route');
-        localStorage.removeItem('login-attempts');
+        navigate(loginDestination, { replace: true });
     };
 
     return (
         <div className='login-page'>
             <div className='login-body'>
-                <div className='login-logo'>
-                    <OwlpostSquareLogo />
-                </div>
+                    <div className='login-logo'>
+                        <img src={prefersDark ? iconDark : iconLight } />
+                    </div>
+                    <div className='name-logo'>
+                        <img src={prefersDark ? nameLight : nameDark } />
+                    </div>
 
                 <h3>Criar nova conta</h3>
 

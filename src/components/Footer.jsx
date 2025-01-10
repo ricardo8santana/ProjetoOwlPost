@@ -1,12 +1,28 @@
+import React, { useState } from 'react';
 import { faYoutube, faXTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 
 import PageSection from './PageSection';
 
 import './Footer.css';
 
 const Footer = () => {
+
+  const { 
+    t,
+    i18n: { changeLanguage, language },
+  } = useTranslation()
+
+  const [currentLanguage, setCurrentLanguage] = useState(language)
+
+  const handleChangeLanguage = () => {
+    const newLanguage = currentLanguage === 'en' ? 'pt' : 'en'
+    changeLanguage(newLanguage)
+    setCurrentLanguage(newLanguage)
+  }
+  
   return (
     <PageSection isEnd hugContent variant='secondary'>
       <div className="enquadro-footer">
@@ -16,10 +32,10 @@ const Footer = () => {
           <Link><FontAwesomeIcon icon={faFacebook} /></Link>
         </div>
         <hr />
-        <p>&copy; 2024, OwlPost, Inc. Todos os direitos reservados.</p>
+        <p>{t('rights')}</p>
         <div className="sercice-links">
-          <Link>Termos de Serviço</Link>
-          <Link>Politica de Privacidade</Link>
+          <Link>{t('terms')}</Link>
+          <Link>{t('privacy')}</Link>
         </div>
       </div>
     </PageSection>

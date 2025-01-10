@@ -13,7 +13,7 @@
 }
 
 .enquadro-footer hr {
-    color: var(--color-neutral-0);
+    color: var(--color-neutral-0) !important;
     width: 100%;
 }
 

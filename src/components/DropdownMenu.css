@@ -76,6 +76,7 @@ a.dropdown-box.dropdown-item:focus {
     justify-content: end;
     height: 100%;
     align-items: baseline;
+    margin-bottom: 5px;
 }
 
 .style-button {
@@ -144,3 +145,54 @@ a.dropdown-box.dropdown-item:hover {
 .color-theme {
     color: black;
 }
+
+.button-login {
+    display: block !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none!important;
+    height: 35px !important;
+}
+
+.button-login:not(:has(.profile-button-logged)) {
+    width: 35px !important;
+}
+
+.button-login:has(.profile-button-logged) {
+    width: 100% !important;
+}
+
+.profile-button-logged {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 0.5rem;
+}
+
+.profile-button-logged p {
+    margin: 0;
+}
+
+.profile-button-logged .fotoPerfil {
+    background-color: white;
+    width: 35px !important;
+    height: 35px !important;
+}
+
+.profile-button {
+    background-color: transparent !important;
+    color: #fafafc !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 45px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+}
+
+.profile-button svg {
+    background-color: transparent !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+

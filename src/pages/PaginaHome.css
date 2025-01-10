@@ -3,6 +3,17 @@
     font-weight: 800;
 }
 
+/* .my-section {
+    height: 100vh;
+    padding: 0 clamp(0rem, 12vw, 20rem);
+    display: grid;
+    place-content: center;
+
+    p {
+        font-size: clamp(2rem, 5vw, 8rem);
+    }
+} */
+
 .page-section:has(.destaques),
 .page-section:has(.grupo) {
     display: flex;
@@ -20,12 +31,29 @@
     flex-direction: column;
     gap: 2rem;
 
-    width: 100vw;
+    width: 100%;
 }
 
 .home h1, hr {
     padding: 0;
     margin: 0;
+}
+
+.teste {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 7rem;
+}
+
+.testando-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 5rem; */
 }
 
 .home hr {
@@ -61,39 +89,32 @@
     gap: 1rem;
 }
 
-.content-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-
+.home-content-container .destaque-card {
+    width: 100%;
     height: 0;
     flex-grow: 1;
-
-    background-color: var(--color-bg-main);
-    color: var(--color-text-main);
-    border-radius: 12px;
-    padding: 0.5rem 1rem;
 }
-
-.content-card * {
-    padding: 0;
-    margin: 0;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-wrap: nowrap;
-    text-justify: distribute;
-}
-
 
 .page-section:has(.sobre) {
-    display: flex;
+    padding: 6rem 4rem;
+    height: max(100%, 135vh) !important;
+    
+    h5 {
+        font-size: 1.50rem;
+    }
+
+    p, span {
+        font-size: clamp(1.30rem, 1.30vw, 1.8rem);
+    }
 }
+
+
 
 .grupo,
 .sobre {
     width: 100%;
-    padding: 4rem;
+    /* height: 100%;  */
+    padding: 14rem 4rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -102,9 +123,19 @@
     color: var(--color-neutral-0);
 }
 
-.sobre-buble {
-    width: min(100%, 75vw);
+.sobre-start {
+    width: 100%;
     padding: 2rem;
+}
+
+/* .corujinha {
+    transform: translateX(-700px);
+    opacity: 0;
+} */
+
+.sobre-buble {
+    width: min(100%, 60vw);
+    padding: 4rem;  /*Aqui que da uma diminuida na largura*/
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -135,17 +166,18 @@
     flex-wrap: wrap;
 
     justify-content: center;
-    gap: 1rem 2rem;
-    
+    gap: 5rem;
 }
 
 .integrante {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
 
-    width: 250px;
-    padding: 1rem;
+    flex: 0 0 25%;
+    width: 10rem;
 }
 
 .integrante p {
@@ -162,7 +194,23 @@
     box-shadow: 0 0px 12px -4px  rgba(0,0,0,0.125);
 }
 
+
+@media screen and (max-width: 1024px) {
+    .sobre-buble {
+        padding: 3.15rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
+
+    .page-section:has(.sobre) {
+        padding: 3rem;
+
+        h5 {
+            font-size: 1.45rem;
+        }
+    }
+
     .home-carousel {
         flex-direction: column;
         padding: 1rem;
@@ -180,33 +228,45 @@
         gap: 1rem;
     }
 
-    .content-card {
+    .home-content-container .destaque-card {
         flex-basis: calc(50% - 1rem);
+        width: 0;
         height: unset;
+        min-height: 5rem;
         flex-grow: unset;
     }
 
-    .content-card * {
+    .home-content-container .destaque-card * {
         padding: 0;
         margin: 0;
-
         height: unset;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-wrap: nowrap;
     }
 
     .sobre {
         padding: 3rem 0.5rem !important;
+        font-size: 0.9rem !important;
     }
 
     .sobre-buble {
         padding: 0;
     }
 
+    .page-space {
+        margin-top: 40%;
+    }
+
     .content-card {
         min-width: 280px;
         flex-grow: 1;
+    }
+
+    .integrantes {
+        gap: 4rem;
+    }
+
+    .integrante {
+        flex: 0 0 10rem;
+        width: 10rem;
     }
 }
 
@@ -214,17 +274,59 @@
     .destaques {
         padding: 1rem;
     }
+    
     .home-carousel {
         padding: 0;
     }
 
-    .content-card {
+    .home-content-container .destaque-card {
         min-width: 100%;
+        min-height: 5rem;
         flex-grow: 1;
     }
 
+    .integrantes {
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 2rem;
+    }
+
     .integrante {
-        width: 150px;
-        padding: 0.5rem;
+        flex: 1 1 9.5rem;
+        width: 9.5rem;
+    }
+
+    .page-section:has(.sobre) {
+        h5 {
+            font-size: 1.45rem;
+        }
+    
+        p {
+            font-size: clamp(1.26rem, 1.30vw, 1.8rem);
+        }
+
+        padding: 1rem;
+        min-height: 100% !important;
     }
 }
+
+html.lenis, html.lenis body {
+    height: auto;
+  }
+  
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }

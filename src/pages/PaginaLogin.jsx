@@ -1,77 +1,85 @@
-import OwlpostSquareLogo from '../assets/OwlpostSquareLogo.jsx';
+import iconLight from '../assets/images/owlpost-black.png';
+import iconDark from '../assets/images/owlpost-white.png';
+import nameLight from '../assets/images/owlpostName-white.png';
+import nameDark from '../assets/images/owlpostName-black.png';
 import './PaginaLogin.css'
 
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Col } from 'react-bootstrap';
-import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import { useState } from 'react';
 
-import * as userService from '../services/userService.jsx';
+import * as authService from '../services/authService';
+import * as darkModeService from '../services/darkModeService';
+import * as routingService from '../services/routingService';
 
 const PaginaLogin = () => {
-    const [validated, setValidated] = useState(true);
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [validated, setValidated] = useState('true');
+    const [failedToLogin, setFailedToLogin] = useState(false);
+
     const navigate = useNavigate();
+    const prefersDark = darkModeService.loadTheme();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const isValidEmail = () => {
+        const emailValidationRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+        return email && email.match(emailValidationRegex);
+    }
 
-    useEffect(() => {
-        window.addEventListener('user-logout', () => {
-            navigate('/');
-        });
-    }, []);
-
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        
         const form = event.currentTarget;
-        
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+        if (form.checkValidity() === false || !isValidEmail() || failedToLogin) {
+            setValidated('false');
             return;
         }
 
-        console.log(userService.users);
+        const user = await authService.login(email, password);
 
-        if (!userService.login(username, password)) {
-            console.error(`Falha ao realizar login para ${username} ${password}`);
-            event.preventDefault();
-            event.stopPropagation();
-            setValidated(false);
+        if (!user) {
+            setFailedToLogin(true);
+            setValidated('false');
             return;
-        }
+        } 
 
-        setValidated(true);
-        
-        const lastRoute = localStorage.getItem('last-route');
-
-        navigate(lastRoute ? lastRoute : '/');
-
-        localStorage.removeItem('last-route');
-        localStorage.removeItem('login-attempts');
+        setValidated('true');
+        routingService.redirectBackFromLogin(navigate);
     };
 
     return (
         <div className='login-page'>
             <div className='login-body'>
                 <div className='login-logo'>
-                    <OwlpostSquareLogo />
+                    <img src={prefersDark ? iconDark : iconLight } />
+                </div>
+                <div className='name-logo'>
+                    <img src={prefersDark ? nameLight : nameDark } />
                 </div>
                 
                 <h3>Entrar na conta</h3>
                 
                 <Form id='login-form' className='login-form' validate={validated} onSubmit={handleOnSubmit}>
                 <Form.Control 
-                        type="text" 
-                        placeholder="Nome de usuário" 
-                        autoComplete='username'
-                        isInvalid={!validated}
-                        onChange={(e) => setUsername(e.target.value)} />
+                        type="email" 
+                        placeholder="Email" 
+                        autoComplete='email'
+                        isInvalid={!isValidEmail() || failedToLogin}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setFailedToLogin(false);
+                        }} />
 
                     <Form.Control 
                         type="password" 
                         placeholder="Senha" 
-                        isInvalid={!validated}
+                        isInvalid={failedToLogin}
                         autoComplete='current-password'
-                        onChange={(e) => setPassword(e.target.value)}/>
+                        onChange={(e) => { 
+                            setPassword(e.target.value);
+                            setFailedToLogin(false);
+                        }}/>
 
                     <Button variant='owl-primary' type="submit">Entrar</Button>
                 </Form>
