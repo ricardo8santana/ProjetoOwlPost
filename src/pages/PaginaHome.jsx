@@ -29,6 +29,7 @@ import Carousel1 from '../assets/images/carousel_1.jpg';
 import Carousel2 from '../assets/images/carousel_2.jpg';
 import GameBG from '../assets/images/carousel_6.jpg';
 import { randomizeArray } from '../models/utils';
+import { Timeline } from 'gsap/gsap-core';
 
 const slideBackgrounds = [Carousel0, Carousel1, Carousel2];
 
@@ -41,7 +42,7 @@ const integrantesGrupo = [
   // { nome: "Gustavo Dos Santos Magalhães", githubID: "172276584", },
 ];
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+// gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const PaginaHome = () => {
   const [slideDestaques, setSlideDestaques] = useState([]);
@@ -118,42 +119,68 @@ const PaginaHome = () => {
   
   
   const main = useRef();
-  
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let tl = gsap.timeline();
+
   useGSAP(() => {
-    const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit')
-    splitTypes.forEach((char, i) => {
-      const text = new SplitType(char, { types: 'words' })
-      gsap.from(text.words, {
+    const splitTypes = document.querySelectorAll('.title, .gap, .scroll-edit');
+    
+    splitTypes.forEach(char => {
+      const text = new SplitType(char, { 
+        types: 'lines, words',
+      });
+
+      const scrollAnim = gsap.from(text.words, {
         scrollTrigger: {
           trigger: char,
-          start: 'top 80%',
-          end: 'top 100%',
+          start: 'top 75%',
+          end: 'bottom 95%',
           scrub: 1,
-          markers: false
+          // markers: true,
+          toggleActions: "play pause resume none",
         },
-        scaleY: 0,
-        x: -10,
-        y: -20,
-        transformOrigin: 'left',
+        // scaleY: 0,
+        x: -40,
+        y: 80,
+        // y: '100%',
+        z: 0.01,
+        opacity: 0,
+        ease: 'power1.out',
+        // transformOrigin: 'left',
         stagger: 0.01
-      })
-    })
+      });
+
+      tl.add(scrollAnim, 0);
+    });
   });
 
-  const lenis = new Lenis()
+  tl.progress(1).progress(0);
 
-  // lenis.on('scroll', (e) => {
-  //   console.log(e)
-  // })
+  const lenis = new Lenis({
+    autoRef: true,
+  });
 
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
+  // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+  lenis.on('scroll', ScrollTrigger.update);
 
-  requestAnimationFrame(raf)
+  // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
+  // This ensures Lenis's smooth scroll animation updates on each GSAP tick
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000); // Convert time from seconds to milliseconds
+  });
 
-  
+  // Disable lag smoothing in GSAP to prevent any delay in scroll animations
+  gsap.ticker.lagSmoothing(0);
+
+  // function raf(time) {
+  //   lenis.raf(time);
+  //   requestAnimationFrame(raf);
+  // }
+
+  // requestAnimationFrame(raf);
+ 
 
 
   return (

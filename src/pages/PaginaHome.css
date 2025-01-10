@@ -103,7 +103,7 @@
         font-size: 1.50rem;
     }
 
-    p {
+    p, span {
         font-size: clamp(1.30rem, 1.30vw, 1.8rem);
     }
 }
