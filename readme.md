@@ -4,7 +4,7 @@
 </a>
     <h3 align="center">Owlpost</h3>
     <p align="center">
-        Um plataforma colaborativo onde estudantes podem compartilhar <br> conteúdos e tópicos de interesse da turma.
+        Uma plataforma colaborativa onde estudantes podem compartilhar <br> conteúdos e tópicos de interesse da turma.
     </p>
 </div>
 <br/>
