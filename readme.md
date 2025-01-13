@@ -1,7 +1,11 @@
 <div align="center">
     <a href="https://github.com/BlackKing72/api-owlpost"  style="filter: drop-shadow(0 0 1px #fafaff80)">
-        <img src="images/owlpost_logo.png" alt="Logo" width="100" height="100">
-</a>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/e9b25d79-14b9-495d-82e8-a099e95263e5">
+          <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/8488d32e-b04f-4179-8253-0524a2249bab">
+          <img alt="Logo" src="https://github.com/user-attachments/assets/8488d32e-b04f-4179-8253-0524a2249bab" width="100" height="100">
+        </picture>
+    </a>
     <h3 align="center">Owlpost</h3>
     <p align="center">
         Uma plataforma colaborativa onde estudantes podem compartilhar <br> conteúdos e tópicos de interesse da turma.
